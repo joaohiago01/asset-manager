@@ -1,0 +1,18 @@
+.text-menu-item {
+  color: black;
+  font-size: medium;
+}
+
+.text-menu-item-active {
+  color: black;
+  font-size: medium;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.text-menu-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  padding-left: 5%;
+}

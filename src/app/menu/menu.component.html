@@ -1,18 +1,67 @@
-<aside class="menu">
-  <p class="menu-label p-2">
-    <strong>
-      Olá, Coordenador
-    </strong>
+<aside class="column is-3 is-narrow-mobile is-fullheight section background-color">
+  <div class="is-flex is-justify-content-center">
+    <figure class="image image is-48x48">
+      <img src="assets/images/icon-login.png">
+    </figure>
+  </div>
+  <p class="menu-label is-hidden-touch">
+    <span class="icon is-large"><i class="fa fa-user"></i></span>
+    <strong class="text-menu-label">Olá, Coordenador</strong>
   </p>
   <ul class="menu-list">
-    <li><a>Dashboard</a></li>
-    <li><a>Categorias</a></li>
-    <li><a>Insumos</a></li>
-    <li><a>Equipamentos</a></li>
-    <li><a>Licenças de Software</a></li>
-    <li><a>Setores</a></li>
-    <li><a>Empréstimos</a></li>
-    <li><a>Serviços</a></li>
-    <li><a (click)="logout()">Sair</a></li>
+    <li>
+      <a class="text-menu-item-active">
+        <span class="icon is-medium"><i class="fa fa-list-alt"></i></span>
+        <strong class="has-text">Dashboard</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-object-ungroup"></i></span>
+        <strong class="has-text text-menu-item">Categorias</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-th-list"></i></span>
+        <strong class="has-text text-menu-item">Insumos</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-microchip"></i></span>
+        <strong class="has-text text-menu-item">Equipamentos</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-key"></i></span>
+        <strong class="has-text text-menu-item">Licenças</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-users"></i></span>
+        <strong class="has-text text-menu-item">Setores</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-address-card"></i></span>
+        <strong class="has-text text-menu-item">Empréstimos</strong>
+      </a>
+    </li>
+    <li>
+      <a class="">
+        <span class="icon is-medium"><i class="fa fa-wrench"></i></span>
+        <strong class="has-text text-menu-item">Serviços</strong>
+      </a>
+    </li>
+    <li>
+      <a class="" (click)="logout()">
+        <span class="icon is-medium"><i class="fa fa-sign-out"></i></span>
+        <strong class="has-text text-menu-item">Sair</strong>
+      </a>
+    </li>
   </ul>
 </aside>
