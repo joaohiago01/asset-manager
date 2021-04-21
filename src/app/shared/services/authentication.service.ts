@@ -12,11 +12,7 @@ export class AuthenticationService {
   public currentUser!: Observable<User>;
 
   constructor(private http: HttpClient) {
-    let currentUser = localStorage.getItem('currentUser');
-    if (currentUser !== null) {
-      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(currentUser));
-      this.currentUser = this.currentUserSubject.asObservable();
-    }
+    this.setCurrentUser();
   }
 
   public get currentUserValue(): User {
@@ -24,6 +20,14 @@ export class AuthenticationService {
       return this.currentUserSubject.value;
     }
     return this.currentUserSubject;
+  }
+
+  private setCurrentUser(): void {
+    let currentUser = localStorage.getItem('currentUser');
+    if (currentUser !== null) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(currentUser));
+      this.currentUser = this.currentUserSubject.asObservable();
+    }
   }
 
   async login(username: string, password: string) {
@@ -45,6 +49,7 @@ export class AuthenticationService {
       .then((response: any) => {
         let user = response.data;
         localStorage.setItem('currentUser', JSON.stringify(user.access_token));
+        this.setCurrentUser();
         this.currentUserSubject.next(user);
         return user;
       })
