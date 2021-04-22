@@ -1,12 +1,12 @@
-<div class="columns is-vcentered">
+<div *ngIf="isLogged === false" class="columns is-vcentered">
   <div class="column is-6 background-color">
     <div class="has-text-centered">
       <figure class="image is-square">
         <img src="assets/images/background-login.png">
       </figure>
+    </div>
   </div>
-  </div>
-  <div class="column is-6 is-flex is-justify-content-center is-align-items-center">
+  <div class="column is-6 is-flex is-justify-content-center is-align-items-center" style="background-color: white;">
     <section class="section">
       <div class="is-flex is-justify-content-center">
         <figure class="image is-128x128">

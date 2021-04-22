@@ -17,6 +17,11 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then(m => m.CategoryModule),
+    canActivate: [AuthenticationGuardService]
   }
 ];
 

@@ -8,12 +8,26 @@ import { AuthenticationService } from '../shared/services/authentication.service
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  public isActiveDashboard: boolean = true;
+  public isActiveCategory: boolean = false;
 
   constructor(
     public router: Router,
     public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+  }
+
+  navigateToDashboard() {
+    this.isActiveCategory = false;
+    this.isActiveDashboard = true;
+    this.router.navigate(['dashboard']);
+  }
+
+  navigateToCategories() {
+    this.isActiveDashboard = false;
+    this.isActiveCategory = true;
+    this.router.navigate(['category']);
   }
 
   logout() {
