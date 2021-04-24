@@ -37,57 +37,63 @@ export class CategoryService {
     }
   }
 
-  createCategory(category: Category): boolean {
+  async createCategory(category: Category): Promise<boolean> {
     let categoryWasCreated = false;
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`
+      };
 
-    let headers = {
-      Authorization: `Bearer ${this.authenticationService.token}`
-    };
+      let categoryServer = {
+        nome: category.name,
+        tipoCategoria: category.categoryType
+      };
+      await api.post('/categorias', categoryServer, { headers });
+      categoryWasCreated = true;
 
-    api.post('/category/create', category, { headers })
-      .then((response: any) => {
-        categoryWasCreated = true;
-      })
-      .catch((error: Error) => {
-        categoryWasCreated = false;
-      });
-
-    return categoryWasCreated;
+      return categoryWasCreated;
+    } catch (error) {
+      console.error(error);
+      return categoryWasCreated = false;
+    }
   }
 
-  editCategory(category: Category): boolean {
+  async editCategory(category: Category): Promise<boolean> {
     let categoryWasEdited = false;
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`
+      };
 
-    let headers = {
-      Authorization: `Bearer ${this.authenticationService.token}`
-    };
+      let categoryServer = {
+        id: category.id,
+        nome: category.name,
+        tipoCategoria: category.categoryType
+      };
+      api.put(`/categorias/${category.id}`, categoryServer, { headers });
+      categoryWasEdited = true;
 
-    api.put('/category/edit', category, { headers })
-      .then((response: any) => {
-        categoryWasEdited = true;
-      })
-      .catch((error: Error) => {
-        categoryWasEdited = false;
-      });
-
-    return categoryWasEdited;
+      return categoryWasEdited;
+    } catch (error) {
+      console.error(error);
+      return categoryWasEdited = false;
+    }
   }
 
-  deleteCategory(id: Number): boolean {
+  async deleteCategory(id: Number): Promise<boolean> {
     let categoryWasDeleted = false;
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`
+      };
 
-    let headers = {
-      Authorization: `Bearer ${this.authenticationService.token}`
-    };
+      api.delete(`/categorias/${id}`, { headers });
+      categoryWasDeleted = true;
 
-    api.put('/category/delete', id, { headers })
-      .then((response: any) => {
-        categoryWasDeleted = true;
-      })
-      .catch((error: Error) => {
-        categoryWasDeleted = false;
-      });
-
-    return categoryWasDeleted;
+      return categoryWasDeleted;
+    } catch (error) {
+      console.error(error);
+      return categoryWasDeleted = false;
+    }
   }
 }
