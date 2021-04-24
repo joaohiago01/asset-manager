@@ -1,0 +1,69 @@
+.container {
+    width: 100%;
+}
+
+.header-category {
+    padding-top: 0.5rem;
+    padding-right: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-cadastrar {
+    background-color: #1fd181;
+}
+
+.list {
+    padding-right: 0.8rem;
+    padding-top: 0.5rem;
+}
+
+mat-grid-tile {
+    border-left: solid 8px #1fd181;
+    border-radius: 8px;
+}
+
+.card-category {
+    flex: 1;
+    height: 10rem;
+    background-color: lightgray;
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.header-card > span {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.header-icon {
+    background-color: #1fd181;
+    border-radius: 5px;
+}
+
+.header-icon > button {
+    display: flex;
+    width: 2em;
+    height: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-card {
+    padding-top: 2em;
+}
+
+.content-card .category-type {
+    display: flex;
+    padding-top: 0.4em;
+    justify-content: center;
+}
+
+.content-card .category-type > span {
+    font-size: 1.8em;
+    font-weight: bold;
+}

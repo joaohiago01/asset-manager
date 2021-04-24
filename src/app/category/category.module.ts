@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CategoryRoutingModule } from './category-routing.module';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { MatCardModule } from '@angular/material/card';
   imports: [
     CommonModule,
     CategoryRoutingModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule,
+    MatButtonModule
   ]
 })
 export class CategoryModule { }
