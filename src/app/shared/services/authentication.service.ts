@@ -15,6 +15,12 @@ export class AuthenticationService {
     this.setCurrentUser();
   }
 
+  public get token(): string {
+    let currentUser = localStorage.getItem('currentUser');
+    let token = currentUser?.slice(1, currentUser.length - 1);
+    return token || '';
+  }
+
   public get currentUserValue(): User {
     if (this.currentUserSubject) {
       return this.currentUserSubject.value;

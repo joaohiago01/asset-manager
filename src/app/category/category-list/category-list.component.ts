@@ -11,6 +11,7 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
+  public categories: Category[] = [];
 
   constructor(
     public httpClient: HttpClient,
@@ -18,15 +19,14 @@ export class CategoryListComponent implements OnInit {
     public categoryService: CategoryService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.getAllCategories();
   }
 
-  getAllCategories(): Category[] {
-    let categories = this.categoryService.getAllCategories();
-    if (categories) {
-      return categories;
-    } else {
-      throw new Error("Nenhuma Categoria Encontrada");
+  async getAllCategories(): Promise<void> {
+    this.categories = await this.categoryService.getAllCategories();
+    if (!this.categories) {
+      alert("Nenhuma Categoria Encontrada");
     }
   }
 

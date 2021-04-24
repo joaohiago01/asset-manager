@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import api from 'src/app/shared/services/api';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { environment } from 'src/environments/environment.prod';
 import { Category } from '../../shared/models/category.model';
 
@@ -8,36 +9,42 @@ import { Category } from '../../shared/models/category.model';
 })
 export class CategoryService {
 
-  constructor() { }
+  constructor(
+    private authenticationService: AuthenticationService
+  ) { }
 
-  getAllCategories(): Category[] {
-    let categories!: Category[];
+  async getAllCategories(): Promise<Category[]> {
+    try {
+      let categories !: Category[];
 
-    let auth = {
-      username: environment.usernameApi,
-      password: environment.passwordApi
-    };
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`
+      };
 
-    api.get('/category/list', { auth })
-      .then((response: any) => {
-        categories = response.data;
-      })
-      .catch((error: Error) => {
-        return [];
+      const response = await api.get('/categorias', { headers });
+      categories = response.data.map((categoryServer: any) => {
+        return new Category({
+          name: categoryServer.nome,
+          categoryType: categoryServer.tipoCategoria
+        },
+          categoryServer.id);
       });
 
-    return categories;
+      return categories;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
 
   createCategory(category: Category): boolean {
     let categoryWasCreated = false;
 
-    let auth = {
-      username: environment.usernameApi,
-      password: environment.passwordApi
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`
     };
 
-    api.post('/category/create', category, { auth })
+    api.post('/category/create', category, { headers })
       .then((response: any) => {
         categoryWasCreated = true;
       })
@@ -51,12 +58,11 @@ export class CategoryService {
   editCategory(category: Category): boolean {
     let categoryWasEdited = false;
 
-    let auth = {
-      username: environment.usernameApi,
-      password: environment.passwordApi
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`
     };
 
-    api.put('/category/edit', category, { auth })
+    api.put('/category/edit', category, { headers })
       .then((response: any) => {
         categoryWasEdited = true;
       })
@@ -70,12 +76,11 @@ export class CategoryService {
   deleteCategory(id: Number): boolean {
     let categoryWasDeleted = false;
 
-    let auth = {
-      username: environment.usernameApi,
-      password: environment.passwordApi
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`
     };
 
-    api.put('/category/delete', id, { auth })
+    api.put('/category/delete', id, { headers })
       .then((response: any) => {
         categoryWasDeleted = true;
       })
