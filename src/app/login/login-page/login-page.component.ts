@@ -10,8 +10,6 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  public isLogged: boolean = false;
-
   constructor(
     public httpClient: HttpClient,
     public router: Router,
@@ -24,7 +22,6 @@ export class LoginPageComponent implements OnInit {
     event.preventDefault();
     let user = this.authenticationService.login(username, password);
     if (!user) throw new UserNotFoundException();
-    this.isLogged = true;
     this.router.navigate(['dashboard']);
   }
 
