@@ -1,32 +1,80 @@
 <div class="container">
-    <div class="header-category">
-        <button class="btn-cadastrar" mat-raised-button color="primary">
-            <i class="material-icons">add</i>
-            Cadastrar
-        </button>
-    </div>
-    <div class="list">
-        <mat-grid-list cols="3" rowHeight="8rem" gutterSize="1rem">
-          <li *ngFor="let category of categories">
-            <mat-grid-tile>
-                <mat-card class="card-category">
-                    <div class="header-card">
-                        <span>{{ category.name }}</span>
-                        <div class="header-icon">
-                            <button mat-icon-button (click)="detailCategory(category.id)">
-                                <i class="material-icons v-middle color-card-icon">edit</i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="content-card">
-                        <span>TIPO</span>
-                        <div class="category-type">
-                            <span>{{ category.categoryType }}</span>
-                        </div>
-                    </div>
-                </mat-card>
-            </mat-grid-tile>
-          </li>
-        </mat-grid-list>
-    </div>
+  <div class="modal-window hidden" style="width: 45%">
+    <header class="modal-card-head">
+      <p class="modal-card-title font-color title m-2">Cadastrar categoria</p>
+      <button id="btnFechar" class="delete" aria-label="close"></button>
+    </header>
+    <section
+      class="modal-card-body"
+      style="margin-right: 15%; margin-left: 15%"
+    >
+      <label for="nome" class="label">Nome</label>
+      <input
+        type="text"
+        #nome
+        class="input is-success mb-5"
+        id="nome"
+        placeholder="Nome da categoria"
+      />
+
+      <label for="tipoCategoria" class="label">Tipo de Categoria</label>
+      <div class="select is-success is-fullwidth">
+        <select id="tipoCategoria">
+          <option>SOFTWARE</option>
+          <option>HARDWARE</option>
+          <option>REDE</option>
+          <option>MOBILIARIO</option>
+          <option>OUTROS</option>
+        </select>
+      </div>
+    </section>
+
+    <footer
+      class="modal-card-foot is-justify-content-center is-align-items-center"
+    >
+      <form role="form">
+        <button class="button is-success">Cadastrar</button>
+      </form>
+      <button class="button">Cancelar</button>
+    </footer>
+  </div>
+  <div class="overlay hidden"></div>
+
+  <div class="header-category">
+    <button
+      type="submit"
+      id="btnCadastrar"
+      class="btn-cadastrar"
+      mat-raised-button
+      color="primary"
+    >
+      <i class="material-icons">add</i>
+      Cadastrar
+    </button>
+  </div>
+
+  <div class="list">
+    <mat-grid-list cols="3" rowHeight="8rem" gutterSize="1rem">
+      <li *ngFor="let category of categories">
+        <mat-grid-tile>
+          <mat-card class="card-category">
+            <div class="header-card">
+              <span>{{ category.name }}</span>
+              <div class="header-icon">
+                <button mat-icon-button (click)="detailCategory(category.id)">
+                  <i class="material-icons v-middle color-card-icon">edit</i>
+                </button>
+              </div>
+            </div>
+            <div class="content-card">
+              <span>TIPO</span>
+              <div class="category-type">
+                <span>{{ category.categoryType }}</span>
+              </div>
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+      </li>
+    </mat-grid-list>
+  </div>
 </div>
