@@ -12,13 +12,17 @@ import { CategoryService } from '../services/category.service';
 })
 export class CategoryListComponent implements OnInit {
   public categories: Category[] = [];
-  categoryType = CategoryType;
+  public selectedValue: string = '';
+  types: string[] = [];
+  category: Category = <Category>{};
 
   constructor(
     public httpClient: HttpClient,
     public router: Router,
     public categoryService: CategoryService
-  ) {}
+  ) {
+    this.types = Object.values(CategoryType);
+  }
 
   async ngOnInit(): Promise<void> {
     await this.getAllCategories();
@@ -33,9 +37,11 @@ export class CategoryListComponent implements OnInit {
 
   async createCategory(
     name: string,
-    categoryType: CategoryType
+    categoryTypeString: string
   ): Promise<void> {
-    if (name && categoryType) {
+    if (name && categoryTypeString) {
+      const categoryType: CategoryType = <CategoryType>categoryTypeString;
+
       let category = new Category({
         name,
         categoryType,
@@ -54,17 +60,22 @@ export class CategoryListComponent implements OnInit {
   }
 
   detailCategory(categoryId: number) {
-    return this.categories.find(
-      (category: Category) => category.id === categoryId
+    this.category = <Category>(
+      this.categories.find((category: Category) => category.id === categoryId)
     );
+    this.selectedValue = this.category.categoryType;
+
+    this.showModal('#modalEditar');
   }
 
   async editCategory(
     id: number,
     name: string,
-    categoryType: CategoryType
+    categoryTypeString: string
   ): Promise<void> {
-    if (name && categoryType) {
+    if (name && categoryTypeString) {
+      const categoryType: CategoryType = <CategoryType>categoryTypeString;
+
       let category = new Category(
         {
           name,
@@ -81,6 +92,8 @@ export class CategoryListComponent implements OnInit {
     } else {
       alert('Dados Inválidos');
     }
+
+    this.selectedValue = '';
   }
 
   async deleteCategory(id: number): Promise<void> {
@@ -95,31 +108,30 @@ export class CategoryListComponent implements OnInit {
       alert('Categoria Inválida');
     }
   }
+
+  showModal(modalSelector: string) {
+    const modal: HTMLDivElement = <HTMLDivElement>(
+      document.querySelector(modalSelector)
+    );
+    const overlay: HTMLDivElement = <HTMLDivElement>(
+      document.querySelector('.overlay')
+    );
+
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  }
+
+  hideModal(modalSelector: string) {
+    const modal: HTMLDivElement = <HTMLDivElement>(
+      document.querySelector(modalSelector)
+    );
+    const overlay: HTMLDivElement = <HTMLDivElement>(
+      document.querySelector('.overlay')
+    );
+
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+
+    this.selectedValue = '';
+  }
 }
-
-const showModal = function () {
-  const modal: HTMLDivElement = <HTMLDivElement>(
-    document.querySelector('.modal-window')
-  );
-  const overlay: HTMLDivElement = <HTMLDivElement>(
-    document.querySelector('.overlay')
-  );
-
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
-const hideModal = function () {
-  const modal: HTMLDivElement = <HTMLDivElement>(
-    document.querySelector('.modal-window')
-  );
-  const overlay: HTMLDivElement = <HTMLDivElement>(
-    document.querySelector('.overlay')
-  );
-
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
-};
-
-document.querySelector('btnCadastrar')?.addEventListener('click', showModal);
-document.querySelector('btnFechar')?.addEventListener('click', hideModal);
