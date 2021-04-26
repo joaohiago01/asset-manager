@@ -6,12 +6,14 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     CategoryListComponent
   ],
   imports: [
+    SharedModule,
     CommonModule,
     CategoryRoutingModule,
     MatCardModule,

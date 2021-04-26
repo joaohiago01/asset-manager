@@ -8,14 +8,12 @@ import { environment } from '../environments/environment';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuComponent } from './menu/menu.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MenuComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
