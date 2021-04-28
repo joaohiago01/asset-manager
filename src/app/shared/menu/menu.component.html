@@ -1,7 +1,7 @@
 <aside class="is-narrow-mobile is-fullheight section background-color">
   <div class="is-flex is-justify-content-center">
     <figure class="image image is-48x48">
-      <img src="assets/images/icon-login.png">
+      <img src="assets/images/icon-login.png" />
     </figure>
   </div>
   <p class="menu-label is-hidden-touch is-flex is-justify-content-center p-2">
@@ -9,13 +9,19 @@
   </p>
   <ul class="menu-list">
     <li>
-      <a [ngClass]="{'text-menu-item-active': isActiveDashboard}" (click)="navigateToDashboard()">
+      <a
+        [ngClass]="{ 'text-menu-item-active': isActiveDashboard }"
+        (click)="navigateToDashboard()"
+      >
         <span class="icon is-medium"><i class="fa fa-list-alt"></i></span>
-        <strong class="has-text">Dashboard</strong>
+        <strong class="has-text text-menu-item">Dashboard</strong>
       </a>
     </li>
     <li>
-      <a [ngClass]="{'text-menu-item-active': isActiveCategory}" (click)="navigateToCategories()">
+      <a
+        [ngClass]="{ 'text-menu-item-active': isActiveCategory }"
+        (click)="navigateToCategories()"
+      >
         <span class="icon is-medium"><i class="fa fa-object-ungroup"></i></span>
         <strong class="has-text text-menu-item">Categorias</strong>
       </a>

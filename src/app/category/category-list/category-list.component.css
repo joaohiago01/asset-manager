@@ -3,7 +3,7 @@
 }
 
 .header-category {
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   padding-right: 0.8rem;
   display: flex;
   justify-content: flex-end;
@@ -15,29 +15,33 @@
 
 .list {
   padding-right: 0.8rem;
-  padding-top: 0.5rem;
+  padding-top: 1.2rem;
 }
 
 mat-grid-tile {
-  border-left: solid 8px #1fd181;
-  border-radius: 8px;
+  border: 2px solid #1fd181;
+  border-left: 8px solid #1fd181;
+  border-radius: 4px;
 }
 
 .card-category {
   flex: 1;
   height: 10rem;
-  background-color: lightgray;
+  background-color: white;
 }
 
 .header-card {
   display: flex;
+  padding-top: 0.7em;
   justify-content: space-between;
-  padding: 0.5rem;
 }
 
 .header-card > span {
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1em;
+  background-color: lightgray;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 .header-icon {
@@ -54,13 +58,13 @@ mat-grid-tile {
 }
 
 .content-card {
-  padding-top: 2em;
+  margin-top: 1.2em;
 }
 
 .content-card .category-type {
   display: flex;
   padding-top: 0.4em;
-  justify-content: center;
+  justify-content: left;
 }
 
 .content-card .category-type > span {

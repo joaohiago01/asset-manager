@@ -7,7 +7,9 @@
       <!-- MODAL PARA CADASTRAR CATEGORIA -->
       <div id="modalCadastrar" class="modal-window hidden" style="width: 45%">
         <header class="modal-card-head">
-          <p class="modal-card-title font-color title m-2">Cadastrar categoria</p>
+          <p class="modal-card-title font-color title m-2">
+            Cadastrar categoria
+          </p>
           <button
             id="btnFechar"
             class="delete"
@@ -41,7 +43,10 @@
         <footer
           class="modal-card-foot is-justify-content-center is-align-items-center"
         >
-          <form role="form" (submit)="createCategory(nome.value, selectedValue)">
+          <form
+            role="form"
+            (submit)="createCategory(nome.value, selectedValue)"
+          >
             <button type="submit" class="button is-success">Cadastrar</button>
           </form>
           <button class="button" (click)="hideModal('#modalCadastrar')">
@@ -91,7 +96,9 @@
             [value]="category.name"
           />
 
-          <label for="tipoCategoriaEdicao" class="label">Tipo de Categoria</label>
+          <label for="tipoCategoriaEdicao" class="label"
+            >Tipo de Categoria</label
+          >
           <div class="select is-success is-fullwidth">
             <select id="tipoCategoriaEdicao" [(ngModel)]="selectedValue">
               <option *ngFor="let tipo of types" [value]="tipo">
@@ -106,7 +113,9 @@
         >
           <form
             role="form"
-            (submit)="editCategory(category.id, nomeEdicao.value, selectedValue)"
+            (submit)="
+              editCategory(category.id, nomeEdicao.value, selectedValue)
+            "
           >
             <button type="submit" class="button is-success">Salvar</button>
           </form>
@@ -118,22 +127,28 @@
 
       <!-- LISTA DE CARDS DE CATEGORIA -->
       <div class="list">
-        <mat-grid-list cols="3" rowHeight="8rem" gutterSize="1rem">
+        <mat-grid-list cols="3" rowHeight="8.5rem" gutterSize="0.8rem">
           <li *ngFor="let category of categories">
             <mat-grid-tile>
               <mat-card class="card-category">
                 <div class="header-card">
-                  <span>{{ category.name }}</span>
+                  <span>{{ category.categoryType }}</span>
                   <div class="header-icon">
-                    <button class="mx-1" mat-icon-button (click)="detailCategory(category.id)">
-                      <i class="material-icons v-middle color-card-icon">edit</i>
+                    <button
+                      class="mx-1"
+                      mat-icon-button
+                      (click)="detailCategory(category.id)"
+                    >
+                      <i class="material-icons v-middle color-card-icon"
+                        >edit</i
+                      >
                     </button>
                   </div>
                 </div>
                 <div class="content-card">
-                  <span>TIPO</span>
+                  <span>NOME</span>
                   <div class="category-type">
-                    <span>{{ category.categoryType }}</span>
+                    <span>{{ category.name }}</span>
                   </div>
                 </div>
               </mat-card>
