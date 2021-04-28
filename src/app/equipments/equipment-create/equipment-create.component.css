@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+}
+
+.header-equipment-create {
+    padding-top: 1rem;
+    padding-right: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-salvar {
+    background-color: #1fd181;
+}
+
+.description {
+    padding-top: 1rem;
+}
+
+.inputDescription {
+    width: 35rem;
+    height: 6rem;
+    resize: none;
+}
+
+mat-label {
+    font-weight: bold;
+    font-size: 1rem;
+}

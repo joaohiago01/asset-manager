@@ -1,0 +1,32 @@
+<div class="columns">
+    <div class="column is-3 background-color">
+      <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+      <div class="container">
+        
+        <div class="header-equipment-create">
+            <button
+              #btnCSalvar
+              class="btn-salvar"
+              mat-raised-button
+              color="primary"
+            >
+              Salvar
+            </button>
+        </div>
+
+        <div class="content-equipment-create">
+
+          <mat-form-field appearance="fill">
+            <div class="description">
+              <mat-label>Descrição:</mat-label>
+              <textarea matInput class="inputDescription"></textarea>
+            </div>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+    </div>
+</div>

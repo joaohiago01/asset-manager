@@ -33,7 +33,9 @@
       </a>
     </li>
     <li>
-      <a class="">
+      <a [ngClass]="{ 'text-menu-item-active': isActiveEquipments }"
+        (click)="navigateToEquipments()"
+      >
         <span class="icon is-medium"><i class="fa fa-microchip"></i></span>
         <strong class="has-text text-menu-item">Equipamentos</strong>
       </a>

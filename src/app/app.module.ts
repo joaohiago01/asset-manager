@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from './shared/services/authentication.service';
-import { AssetModule } from './asset/asset.module';
+import { EquipmentsModule } from './equipments/equipments.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +27,7 @@ import { AssetModule } from './asset/asset.module';
     BrowserAnimationsModule,
     MatCardModule,
     MatGridListModule,
-    AssetModule,
+    EquipmentsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+}
+
+.header-equipment {
+    padding-top: 1rem;
+    padding-right: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-cadastrar {
+    background-color: #1fd181;
+}

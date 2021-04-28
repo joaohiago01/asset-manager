@@ -10,6 +10,7 @@ import { AuthenticationService } from '../../shared/services/authentication.serv
 export class MenuComponent implements OnInit {
   public isActiveDashboard: boolean = true;
   public isActiveCategory: boolean = false;
+  public isActiveEquipments: boolean = false;
 
   constructor(
     public router: Router,
@@ -17,11 +18,17 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url === '/dashboard') {
+      this.isActiveEquipments = false;
       this.isActiveCategory = false;
       this.isActiveDashboard = true;
     } else if (this.router.url === '/category') {
+      this.isActiveEquipments = false;
       this.isActiveDashboard = false;
       this.isActiveCategory = true;
+    } else if (this.router.url === '/equipments' || this.router.url === '/equipments/create') {
+      this.isActiveEquipments = true;
+      this.isActiveCategory = false;
+      this.isActiveDashboard = false;
     }
   }
 
@@ -31,6 +38,10 @@ export class MenuComponent implements OnInit {
 
   navigateToCategories() {
     this.router.navigate(['category']);
+  }
+
+  navigateToEquipments() {
+    this.router.navigate(['equipments']);
   }
 
   logout() {
