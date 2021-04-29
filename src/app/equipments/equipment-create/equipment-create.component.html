@@ -4,7 +4,6 @@
     </div>
     <div class="column is-9">
       <div class="container">
-        
         <div class="header-equipment-create">
             <button
               #btnCSalvar
@@ -17,16 +16,66 @@
         </div>
 
         <div class="content-equipment-create">
-
           <mat-form-field appearance="fill">
-            <div class="description">
-              <mat-label>Descrição:</mat-label>
-              <textarea matInput class="inputDescription"></textarea>
-            </div>
+            <mat-label>Categoria:</mat-label>
+              <mat-select>
+                <mat-option value="volvo">Volvo</mat-option>
+                <mat-option value="saab">Saab</mat-option>
+                <mat-option value="mercedes">Mercedes</mat-option>
+                <mat-option value="audi">Audi</mat-option>
+              </mat-select>
           </mat-form-field>
-
+          <div class="description">
+            <mat-label>Descrição:</mat-label>
+            <textarea matInput class="inputDescription"></textarea>
+          </div>
+          <div class = "two-fields-container">
+            <div class="two-fields-box">
+              <mat-label class="two-labels">Bloco:</mat-label>
+              <input matInput class="medium-input">
+            </div>
+            <div class="two-fields-box">
+              <mat-label class="two-labels">Sala:</mat-label>
+              <input matInput class="medium-input">
+            </div>
+          </div>
         </div>
-
+        <mat-form-field appearance="fill">
+          <mat-label>Estado de conservação:</mat-label>
+            <mat-select>
+              <mat-option value="CONSERVADO">Conservado</mat-option>
+              <mat-option value="DANIFICADO">Danificado</mat-option>
+              <mat-option value="IRRECUPERAVEL">Irrecuperavel</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class = "two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Número:</mat-label>
+            <input matInput class="medium-input">
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Número de série:</mat-label>
+            <input matInput class="medium-input">
+          </div>
+        </div>
+        <div class = "two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Hostname (opcional):</mat-label>
+            <input matInput class="medium-input">
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Endereço IP (opcional):</mat-label>
+            <input matInput class="medium-input">
+          </div>
+      </div> 
+      <div class="one-field-container">
+        <div class="one-field-box">
+          <mat-label>Endereço MAC (opcional):</mat-label>
+          <input matInput>
+        </div>
+      </div>
+      <div class="input-file-container">
+        <input class="input-file" type="file"/>
       </div>
     </div>
 </div>
