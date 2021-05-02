@@ -1,0 +1,5 @@
+export enum ConservationState {
+  CONSERVED = 'CONSERVADO',
+  IRRECUPERABLE = 'IRRECUPERAVEL',
+  DAMAGED = 'DANIFICADO',
+}

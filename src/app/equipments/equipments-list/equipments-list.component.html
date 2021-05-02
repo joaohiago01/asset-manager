@@ -17,6 +17,30 @@
               Cadastrar
             </button>
           </div>
+
+          <div class="list">
+            <mat-grid-list cols="3" rowHeight="8.5rem" gutterSize="0.8rem">
+              <li *ngFor="let asset of assets">
+                <mat-grid-tile>
+                  <mat-card>
+                    <div class="header-card">
+                      <span>{{ asset.description }}</span>
+                      <div class="header-icon">
+                        <button
+                          mat-icon-button
+                          (click)="detailAsset(asset.id)"
+                        >
+                          <i class="material-icons v-middle color-card-icon"
+                            >edit</i
+                          >
+                        </button>
+                      </div>
+                    </div>
+                  </mat-card>
+                </mat-grid-tile>
+              </li>
+            </mat-grid-list>
+          </div>
       </div>
     </div>
 </div>

@@ -1,5 +1,0 @@
-export enum estadoConservacao {
-  CONSERVADO = 'CONSERVADO',
-  IRRECUPERAVEL = 'IRRECUPERAVEL',
-  DANIFICADO = 'DANIFICADO',
-}

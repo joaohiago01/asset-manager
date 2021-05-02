@@ -6,11 +6,16 @@
     padding-top: 1rem;
     padding-right: 0.8rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .btn-salvar {
     background-color: #1fd181;
+}
+
+.btn-excluir {
+  background-color: #CF2A27;
+  color: white;
 }
 
 .content-equipment-create {
