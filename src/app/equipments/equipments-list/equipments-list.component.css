@@ -18,7 +18,6 @@ mat-grid-tile {
 
 .card-equipment {
   flex: 1;
-  height: 10rem;
   background-color: white;
 }
 
@@ -31,9 +30,7 @@ mat-grid-tile {
 .header-card > span {
   font-weight: bold;
   font-size: 1em;
-  background-color: lightgray;
   border-radius: 3px;
-  padding: 4px;
 }
 
 .header-icon {
@@ -54,16 +51,80 @@ mat-grid-tile {
 }
 
 .container {
-    width: 100%;
+  width: 100%;
 }
 
-.header-equipment {
-    padding-top: 1rem;
-    padding-right: 0.8rem;
-    display: flex;
-    justify-content: flex-end;
+.header-category {
+  padding-top: 1rem;
+  padding-right: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .btn-cadastrar {
-    background-color: #1fd181;
+  background-color: #1fd181;
+}
+
+.list {
+  padding-right: 0.8rem;
+  padding-top: 1.2rem;
+}
+
+mat-grid-tile {
+  border: 2px solid #1fd181;
+  border-left: 10px solid #1fd181;
+}
+
+.card-equipment {
+  flex: 1;
+  background-color: white;
+}
+
+.header-card {
+  display: flex;
+  padding-top: 0.7em;
+  justify-content: space-between;
+}
+
+.header-card > span {
+  font-weight: bold;
+  font-size: 1.5em;
+  border-radius: 3px;
+}
+
+.header-icon {
+  background-color: #1fd181;
+  border-radius: 5px;
+}
+
+.header-icon > button {
+  display: flex;
+  width: 2em;
+  height: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-card {
+  margin-top: 1.2em;
+}
+
+.content-card .category-type {
+  display: flex;
+  padding-top: 0.4em;
+  justify-content: left;
+}
+
+.content-card .category-type > span {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.field-title {
+  display: inline-block;
+  color: gray;
+  font-weight: bold;
+  font-size: medium;
+  margin-right: 6px;
+  margin-bottom: 0;
 }
