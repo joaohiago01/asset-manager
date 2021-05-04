@@ -7,6 +7,7 @@ export class Asset {
   public number: number;
   public serialNumber: string;
   public categoryId: number;
+  public categoryName?: string;
   public block: string;
   public room: string;
   public conservationState: ConservationState;

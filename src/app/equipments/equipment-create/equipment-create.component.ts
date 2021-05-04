@@ -11,12 +11,12 @@ import { EquipmentService } from '../services/equipment.service';
 @Component({
   selector: 'app-equipment-create',
   templateUrl: './equipment-create.component.html',
-  styleUrls: ['./equipment-create.component.css']
+  styleUrls: ['./equipment-create.component.css'],
 })
 export class EquipmentCreateComponent implements OnInit {
   public asset?: Asset = <Asset>{};
   public categories: Category[] = [];
-  public selectedCategoryId: string = '';
+  public selectedCategoryId: number = 0;
   public selectedConservationState: string = '';
   public conservationStates: string[] = [];
 
@@ -26,33 +26,39 @@ export class EquipmentCreateComponent implements OnInit {
     private router: Router,
     public equipmentService: EquipmentService,
     public categoryService: CategoryService
-  ) { }
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    debugger
+    debugger;
     //this.suggestDescriptions = await (await apiCampus.get('')).data.map((data: any) => data.descricao);
     this.suggestDescriptions = [
-      "tacômetro digital contato/foto, display: lcd 5 dígitos",
-      "ESTUFA LABORATÓRIO A VÁCUO, CAPACIDADE 30 LITROS, TEMPERATURA DE 50° ATE 200°, DIMENSÕES  INTERNACIONAIS, MARCA LUMATEC.",
-      "Máquina de soldar a ponto; máquina de solda inversora eletrônica; voltagem monofásico 220v, frequência 60hz; potência mínima 5100w, diâmetro do eletrodo 2,0 a 3,2mm, regulagem casta de amperagem 20 a 130a; isolação classe i. frequência 60hz.",
-      "MARTELETE PERFURADOR ROMPEDOR PORTÁTIL, POTÊNCIA 850W, TENSÃO 220V, MODELO MPD-853, MARCA DWT",
-      "IMPRESSORA 3D- GTMAX3D- PRO CORE A1V2.",
+      'tacômetro digital contato/foto, display: lcd 5 dígitos',
+      'ESTUFA LABORATÓRIO A VÁCUO, CAPACIDADE 30 LITROS, TEMPERATURA DE 50° ATE 200°, DIMENSÕES  INTERNACIONAIS, MARCA LUMATEC.',
+      'Máquina de soldar a ponto; máquina de solda inversora eletrônica; voltagem monofásico 220v, frequência 60hz; potência mínima 5100w, diâmetro do eletrodo 2,0 a 3,2mm, regulagem casta de amperagem 20 a 130a; isolação classe i. frequência 60hz.',
+      'MARTELETE PERFURADOR ROMPEDOR PORTÁTIL, POTÊNCIA 850W, TENSÃO 220V, MODELO MPD-853, MARCA DWT',
+      'IMPRESSORA 3D- GTMAX3D- PRO CORE A1V2.',
     ];
     this.asset = window.history.state.asset;
     this.conservationStates = Object.values(ConservationState);
     this.categories = await this.categoryService.getAllCategories();
     if (this.asset) {
-      let selectedConservationState = this.conservationStates
-        .find((conservationState: any) => conservationState === this.asset?.conservationState);
-      this.selectedConservationState = selectedConservationState ? selectedConservationState : '';
-      let selectedCategoryId = this.categories
-        .find((category: Category) => category.id === this.asset?.categoryId)?.id.toString();
-      this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : '';
+      let selectedConservationState = this.conservationStates.find(
+        (conservationState: any) =>
+          conservationState === this.asset?.conservationState
+      );
+      this.selectedConservationState = selectedConservationState
+        ? selectedConservationState
+        : '';
+      let selectedCategoryId = this.categories.find(
+        (category: Category) => category.id === this.asset?.categoryId
+      )?.id;
+      this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
+      console.log(this.selectedCategoryId);
     }
   }
 
   async createAsset(
-    selectedCategoryId: string,
+    selectedCategoryId: number,
     number: string,
     serialNumber: string,
     description: string,
@@ -81,16 +87,14 @@ export class EquipmentCreateComponent implements OnInit {
       );
     } else {
       if (number && selectedConservationState) {
-        const conservationState: ConservationState = <ConservationState>selectedConservationState;
-
-        let network = new Network(
-          hostname,
-          addressIP,
-          addressMAC
+        const conservationState: ConservationState = <ConservationState>(
+          selectedConservationState
         );
 
+        let network = new Network(hostname, addressIP, addressMAC);
+
         let asset = new Asset({
-          categoryId: Number.parseInt(selectedCategoryId),
+          categoryId: selectedCategoryId,
           number: Number.parseInt(number),
           serialNumber,
           description,
@@ -98,7 +102,7 @@ export class EquipmentCreateComponent implements OnInit {
           room,
           conservationState,
           network,
-          filename
+          filename,
         });
 
         let assetWasCreated = await this.equipmentService.createAsset(asset);
@@ -115,7 +119,7 @@ export class EquipmentCreateComponent implements OnInit {
 
   async editAsset(
     id: number,
-    selectedCategoryId: string,
+    selectedCategoryId: number,
     number: string,
     serialNumber: string,
     description: string,
@@ -128,27 +132,30 @@ export class EquipmentCreateComponent implements OnInit {
     filename: string
   ): Promise<void> {
     if (id && number && selectedConservationState) {
-      const conservationState: ConservationState = <ConservationState>selectedConservationState;
-
-      let network = new Network(
-        hostname,
-        addressIP,
-        addressMAC
+      const conservationState: ConservationState = <ConservationState>(
+        selectedConservationState
       );
 
-      let asset = new Asset({
-        categoryId: Number.parseInt(selectedCategoryId),
-        number: Number.parseInt(number),
-        serialNumber,
-        description,
-        block,
-        room,
-        conservationState,
-        network,
-        filename
-      }, id);
+      let network = new Network(hostname, addressIP, addressMAC);
+
+      let asset = new Asset(
+        {
+          categoryId: selectedCategoryId,
+          number: Number.parseInt(number),
+          serialNumber,
+          description,
+          block,
+          room,
+          conservationState,
+          network,
+          filename,
+        },
+        id
+      );
+      debugger;
       let assetWasEdited = await this.equipmentService.editAsset(asset);
       if (assetWasEdited === true) {
+        this.asset = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
         alert('Oops, ocorreu um erro ao tentar editar esse Equipamento');

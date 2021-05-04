@@ -24,22 +24,21 @@
               <mat-card class="card-equipment">
                 <div class="header-card">
                   <span>{{ asset.description }}</span>
-                  <div class="header-icon">
-                    <button
-                      class="mx-1"
-                      mat-icon-button
-                      (click)="detailAsset(asset.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >edit</i
-                      >
-                    </button>
-                  </div>
                 </div>
+                <div class="header-icon">
+                  <button
+                    class="mx-1"
+                    mat-icon-button
+                    (click)="detailAsset(asset.id)"
+                  >
+                    <i class="material-icons v-middle color-card-icon">edit</i>
+                  </button>
+                </div>
+
                 <div class="content-card">
                   <div>
                     <p class="field-title">Categoria:</p>
-                    <span>Hardware</span>
+                    <span>{{ asset.categoryName }}</span>
                   </div>
                   <div>
                     <p class="field-title">Número:</p>
