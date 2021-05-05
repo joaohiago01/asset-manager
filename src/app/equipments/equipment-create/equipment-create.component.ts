@@ -22,11 +22,23 @@ export class EquipmentCreateComponent implements OnInit {
 
   public suggestDescriptions: string[] = [];
 
+  public file: File = new File(["empty"], "empty.txt", 
+    {type: "text/plain",});
+
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
     public categoryService: CategoryService
   ) {}
+
+  inputFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    if (files != null && files[0] != null) {
+      const userfile = files[0];
+      this.file = userfile;
+    }
+  }
 
   async ngOnInit(): Promise<void> {
     debugger;
@@ -105,9 +117,13 @@ export class EquipmentCreateComponent implements OnInit {
           filename,
         });
 
-        let assetWasCreated = await this.equipmentService.createAsset(asset);
-        if (assetWasCreated === true) {
-          this.router.navigate(['equipments'], { state: { needReload: true } });
+        const response = await this.equipmentService.createAsset(asset);
+        if (response.status == 201) {
+          const equipamamentoId = response.data['id'];
+          const fileResponse = await this.equipmentService.sendFile(this.file, equipamamentoId);
+          if (fileResponse.status == 201) {
+            this.router.navigate(['equipments'], { state: { needReload: true } });
+          }
         } else {
           alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento');
         }

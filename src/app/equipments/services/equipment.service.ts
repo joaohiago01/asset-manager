@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import { Asset } from 'src/app/shared/models/asset.model';
 import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -43,7 +44,22 @@ export class EquipmentService {
     }
   }
 
-  async createAsset(asset: Asset): Promise<boolean> {
+  async sendFile(file: File, equipamamentoId: number): Promise<AxiosResponse> {
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`
+      };
+      const formData = new FormData();
+      formData.append('arquivo', file);
+      const response = await api.post(`/equipamentos/${equipamamentoId}/file`, formData, { headers });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async createAsset(asset: Asset): Promise<AxiosResponse> {
     let assetWasCreated = false;
     try {
       let headers = {
@@ -65,13 +81,11 @@ export class EquipmentService {
         },
         nomeArquivo: asset.filename
       };
-      await api.post('/equipamentos', assetServer, { headers });
-      assetWasCreated = true;
-
-      return assetWasCreated;
+      const response = await api.post('/equipamentos', assetServer, { headers });
+      return response;
     } catch (error) {
       console.error(error);
-      return assetWasCreated = false;
+      throw error;
     }
   }
 
