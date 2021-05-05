@@ -27,7 +27,7 @@ import { EquipmentsModule } from './equipments/equipments.module';
     BrowserAnimationsModule,
     MatCardModule,
     MatGridListModule,
-    EquipmentsModule
+    EquipmentsModule,
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

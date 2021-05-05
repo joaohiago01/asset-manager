@@ -49,6 +49,8 @@ export class EquipmentsListComponent implements OnInit {
       this.assets.find((asset: Asset) => asset.id === assetId)
     );
 
+    console.log(this.selectedAsset);
+
     this.router.navigate(['equipments/create'], {
       state: { asset: this.selectedAsset },
     });

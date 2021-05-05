@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { Asset } from 'src/app/shared/models/asset.model';
+import { AssetApiCampus } from 'src/app/shared/models/assetApiCampus.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { ConservationState } from 'src/app/shared/models/conservationState.enum';
 import { Network } from 'src/app/shared/models/network.model';
@@ -20,7 +24,9 @@ export class EquipmentCreateComponent implements OnInit {
   public selectedConservationState: string = '';
   public conservationStates: string[] = [];
 
-  public suggestDescriptions: string[] = [];
+  public myControl = new FormControl();
+  public options: AssetApiCampus[] = [];
+  public filteredOptions?: Observable<AssetApiCampus[]>;
 
   constructor(
     private router: Router,
@@ -29,15 +35,24 @@ export class EquipmentCreateComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    debugger;
-    //this.suggestDescriptions = await (await apiCampus.get('')).data.map((data: any) => data.descricao);
-    this.suggestDescriptions = [
-      'tacômetro digital contato/foto, display: lcd 5 dígitos',
-      'ESTUFA LABORATÓRIO A VÁCUO, CAPACIDADE 30 LITROS, TEMPERATURA DE 50° ATE 200°, DIMENSÕES  INTERNACIONAIS, MARCA LUMATEC.',
-      'Máquina de soldar a ponto; máquina de solda inversora eletrônica; voltagem monofásico 220v, frequência 60hz; potência mínima 5100w, diâmetro do eletrodo 2,0 a 3,2mm, regulagem casta de amperagem 20 a 130a; isolação classe i. frequência 60hz.',
-      'MARTELETE PERFURADOR ROMPEDOR PORTÁTIL, POTÊNCIA 850W, TENSÃO 220V, MODELO MPD-853, MARCA DWT',
-      'IMPRESSORA 3D- GTMAX3D- PRO CORE A1V2.',
-    ];
+    //this.options = await this.equipmentService.getAllAssetsSuggestions();
+    let option1: AssetApiCampus = new AssetApiCampus('212121', 'mesa', 'ativo');
+    let option2: AssetApiCampus = new AssetApiCampus(
+      '333333',
+      'cadeira',
+      'ativo'
+    );
+    let optionsArray: AssetApiCampus[] = [option1, option2];
+
+    this.options = optionsArray;
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value))
+    );
+
+    console.log(this.options);
+
     this.asset = window.history.state.asset;
     this.conservationStates = Object.values(ConservationState);
     this.categories = await this.categoryService.getAllCategories();
@@ -54,6 +69,39 @@ export class EquipmentCreateComponent implements OnInit {
       )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
       console.log(this.selectedCategoryId);
+    }
+  }
+
+  private _filter(value: string): AssetApiCampus[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(
+      (option) =>
+        option.numero.toLowerCase().includes(filterValue) ||
+        option.descricao.toLowerCase().includes(filterValue)
+    );
+  }
+
+  autocompleteInputFields(assetApiCampusNumber: string) {
+    const selectedAsset: AssetApiCampus | undefined = this.options.find(
+      (asset) => {
+        if (asset.numero.localeCompare(assetApiCampusNumber) === 0) {
+          return asset;
+        } else return;
+      }
+    );
+
+    const descriptionInput: HTMLTextAreaElement = <HTMLTextAreaElement>(
+      document.querySelector('#descriptionInput')
+    );
+
+    const numberInput: HTMLInputElement = <HTMLInputElement>(
+      document.querySelector('#numberInput')
+    );
+
+    if (selectedAsset != undefined) {
+      numberInput.value = selectedAsset.numero;
+      descriptionInput.value = selectedAsset.descricao;
     }
   }
 
@@ -152,7 +200,7 @@ export class EquipmentCreateComponent implements OnInit {
         },
         id
       );
-      debugger;
+
       let assetWasEdited = await this.equipmentService.editAsset(asset);
       if (assetWasEdited === true) {
         this.asset = undefined;
