@@ -9,7 +9,7 @@
         (submit)="
           createAsset(
             selectedCategoryId,
-            numberInput.value,
+            number.value,
             serialNumber.value,
             description.value,
             block.value,
@@ -51,10 +51,10 @@
           <div class="two-fields-box">
             <mat-label>Número:</mat-label>
             <input
-              #numberInput
+              #number
               id="numberInput"
               class="medium-input"
-              value="{{ asset ? asset.number : '' }"
+              value="{{ asset ? asset.number : '' }}"
               aria-label="Número"
               [formControl]="myControl"
               matInput
@@ -63,7 +63,7 @@
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
                 *ngFor="let option of filteredOptions | async"
-                value="option.numero"
+                value="{{ asset ? asset.number : '' }}"
                 (click)="autocompleteInputFields(option.numero)"
               >
                 {{ option.descricao }}

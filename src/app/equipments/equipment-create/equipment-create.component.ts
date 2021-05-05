@@ -1,6 +1,7 @@
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER } from '@angular/cdk/overlay/overlay-directives';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CategoryService } from 'src/app/category/services/category.service';
@@ -31,18 +32,39 @@ export class EquipmentCreateComponent implements OnInit {
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService
-  ) {}
+    public categoryService: CategoryService,
+    private route: ActivatedRoute
+  ) {
+    const asset: Asset = <Asset>(
+      this.router.getCurrentNavigation()?.extras.state
+    );
+
+    if (asset != null && asset != undefined) {
+      const map = new Map(Object.entries(Object.values(asset)));
+      const assetNumber: string = map.get('0')['number'];
+
+      this.myControl.setValue(assetNumber);
+    }
+  }
 
   async ngOnInit(): Promise<void> {
     //this.options = await this.equipmentService.getAllAssetsSuggestions();
-    let option1: AssetApiCampus = new AssetApiCampus('212121', 'mesa', 'ativo');
-    let option2: AssetApiCampus = new AssetApiCampus(
-      '333333',
-      'cadeira',
+    let option1: AssetApiCampus = new AssetApiCampus(
+      '215305',
+      'IMPRESSORA ECO-TANK. MARCA: EPSON',
       'ativo'
     );
-    let optionsArray: AssetApiCampus[] = [option1, option2];
+    let option2: AssetApiCampus = new AssetApiCampus(
+      '215616',
+      'EQUIPAMENTO SLUMP TEST',
+      'ativo'
+    );
+    let option3: AssetApiCampus = new AssetApiCampus(
+      '216061',
+      'CADEIRA FIXA SEM APOIO DE BRAÇO',
+      'ativo'
+    );
+    let optionsArray: AssetApiCampus[] = [option1, option2, option3];
 
     this.options = optionsArray;
 
@@ -50,8 +72,6 @@ export class EquipmentCreateComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value))
     );
-
-    console.log(this.options);
 
     this.asset = window.history.state.asset;
     this.conservationStates = Object.values(ConservationState);
