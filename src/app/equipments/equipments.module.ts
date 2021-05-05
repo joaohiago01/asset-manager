@@ -8,17 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { EquipmentCreateComponent } from './equipment-create/equipment-create.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [
-    EquipmentsListComponent,
-    EquipmentCreateComponent
-  ],
+  declarations: [EquipmentsListComponent, EquipmentCreateComponent],
   imports: [
     SharedModule,
     CommonModule,
@@ -30,7 +27,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     FormsModule,
     MatGridListModule,
     MatCardModule,
-    MatAutocompleteModule
-  ]
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+  ],
 })
-export class EquipmentsModule { }
+export class EquipmentsModule {}
