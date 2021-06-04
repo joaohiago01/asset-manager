@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'equipments',
     loadChildren: () => import('./equipments/equipments.module').then(m => m.EquipmentsModule),
     canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'assets',
+    loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule),
+    canActivate: [AuthenticationGuardService]
   }
 ];
 

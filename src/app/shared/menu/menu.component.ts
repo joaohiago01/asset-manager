@@ -11,6 +11,7 @@ export class MenuComponent implements OnInit {
   public isActiveDashboard: boolean = true;
   public isActiveCategory: boolean = false;
   public isActiveEquipments: boolean = false;
+  public isActiveAssets: boolean = false;
 
   constructor(
     public router: Router,
@@ -18,15 +19,23 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url === '/dashboard') {
+      this.isActiveDashboard = true;
       this.isActiveEquipments = false;
       this.isActiveCategory = false;
-      this.isActiveDashboard = true;
+      this.isActiveAssets = false;
     } else if (this.router.url === '/category') {
+      this.isActiveCategory = true;
       this.isActiveEquipments = false;
       this.isActiveDashboard = false;
-      this.isActiveCategory = true;
-    } else if (this.router.url === '/equipments' || this.router.url === '/equipments/create') {
+      this.isActiveAssets = false;
+    } else if (this.router.url === '/equipments' || this.router.url === '/equipments/form') {
       this.isActiveEquipments = true;
+      this.isActiveCategory = false;
+      this.isActiveAssets = false;
+      this.isActiveDashboard = false;
+    } else if (this.router.url === '/assets' || this.router.url === '/assets/form') {
+      this.isActiveAssets = true;
+      this.isActiveEquipments = false;
       this.isActiveCategory = false;
       this.isActiveDashboard = false;
     }
@@ -42,6 +51,10 @@ export class MenuComponent implements OnInit {
 
   navigateToEquipments() {
     this.router.navigate(['equipments']);
+  }
+
+  navigateToAssets() {
+    this.router.navigate(['assets']);
   }
 
   logout() {

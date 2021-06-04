@@ -7,7 +7,7 @@
       <form
         role="form"
         (submit)="
-          createAsset(
+          createEquipment(
             selectedCategoryId,
             number.value,
             serialNumber.value,
@@ -33,11 +33,11 @@
           </button>
 
           <button
-            *ngIf="asset ? asset.id : 0"
+            *ngIf="equipment ? equipment.id : 0"
             class="btn-excluir"
             mat-raised-button
             type="button"
-            (click)="asset && deleteAsset(asset.id)"
+            (click)="equipment && deleteEquipment(equipment.id)"
           >
             Deletar
           </button>
@@ -54,7 +54,7 @@
               #number
               id="numberInput"
               class="medium-input"
-              value="{{ asset ? asset.number : '' }}"
+              value="{{ equipment ? equipment.number : '' }}"
               aria-label="Número"
               [formControl]="myControl"
               matInput
@@ -63,10 +63,10 @@
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
                 *ngFor="let option of filteredOptions | async"
-                value="{{ asset ? asset.number : '' }}"
-                (click)="autocompleteInputFields(option.numero)"
+                value="{{ equipment ? equipment.number : '' }}"
+                (click)="autoCompleteInputFields(option.number)"
               >
-                {{ option.descricao }}
+                {{ option.description }}
               </mat-option>
             </mat-autocomplete>
           </div>
@@ -77,7 +77,7 @@
               #serialNumber
               matInput
               class="medium-input"
-              value="{{ asset ? asset.serialNumber : '' }}"
+              value="{{ equipment ? equipment.serialNumber : '' }}"
             />
           </div>
         </div>
@@ -90,7 +90,7 @@
             id="descriptionInput"
             #description
             matInput
-            >{{ asset ? asset.description : "" }}</textarea
+            >{{ equipment ? equipment.description : "" }}</textarea
           >
         </div>
 
@@ -128,7 +128,7 @@
               #block
               matInput
               class="medium-input"
-              value="{{ asset ? asset.block : '' }}"
+              value="{{ equipment ? equipment.block : '' }}"
             />
           </div>
           <div class="two-fields-box">
@@ -137,7 +137,7 @@
               #room
               matInput
               class="medium-input"
-              value="{{ asset ? asset.room : '' }}"
+              value="{{ equipment ? equipment.room : '' }}"
             />
           </div>
         </div>
@@ -150,7 +150,7 @@
             #hostname
             matInput
             class="medium-input"
-            value="{{ asset && asset.network ? asset.network.hostname : '' }}"
+            value="{{ equipment && equipment.network ? equipment.network.hostname : '' }}"
           />
         </div>
         <div class="two-fields-box">
@@ -159,7 +159,7 @@
             #addressIP
             matInput
             class="medium-input"
-            value="{{ asset && asset.network ? asset.network.addressIP : '' }}"
+            value="{{ equipment && equipment.network ? equipment.network.addressIP : '' }}"
           />
         </div>
       </div>
@@ -169,7 +169,7 @@
           <input
             #addressMAC
             matInput
-            value="{{ asset && asset.network ? asset.network.addressMAC : '' }}"
+            value="{{ equipment && equipment.network ? equipment.network.addressMAC : '' }}"
           />
         </div>
       </div>

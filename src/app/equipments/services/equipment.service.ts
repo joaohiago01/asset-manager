@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Equipment } from 'src/app/shared/models/equipment.model';
+import { EquipmentApiCampus } from 'src/app/shared/models/equipmentApiCampus.model';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { AxiosResponse } from 'axios';
-import { Asset } from 'src/app/shared/models/asset.model';
-import { AssetApiCampus } from 'src/app/shared/models/assetApiCampus.model';
 import api from 'src/app/shared/services/api';
 import apiCampus from 'src/app/shared/services/apiCampus';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import * as equipmentsApiCampus from '../../shared/services/equipments-api-campus.json';
 
 @Injectable({
   providedIn: 'root',
@@ -12,70 +13,75 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 export class EquipmentService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async getAllAssetsSuggestions(): Promise<AssetApiCampus[]> {
+  async getAllEquipmentsSuggestions(): Promise<EquipmentApiCampus[]> {
     try {
-      let assetsCampus!: AssetApiCampus[];
-
-      const response = await apiCampus.get(
-        '/datastore_search_sql?sql=SELECT numero, descricao, situacao from  "1144fd11-e7f6-456c-97d3-60a9024aba7b" where "campus.nome" = ' +
-          "'CAMPUS MONTEIRO'"
+      let equipmentsCampus!: EquipmentApiCampus[];
+      /*const response = await apiCampus.get(
+        `/datastore_search_sql?sql=SELECT numero, descricao, situacao from  "1144fd11-e7f6-456c-97d3-60a9024aba7b" where "campus.nome" = 'CAMPUS MONTEIRO'`
       );
-      assetsCampus = response.data.map((assetServer: any) => {
-        return new AssetApiCampus(
-          assetServer.numero,
-          assetServer.descricao,
-          assetServer.situacao
+      equipmentsCampus = response.data.map((equipmentServer: any) => {
+        return new EquipmentApiCampus(
+          equipmentServer.numero,
+          equipmentServer.descricao,
+          equipmentServer.situacao
+        );
+      });*/
+      equipmentsCampus = equipmentsApiCampus.result.records.map((equipmentServer: any) => {
+        return new EquipmentApiCampus(
+          equipmentServer.numero,
+          equipmentServer.descricao,
+          equipmentServer.situacao
         );
       });
 
-      return assetsCampus;
+      return equipmentsCampus;
     } catch (error) {
       console.error(error);
       return [];
     }
   }
 
-  async getAllAssets(): Promise<Asset[]> {
+  async getAllEquipments(): Promise<Equipment[]> {
     try {
-      let assets!: Asset[];
+      let equipments!: Equipment[];
 
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
       const response = await api.get('/equipamentos', { headers });
-      assets = response.data.map((assetServer: any) => {
-        return new Asset(
+      equipments = response.data.map((equipmentServer: any) => {
+        return new Equipment(
           {
-            categoryId: assetServer.categoriaId,
-            number: Number.parseInt(assetServer.numero),
-            serialNumber: assetServer.numeroSerie,
-            description: assetServer.descricao,
-            block: assetServer.bloco,
-            room: assetServer.sala,
-            conservationState: assetServer.estadoConservacao,
-            network: assetServer.rede,
-            filename: assetServer.nomeArquivo,
+            categoryId: equipmentServer.categoriaId,
+            number: Number.parseInt(equipmentServer.numero),
+            serialNumber: equipmentServer.numeroSerie,
+            description: equipmentServer.descricao,
+            block: equipmentServer.bloco,
+            room: equipmentServer.sala,
+            conservationState: equipmentServer.estadoConservacao,
+            network: equipmentServer.rede,
+            filename: equipmentServer.nomeArquivo,
           },
-          assetServer.id
+          equipmentServer.id
         );
       });
 
-      return assets;
+      return equipments;
     } catch (error) {
       console.error(error);
       return [];
     }
   }
 
-  async sendFile(file: File, equipamamentoId: number): Promise<AxiosResponse> {
+  async sendFile(file: File, equipmentId: number): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`
       };
       const formData = new FormData();
       formData.append('arquivo', file);
-      const response = await api.post(`/equipamentos/${equipamamentoId}/file`, formData, { headers });
+      const response = await api.post(`/equipamentos/${equipmentId}/file`, formData, { headers });
       return response;
     } catch (error) {
       console.log(error);
@@ -83,83 +89,80 @@ export class EquipmentService {
     }
   }
 
-  async createAsset(asset: Asset): Promise<AxiosResponse> {
-    let assetWasCreated = false;
+  async createEquipment(equipment: Equipment): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      let assetServer = {
-        categoriaId: asset.categoryId,
-        numero: asset.number,
-        numeroSerie: asset.serialNumber,
-        descricao: asset.description,
-        bloco: asset.block,
-        sala: asset.room,
-        estadoConservacao: asset.conservationState,
+      let equipmentServer = {
+        categoriaId: equipment.categoryId,
+        numero: equipment.number,
+        numeroSerie: equipment.serialNumber,
+        descricao: equipment.description,
+        bloco: equipment.block,
+        sala: equipment.room,
+        estadoConservacao: equipment.conservationState,
         rede: {
-          hostname: asset.network.hostname,
-          enderecoIP: asset.network.addressIP,
-          enderecoMAC: asset.network.addressMAC,
+          hostname: equipment.network.hostname,
+          enderecoIP: equipment.network.addressIP,
+          enderecoMAC: equipment.network.addressMAC,
         },
-        nomeArquivo: asset.filename,
+        nomeArquivo: equipment.filename,
       };
-      const response = await api.post('/equipamentos', assetServer, { headers });
-      return response;
+      return await api.post('/equipamentos', equipmentServer, { headers });
     } catch (error) {
       console.error(error);
-      throw error;
+      throw new Error(error);
     }
   }
 
-  async editAsset(asset: Asset): Promise<boolean> {
-    let assetWasEdited = false;
+  async editEquipment(equipment: Equipment): Promise<boolean> {
+    let equipmentWasEdited = false;
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      let assetServer = {
-        categoriaId: asset.categoryId,
-        numero: asset.number,
-        numeroSerie: asset.serialNumber,
-        descricao: asset.description,
-        bloco: asset.block,
-        sala: asset.room,
-        estadoConservacao: asset.conservationState,
+      let equipmentServer = {
+        categoriaId: equipment.categoryId,
+        numero: equipment.number,
+        numeroSerie: equipment.serialNumber,
+        descricao: equipment.description,
+        bloco: equipment.block,
+        sala: equipment.room,
+        estadoConservacao: equipment.conservationState,
         rede: {
-          hostname: asset.network.hostname,
-          enderecoIP: asset.network.addressIP,
-          enderecoMAC: asset.network.addressMAC,
+          hostname: equipment.network.hostname,
+          enderecoIP: equipment.network.addressIP,
+          enderecoMAC: equipment.network.addressMAC,
         },
-        nomeArquivo: asset.filename,
+        nomeArquivo: equipment.filename,
       };
-      debugger;
-      api.put(`/equipamentos/${asset.id}`, assetServer, { headers });
-      assetWasEdited = true;
 
-      return assetWasEdited;
+      await api.put(`/equipamentos/${equipment.id}`, equipmentServer, { headers });
+      equipmentWasEdited = true;
+      return equipmentWasEdited;
     } catch (error) {
       console.error(error);
-      return (assetWasEdited = false);
+      return equipmentWasEdited = false;
     }
   }
 
-  async deleteAsset(id: Number): Promise<boolean> {
-    let assetWasDeleted = false;
+  async deleteEquipment(id: Number): Promise<boolean> {
+    let equipmentWasDeleted = false;
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      api.delete(`/equipamentos/${id}`, { headers });
-      assetWasDeleted = true;
+      await api.delete(`/equipamentos/${id}`, { headers });
+      equipmentWasDeleted = true;
 
-      return assetWasDeleted;
+      return equipmentWasDeleted;
     } catch (error) {
       console.error(error);
-      return (assetWasDeleted = false);
+      return (equipmentWasDeleted = false);
     }
   }
 }

@@ -15,8 +15,7 @@ export class LoginPageComponent implements OnInit {
     public router: Router,
     public authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   login(event: Event, username: string, password: string) {
     event.preventDefault();

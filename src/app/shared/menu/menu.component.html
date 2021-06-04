@@ -9,8 +9,7 @@
   </p>
   <ul class="menu-list">
     <li>
-      <a
-        [ngClass]="{ 'text-menu-item-active': isActiveDashboard }"
+      <a [ngClass]="{ 'text-menu-item-active': isActiveDashboard }"
         (click)="navigateToDashboard()"
       >
         <span class="icon is-medium"><i class="fa fa-list-alt"></i></span>
@@ -18,8 +17,7 @@
       </a>
     </li>
     <li>
-      <a
-        [ngClass]="{ 'text-menu-item-active': isActiveCategory }"
+      <a [ngClass]="{ 'text-menu-item-active': isActiveCategory }"
         (click)="navigateToCategories()"
       >
         <span class="icon is-medium"><i class="fa fa-object-ungroup"></i></span>
@@ -27,7 +25,9 @@
       </a>
     </li>
     <li>
-      <a class="">
+      <a [ngClass]="{ 'text-menu-item-active': isActiveAssets }"
+        (click)="navigateToAssets()"
+      >
         <span class="icon is-medium"><i class="fa fa-th-list"></i></span>
         <strong class="has-text text-menu-item">Insumos</strong>
       </a>

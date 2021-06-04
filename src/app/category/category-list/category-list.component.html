@@ -111,9 +111,7 @@
         >
           <form
             role="form"
-            (submit)="
-              editCategory(category.id, nomeEdicao.value, selectedValue)
-            "
+            (submit)="editCategory(category.id, nomeEdicao.value, selectedValue)"
           >
             <button type="submit" class="button is-success">Salvar</button>
           </form>
@@ -137,9 +135,7 @@
                       mat-icon-button
                       (click)="detailCategory(category.id)"
                     >
-                      <i class="material-icons v-middle color-card-icon"
-                        >edit</i
-                      >
+                      <i class="material-icons v-middle color-card-icon">edit</i>
                     </button>
                   </div>
                 </div>

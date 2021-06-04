@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from 'src/app/category/services/category.service';
-import { Asset } from 'src/app/shared/models/asset.model';
+import { Equipment } from 'src/app/shared/models/equipment.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { EquipmentService } from '../services/equipment.service';
+import { CategoryService } from 'src/app/category/services/category.service';
 
 @Component({
   selector: 'app-equipments-list',
@@ -11,8 +11,8 @@ import { EquipmentService } from '../services/equipment.service';
   styleUrls: ['./equipments-list.component.css'],
 })
 export class EquipmentsListComponent implements OnInit {
-  public assets: Asset[] = [];
-  public selectedAsset!: Asset;
+  public equipments: Equipment[] = [];
+  public selectedEquipment!: Equipment;
   public categoryName?: string;
 
   constructor(
@@ -25,36 +25,33 @@ export class EquipmentsListComponent implements OnInit {
     if (window.history.state.needReload) {
       window.location.reload();
     } else {
-      await this.getAllAssets();
+      await this.getAllEquipments();
     }
   }
 
-  async getAllAssets(): Promise<void> {
-    this.assets = await this.equipmentService.getAllAssets();
+  async getAllEquipments(): Promise<void> {
+    this.equipments = await this.equipmentService.getAllEquipments();
     let categories = await this.categoryService.getAllCategories();
-    this.assets = this.assets.map((asset: Asset) => {
-      asset.categoryName = categories.find(
-        (category: Category) => category.id === asset.categoryId
-      )?.name;
-      return asset;
+    this.equipments = this.equipments.map((equipment: Equipment) => {
+      equipment.categoryName = categories.find((category: Category) =>
+        category.id === equipment.categoryId)?.name;
+      return equipment;
     });
 
-    if (!this.assets) {
+    if (!this.equipments) {
       alert('Nenhum Equipamento Encontrado');
     }
   }
 
-  detailAsset(assetId: number) {
-    this.selectedAsset = <Asset>(
-      this.assets.find((asset: Asset) => asset.id === assetId)
-    );
+  detailEquipment(equipmentId: number) {
+    this.selectedEquipment = <Equipment>(this.equipments.find((equipment: Equipment) => equipment.id === equipmentId));
 
-    this.router.navigate(['equipments/create'], {
-      state: { asset: this.selectedAsset },
+    this.router.navigate(['equipments/form'], {
+      state: { equipment: this.selectedEquipment },
     });
   }
 
   navigateToEquipmentCreate(): void {
-    this.router.navigate(['/equipments/create']);
+    this.router.navigate(['/equipments/form']);
   }
 }

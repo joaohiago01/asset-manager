@@ -19,43 +19,43 @@
 
       <div class="list">
         <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let asset of assets">
+          <li *ngFor="let equipment of equipments">
             <mat-grid-tile>
               <mat-card class="card-equipment">
                 <div class="header-card">
-                  <span>{{ asset.description }}</span>
-                </div>
-                <div class="header-icon">
-                  <button
-                    class="mx-1"
-                    mat-icon-button
-                    (click)="detailAsset(asset.id)"
-                  >
-                    <i class="material-icons v-middle color-card-icon">edit</i>
-                  </button>
+                  <span>{{ equipment.description }}</span>
+                  <div class="header-icon">
+                    <button
+                      class="mx-1"
+                      mat-icon-button
+                      (click)="detailEquipment(equipment.id)"
+                    >
+                      <i class="material-icons v-middle color-card-icon">edit</i>
+                    </button>
+                  </div>
                 </div>
 
                 <div class="content-card">
                   <div>
                     <p class="field-title">Categoria:</p>
-                    <span>{{ asset.categoryName }}</span>
+                    <span>{{ equipment.categoryName }}</span>
                   </div>
                   <div>
                     <p class="field-title">Número:</p>
-                    <span>{{ asset.number }}</span>
+                    <span>{{ equipment.number }}</span>
                   </div>
                   <div>
                     <p class="field-title">Número de Série:</p>
-                    <span>{{ asset.serialNumber }}</span>
+                    <span>{{ equipment.serialNumber }}</span>
                   </div>
                   <div>
                     <p class="field-title">Localização:</p>
-                    <span>{{ asset.block }}</span>
-                    <span>{{ asset.room }}</span>
+                    <span>{{ equipment.block }}</span>
+                    <span>{{ equipment.room }}</span>
                   </div>
                   <div>
                     <p class="field-title">Estado de Conservação:</p>
-                    <span>{{ asset.conservationState }}</span>
+                    <span>{{ equipment.conservationState }}</span>
                   </div>
                 </div>
               </mat-card>

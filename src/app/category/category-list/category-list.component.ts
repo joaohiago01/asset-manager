@@ -64,7 +64,6 @@ export class CategoryListComponent implements OnInit {
       this.categories.find((category: Category) => category.id === categoryId)
     );
     this.selectedValue = this.category.categoryType;
-
     this.showModal('#modalEditar');
   }
 
@@ -75,7 +74,6 @@ export class CategoryListComponent implements OnInit {
   ): Promise<void> {
     if (name && categoryTypeString) {
       const categoryType: CategoryType = <CategoryType>categoryTypeString;
-
       let category = new Category(
         {
           name,
