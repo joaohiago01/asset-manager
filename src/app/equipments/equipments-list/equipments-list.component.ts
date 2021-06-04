@@ -31,6 +31,12 @@ export class EquipmentsListComponent implements OnInit {
 
   async getAllEquipments(): Promise<void> {
     this.equipments = await this.equipmentService.getAllEquipments();
+    this.equipments = this.equipments.map((e : Equipment) => {
+      if (e.description.length > 25) {
+        e.description = e.description.slice(0, 25) + "...";
+      }
+      return e;
+    });
     let categories = await this.categoryService.getAllCategories();
     this.equipments = this.equipments.map((equipment: Equipment) => {
       equipment.categoryName = categories.find((category: Category) =>
