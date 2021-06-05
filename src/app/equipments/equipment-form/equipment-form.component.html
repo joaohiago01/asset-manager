@@ -24,7 +24,7 @@
       >
         <div class="header-equipment-create">
           <button
-            class="btn-salvar"
+            class="btn-save"
             mat-raised-button
             color="primary"
             type="submit"
@@ -34,7 +34,7 @@
 
           <button
             *ngIf="equipment ? equipment.id : 0"
-            class="btn-excluir"
+            class="btn-delete"
             mat-raised-button
             type="button"
             (click)="equipment && deleteEquipment(equipment.id)"
@@ -53,7 +53,8 @@
             <input
               #number
               id="numberInput"
-              class="medium-input"
+              class="input medium-input"
+              placeholder="Digite o Número"
               value="{{ equipment ? equipment.number : '' }}"
               aria-label="Número"
               [formControl]="myControl"
@@ -76,7 +77,8 @@
             <input
               #serialNumber
               matInput
-              class="medium-input"
+              class="input medium-input"
+              placeholder="Digite o Número de Série"
               value="{{ equipment ? equipment.serialNumber : '' }}"
             />
           </div>
@@ -127,7 +129,8 @@
             <input
               #block
               matInput
-              class="medium-input"
+              class="input medium-input"
+              placeholder="Digite o Bloco"
               value="{{ equipment ? equipment.block : '' }}"
             />
           </div>
@@ -136,7 +139,8 @@
             <input
               #room
               matInput
-              class="medium-input"
+              class="input medium-input"
+              placeholder="Digite a Sala"
               value="{{ equipment ? equipment.room : '' }}"
             />
           </div>
@@ -149,7 +153,8 @@
           <input
             #hostname
             matInput
-            class="medium-input"
+            class="input medium-input"
+            placeholder="Digite o Hostname"
             value="{{ equipment && equipment.network ? equipment.network.hostname : '' }}"
           />
         </div>
@@ -158,7 +163,8 @@
           <input
             #addressIP
             matInput
-            class="medium-input"
+            class="input medium-input"
+            placeholder="Digite o Endereço IP"
             value="{{ equipment && equipment.network ? equipment.network.addressIP : '' }}"
           />
         </div>
@@ -169,12 +175,24 @@
           <input
             #addressMAC
             matInput
+            class="input medium-input"
+            placeholder="Digite o Endereço MAC"
             value="{{ equipment && equipment.network ? equipment.network.addressMAC : '' }}"
           />
         </div>
       </div>
-      <div class="input-file-container">
-        <input #filename class="input-file" type="file" (change)="inputFileChange($event)" />
+      <div class="file">
+        <label class="file-label">
+          <input #filename class="file-input" type="file" (change)="inputFileChange($event)" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Escolha Um Arquivo…
+            </span>
+          </span>
+        </label>
       </div>
     </div>
   </div>
