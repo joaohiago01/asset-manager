@@ -27,14 +27,16 @@ export class EquipmentFormComponent implements OnInit {
   public options: EquipmentApiCampus[] = [];
   public filteredOptions?: Observable<EquipmentApiCampus[]>;
 
-  public file: File = new File(["empty"], "empty.txt",
-    {type: "text/plain",});
+  public file: File = new File(['empty'], 'empty.txt', { type: 'text/plain' });
 
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService) {
-    const equipment: Equipment = <Equipment>(this.router.getCurrentNavigation()?.extras.state);
+    public categoryService: CategoryService
+  ) {
+    const equipment: Equipment = <Equipment>(
+      this.router.getCurrentNavigation()?.extras.state
+    );
 
     if (equipment != null && equipment != undefined) {
       const map = new Map(Object.entries(Object.values(equipment)));
@@ -53,7 +55,26 @@ export class EquipmentFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.options = await this.equipmentService.getAllEquipmentsSuggestions();
+    // this.options = await this.equipmentService.getAllEquipmentsSuggestions();
+    let option1: EquipmentApiCampus = new EquipmentApiCampus(
+      '215305',
+      'IMPRESSORA ECO-TANK. MARCA: EPSON',
+      'ativo'
+    );
+    let option2: EquipmentApiCampus = new EquipmentApiCampus(
+      '215616',
+      'EQUIPAMENTO SLUMP TEST',
+      'ativo'
+    );
+    let option3: EquipmentApiCampus = new EquipmentApiCampus(
+      '216061',
+      'CADEIRA FIXA SEM APOIO DE BRAÇO',
+      'ativo'
+    );
+    let optionsArray: EquipmentApiCampus[] = [option1, option2, option3];
+
+    this.options = optionsArray;
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value: any) => this._filter(value))
@@ -63,13 +84,16 @@ export class EquipmentFormComponent implements OnInit {
     this.conservationStates = Object.values(ConservationState);
     this.categories = await this.categoryService.getAllCategories();
     if (this.equipment) {
-      let selectedConservationState = this.conservationStates.find((conservationState: any) =>
-          conservationState === this.equipment?.conservationState);
+      let selectedConservationState = this.conservationStates.find(
+        (conservationState: any) =>
+          conservationState === this.equipment?.conservationState
+      );
       this.selectedConservationState = selectedConservationState
         ? selectedConservationState
         : '';
       let selectedCategoryId = this.categories.find(
-        (category: Category) => category.id === this.equipment?.categoryId)?.id;
+        (category: Category) => category.id === this.equipment?.categoryId
+      )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
     }
   }
@@ -103,8 +127,10 @@ export class EquipmentFormComponent implements OnInit {
         filename
       );
     } else {
-      if (number && selectedConservationState && selectedCategoryId) {
-        const conservationState: ConservationState = <ConservationState>(selectedConservationState);
+      if (number && selectedConservationState) {
+        const conservationState: ConservationState = <ConservationState>(
+          selectedConservationState
+        );
 
         let network = new Network(hostname, addressIP, addressMAC);
 
@@ -124,12 +150,19 @@ export class EquipmentFormComponent implements OnInit {
         if (response.status == 201) {
           const equipmentId = response.data['id'];
           if (this.file.name != 'empty.txt') {
-            const fileResponse = await this.equipmentService.sendFile(this.file, equipmentId);
+            const fileResponse = await this.equipmentService.sendFile(
+              this.file,
+              equipmentId
+            );
             if (fileResponse.status == 201) {
-              this.router.navigate(['equipments'], { state: { needReload: true } });
+              this.router.navigate(['equipments'], {
+                state: { needReload: true },
+              });
             }
           } else {
-            this.router.navigate(['equipments'], { state: { needReload: true } });
+            this.router.navigate(['equipments'], {
+              state: { needReload: true },
+            });
           }
         } else {
           setTimeout(function() { alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento'); }, 2000);
@@ -154,8 +187,10 @@ export class EquipmentFormComponent implements OnInit {
     addressMAC: string,
     filename: string
   ): Promise<void> {
-    if (id && number && selectedConservationState && selectedCategoryId) {
-      const conservationState: ConservationState = <ConservationState>(selectedConservationState);
+    if (id && number && selectedConservationState) {
+      const conservationState: ConservationState = <ConservationState>(
+        selectedConservationState
+      );
 
       let network = new Network(hostname, addressIP, addressMAC);
 
@@ -174,7 +209,9 @@ export class EquipmentFormComponent implements OnInit {
         id
       );
 
-      let equipmentWasEdited = await this.equipmentService.editEquipment(equipment);
+      let equipmentWasEdited = await this.equipmentService.editEquipment(
+        equipment
+      );
       if (equipmentWasEdited === true) {
         this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
@@ -200,7 +237,8 @@ export class EquipmentFormComponent implements OnInit {
   }
 
   public autoCompleteInputFields(equipmentApiCampusNumber: string) {
-    const selectedEquipment: EquipmentApiCampus | undefined = this.options.find((equipment) => {
+    const selectedEquipment: EquipmentApiCampus | undefined = this.options.find(
+      (equipment) => {
         if (equipment.number.localeCompare(equipmentApiCampusNumber) === 0) {
           return equipment;
         } else return;

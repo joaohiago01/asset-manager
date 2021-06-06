@@ -32,7 +32,6 @@ mat-grid-tile {
 }
 
 .header-icon {
-  background-color: #1fd181;
   border-radius: 5px;
 }
 
@@ -86,12 +85,11 @@ mat-grid-tile {
 
 .header-card > span {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.3em;
   border-radius: 3px;
 }
 
 .header-icon {
-  background-color: #1fd181;
   border-radius: 5px;
 }
 
@@ -120,9 +118,20 @@ mat-grid-tile {
 
 .field-title {
   display: inline-block;
-  color: gray;
+  color: black;
   font-weight: bold;
-  font-size: medium;
   margin-right: 6px;
   margin-bottom: 0;
+}
+
+.container-title {
+  display: flex;
+}
+
+.header-icon > .edit-button {
+  flex: 1;
+  background-color: #1fd181;
+  border-radius: 5px;
+  width: 2.2rem;
+  margin-top: 0.5rem;
 }

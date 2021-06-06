@@ -26,13 +26,15 @@ export class EquipmentService {
           equipmentServer.situacao
         );
       });*/
-      equipmentsCampus = equipmentsApiCampus.result.records.map((equipmentServer: any) => {
-        return new EquipmentApiCampus(
-          equipmentServer.numero,
-          equipmentServer.descricao,
-          equipmentServer.situacao
-        );
-      });
+      equipmentsCampus = equipmentsApiCampus.result.records.map(
+        (equipmentServer: any) => {
+          return new EquipmentApiCampus(
+            equipmentServer.numero,
+            equipmentServer.descricao,
+            equipmentServer.situacao
+          );
+        }
+      );
 
       return equipmentsCampus;
     } catch (error) {
@@ -60,7 +62,11 @@ export class EquipmentService {
             block: equipmentServer.bloco,
             room: equipmentServer.sala,
             conservationState: equipmentServer.estadoConservacao,
-            network: equipmentServer.rede,
+            network: {
+              hostname: equipmentServer.rede.hostname,
+              addressIP: equipmentServer.rede.enderecoIP,
+              addressMAC: equipmentServer.rede.enderecoMAC,
+            },
             filename: equipmentServer.nomeArquivo,
           },
           equipmentServer.id
@@ -77,11 +83,15 @@ export class EquipmentService {
   async sendFile(file: File, equipmentId: number): Promise<AxiosResponse> {
     try {
       let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`
+        Authorization: `Bearer ${this.authenticationService.token}`,
       };
       const formData = new FormData();
       formData.append('arquivo', file);
-      const response = await api.post(`/equipamentos/${equipmentId}/file`, formData, { headers });
+      const response = await api.post(
+        `/equipamentos/${equipmentId}/file`,
+        formData,
+        { headers }
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -140,12 +150,14 @@ export class EquipmentService {
         nomeArquivo: equipment.filename,
       };
 
-      await api.put(`/equipamentos/${equipment.id}`, equipmentServer, { headers });
+      await api.put(`/equipamentos/${equipment.id}`, equipmentServer, {
+        headers,
+      });
       equipmentWasEdited = true;
       return equipmentWasEdited;
     } catch (error) {
       console.error(error);
-      return equipmentWasEdited = false;
+      return (equipmentWasEdited = false);
     }
   }
 

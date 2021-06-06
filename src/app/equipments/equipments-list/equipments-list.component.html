@@ -23,16 +23,20 @@
           <li *ngFor="let equipment of equipments">
             <mat-grid-tile>
               <mat-card class="card-equipment">
-                <div class="header-card">
-                  <span>{{ equipment.description }}</span>
+                <div class="container-title">
+                  <div class="header-card">
+                    <span>{{ equipment.description | slice: 0:45 }}</span>
+                  </div>
                   <div class="header-icon">
                     <button
                       id="edit"
-                      class="mx-1"
+                      class="mx-1 edit-button"
                       mat-icon-button
                       (click)="detailEquipment(equipment.id)"
                     >
-                      <i class="material-icons v-middle color-card-icon">edit</i>
+                      <i class="material-icons v-middle color-card-icon"
+                        >edit</i
+                      >
                     </button>
                   </div>
                 </div>
