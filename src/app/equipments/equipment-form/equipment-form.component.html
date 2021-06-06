@@ -7,7 +7,7 @@
       <form
         role="form"
         (submit)="
-          createAsset(
+          createEquipment(
             selectedCategoryId,
             number.value,
             serialNumber.value,
@@ -24,7 +24,7 @@
       >
         <div class="header-equipment-create">
           <button
-            class="btn-salvar"
+            class="btn-save"
             mat-raised-button
             color="primary"
             type="submit"
@@ -33,11 +33,11 @@
           </button>
 
           <button
-            *ngIf="asset ? asset.id : 0"
-            class="btn-excluir"
+            *ngIf="equipment ? equipment.id : 0"
+            class="btn-delete"
             mat-raised-button
             type="button"
-            (click)="asset && deleteAsset(asset.id)"
+            (click)="equipment && deleteEquipment(equipment.id)"
           >
             Deletar
           </button>
@@ -53,8 +53,9 @@
             <input
               #number
               id="numberInput"
-              class="medium-input"
-              value="{{ asset ? asset.number : '' }}"
+              class="input medium-input"
+              placeholder="Digite o Número"
+              value="{{ equipment ? equipment.number : '' }}"
               aria-label="Número"
               [formControl]="myControl"
               matInput
@@ -63,10 +64,10 @@
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
                 *ngFor="let option of filteredOptions | async"
-                value="{{ asset ? asset.number : '' }}"
-                (click)="autocompleteInputFields(option.numero)"
+                value="{{ equipment ? equipment.number : '' }}"
+                (click)="autoCompleteInputFields(option.number)"
               >
-                {{ option.descricao }}
+                {{ option.description }}
               </mat-option>
             </mat-autocomplete>
           </div>
@@ -76,8 +77,9 @@
             <input
               #serialNumber
               matInput
-              class="medium-input"
-              value="{{ asset ? asset.serialNumber : '' }}"
+              class="input medium-input"
+              placeholder="Digite o Número de Série"
+              value="{{ equipment ? equipment.serialNumber : '' }}"
             />
           </div>
         </div>
@@ -90,7 +92,7 @@
             id="descriptionInput"
             #description
             matInput
-            >{{ asset ? asset.description : "" }}</textarea
+            >{{ equipment ? equipment.description : "" }}</textarea
           >
         </div>
 
@@ -127,8 +129,9 @@
             <input
               #block
               matInput
-              class="medium-input"
-              value="{{ asset ? asset.block : '' }}"
+              class="input medium-input"
+              placeholder="Digite o Bloco"
+              value="{{ equipment ? equipment.block : '' }}"
             />
           </div>
           <div class="two-fields-box">
@@ -136,8 +139,9 @@
             <input
               #room
               matInput
-              class="medium-input"
-              value="{{ asset ? asset.room : '' }}"
+              class="input medium-input"
+              placeholder="Digite a Sala"
+              value="{{ equipment ? equipment.room : '' }}"
             />
           </div>
         </div>
@@ -149,8 +153,11 @@
           <input
             #hostname
             matInput
-            class="medium-input"
-            value="{{ asset && asset.network ? asset.network.hostname : '' }}"
+            class="input medium-input"
+            placeholder="Digite o Hostname"
+            value="{{
+              equipment && equipment.network ? equipment.network.hostname : ''
+            }}"
           />
         </div>
         <div class="two-fields-box">
@@ -158,8 +165,11 @@
           <input
             #addressIP
             matInput
-            class="medium-input"
-            value="{{ asset && asset.network ? asset.network.addressIP : '' }}"
+            class="input medium-input"
+            placeholder="Digite o Endereço IP"
+            value="{{
+              equipment && equipment.network ? equipment.network.addressIP : ''
+            }}"
           />
         </div>
       </div>
@@ -169,17 +179,29 @@
           <input
             #addressMAC
             matInput
-            value="{{ asset && asset.network ? asset.network.addressMAC : '' }}"
+            class="input medium-input"
+            placeholder="Digite o Endereço MAC"
+            value="{{
+              equipment && equipment.network ? equipment.network.addressMAC : ''
+            }}"
           />
         </div>
       </div>
-      <div class="input-file-container">
-        <input
-          #filename
-          class="input-file"
-          type="file"
-          (change)="inputFileChange($event)"
-        />
+      <div class="file">
+        <label class="file-label">
+          <input
+            #filename
+            class="file-input"
+            type="file"
+            (change)="inputFileChange($event)"
+          />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span>
+            <span class="file-label"> Escolha Um Arquivo… </span>
+          </span>
+        </label>
       </div>
     </div>
   </div>

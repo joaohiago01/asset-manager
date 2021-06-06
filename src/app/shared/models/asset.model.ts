@@ -1,29 +1,22 @@
-import { ConservationState } from './conservationState.enum';
-import { Network } from './network.model';
-
 export class Asset {
   public id!: number;
-  public description: string;
-  public number: number;
-  public serialNumber: string;
+  public name: string;
+  public bookcase: string;
+  public shelf: string;
+  public minQuantity: number;
+  public currentQuantity: number;
+  public unitOfMeasurement: string;
   public categoryId: number;
   public categoryName?: string;
-  public block: string;
-  public room: string;
-  public conservationState: ConservationState;
-  public network: Network;
-  public filename: string;
 
   constructor(props: Omit<Asset, 'id'>, id?: number) {
-    this.description = props.description;
-    this.number = props.number;
-    this.serialNumber = props.serialNumber;
+    this.name = props.name;
+    this.bookcase = props.bookcase;
+    this.shelf = props.shelf;
+    this.minQuantity = props.minQuantity;
+    this.currentQuantity = props.currentQuantity;
+    this.unitOfMeasurement = props.unitOfMeasurement;
     this.categoryId = props.categoryId;
-    this.block = props.block;
-    this.room = props.room;
-    this.conservationState = props.conservationState;
-    this.network = props.network;
-    this.filename = props.filename;
     if (id != undefined) {
       this.id = id;
     }

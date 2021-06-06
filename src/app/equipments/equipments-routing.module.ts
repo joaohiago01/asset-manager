@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EquipmentsListComponent } from './equipments-list/equipments-list.component';
-import { EquipmentCreateComponent } from './equipment-create/equipment-create.component';
+import { EquipmentFormComponent } from './equipment-form/equipment-form.component';
 
 const routes: Routes = [
   {
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: EquipmentsListComponent
   },
   {
-    path: 'equipments/create',
-    component: EquipmentCreateComponent
+    path: 'equipments/form',
+    component: EquipmentFormComponent
   }
 ];
 

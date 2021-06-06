@@ -30,6 +30,12 @@ export class CategoryListComponent implements OnInit {
 
   async getAllCategories(): Promise<void> {
     this.categories = await this.categoryService.getAllCategories();
+    this.categories = this.categories.map((c : Category) => {
+      if (c.name.length > 25) {
+        c.name = c.name.slice(0, 25) + "...";
+      }
+      return c;
+    });
     if (!this.categories) {
       alert('Nenhuma Categoria Encontrada');
     }
@@ -64,7 +70,6 @@ export class CategoryListComponent implements OnInit {
       this.categories.find((category: Category) => category.id === categoryId)
     );
     this.selectedValue = this.category.categoryType;
-
     this.showModal('#modalEditar');
   }
 
@@ -75,7 +80,6 @@ export class CategoryListComponent implements OnInit {
   ): Promise<void> {
     if (name && categoryTypeString) {
       const categoryType: CategoryType = <CategoryType>categoryTypeString;
-
       let category = new Category(
         {
           name,

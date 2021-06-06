@@ -1,0 +1,139 @@
+<div class="columns">
+  <div class="column is-3 background-color">
+    <app-menu></app-menu>
+  </div>
+  <div class="column is-9">
+    <div class="container">
+      <form
+        role="form"
+        (submit)="
+          createAsset(
+            selectedCategoryId,
+            name.value,
+            bookcase.value,
+            shelf.value,
+            minQuantity.value,
+            currentQuantity.value,
+            unitOfMeasurement.value
+          )
+        "
+      >
+        <div class="header-asset-create">
+          <button
+            class="btn-save"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Salvar
+          </button>
+
+          <button
+            *ngIf="asset ? asset.id : 0"
+            class="btn-delete"
+            mat-raised-button
+            type="button"
+            (click)="asset && deleteAsset(asset.id)"
+          >
+            Deletar
+          </button>
+        </div>
+      </form>
+
+      <div class="content-asset-create">
+        <div class="one-field-container">
+          <mat-form-field appearance="fill">
+          <mat-label>Categoria:</mat-label>
+          <mat-select id="category" [(ngModel)]="selectedCategoryId">
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Nome:</mat-label>
+            <input
+              #name
+              id="nameInput"
+              class="input medium-input"
+              value="{{ asset ? asset.name : '' }}"
+              placeholder="Digite o Nome"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Estante:</mat-label>
+            <input
+              #bookcase
+              id="bookcaseInput"
+              class="input medium-input"
+              value="{{ asset ? asset.bookcase : '' }}"
+              placeholder="Digite a Estante"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Prateleira:</mat-label>
+            <input
+              #shelf
+              id="shelfInput"
+              class="input medium-input"
+              value="{{ asset ? asset.shelf : '' }}"
+              placeholder="Digite a Prateleira"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Quantidade Mínima:</mat-label>
+            <input
+              #minQuantity
+              id="minQuantityInput"
+              class="input small-input"
+              type="number"
+              value="{{ asset ? asset.minQuantity : '' }}"
+              placeholder="Digite a Quantidade Mínima"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Quantidade Atual:</mat-label>
+            <input
+              #currentQuantity
+              id="currentQuantityInput"
+              class="input small-input"
+              type="number"
+              value="{{ asset ? asset.currentQuantity : '' }}"
+              placeholder="Digite a Quantidade Atual"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Unidade De Medida:</mat-label>
+            <input
+              #unitOfMeasurement
+              id="unitOfMeasurementInput"
+              class="input small-input"
+              value="{{ asset ? asset.unitOfMeasurement : '' }}"
+              placeholder="Digite a Unidade De Medida"
+              matInput
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

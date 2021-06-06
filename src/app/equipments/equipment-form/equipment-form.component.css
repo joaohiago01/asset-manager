@@ -9,11 +9,11 @@
   justify-content: space-between;
 }
 
-.btn-salvar {
+.btn-save {
   background-color: #1fd181;
 }
 
-.btn-excluir {
+.btn-delete {
   background-color: #cf2a27;
   color: white;
 }
@@ -81,10 +81,6 @@ mat-label {
 
 .medium-input {
   padding-right: 1rem;
-}
-
-.input-file {
-  font-size: 1rem;
 }
 
 .autocomplete-form {

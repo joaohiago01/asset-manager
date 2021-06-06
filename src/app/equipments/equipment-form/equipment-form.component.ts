@@ -1,51 +1,47 @@
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER } from '@angular/cdk/overlay/overlay-directives';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CategoryService } from 'src/app/category/services/category.service';
-import { Asset } from 'src/app/shared/models/asset.model';
-import { AssetApiCampus } from 'src/app/shared/models/assetApiCampus.model';
-import { Category } from 'src/app/shared/models/category.model';
-import { ConservationState } from 'src/app/shared/models/conservationState.enum';
+import { Equipment } from 'src/app/shared/models/equipment.model';
 import { Network } from 'src/app/shared/models/network.model';
-import apiCampus from 'src/app/shared/services/apiCampus';
+import { ConservationState } from 'src/app/shared/models/conservationState.enum';
+import { EquipmentApiCampus } from 'src/app/shared/models/equipmentApiCampus.model';
+import { Category } from 'src/app/shared/models/category.model';
+import { CategoryService } from 'src/app/category/services/category.service';
 import { EquipmentService } from '../services/equipment.service';
 
 @Component({
-  selector: 'app-equipment-create',
-  templateUrl: './equipment-create.component.html',
-  styleUrls: ['./equipment-create.component.css'],
+  selector: 'app-equipment-form',
+  templateUrl: './equipment-form.component.html',
+  styleUrls: ['./equipment-form.component.css'],
 })
-export class EquipmentCreateComponent implements OnInit {
-  public asset?: Asset = <Asset>{};
+export class EquipmentFormComponent implements OnInit {
+  public equipment?: Equipment = <Equipment>{};
   public categories: Category[] = [];
   public selectedCategoryId: number = 0;
   public selectedConservationState: string = '';
   public conservationStates: string[] = [];
 
   public myControl = new FormControl();
-  public options: AssetApiCampus[] = [];
-  public filteredOptions?: Observable<AssetApiCampus[]>;
+  public options: EquipmentApiCampus[] = [];
+  public filteredOptions?: Observable<EquipmentApiCampus[]>;
 
   public file: File = new File(['empty'], 'empty.txt', { type: 'text/plain' });
 
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService,
-    private route: ActivatedRoute
+    public categoryService: CategoryService
   ) {
-    const asset: Asset = <Asset>(
+    const equipment: Equipment = <Equipment>(
       this.router.getCurrentNavigation()?.extras.state
     );
 
-    if (asset != null && asset != undefined) {
-      const map = new Map(Object.entries(Object.values(asset)));
-      const assetNumber: string = map.get('0')['number'];
-
-      this.myControl.setValue(assetNumber);
+    if (equipment != null && equipment != undefined) {
+      const map = new Map(Object.entries(Object.values(equipment)));
+      const equipmentNumber: string = map.get('0')['number'];
+      this.myControl.setValue(equipmentNumber);
     }
   }
 
@@ -59,84 +55,50 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.options = await this.equipmentService.getAllAssetsSuggestions();
-    /*let option1: AssetApiCampus = new AssetApiCampus(
+    // this.options = await this.equipmentService.getAllEquipmentsSuggestions();
+    let option1: EquipmentApiCampus = new EquipmentApiCampus(
       '215305',
       'IMPRESSORA ECO-TANK. MARCA: EPSON',
       'ativo'
     );
-    let option2: AssetApiCampus = new AssetApiCampus(
+    let option2: EquipmentApiCampus = new EquipmentApiCampus(
       '215616',
       'EQUIPAMENTO SLUMP TEST',
       'ativo'
     );
-    let option3: AssetApiCampus = new AssetApiCampus(
+    let option3: EquipmentApiCampus = new EquipmentApiCampus(
       '216061',
       'CADEIRA FIXA SEM APOIO DE BRAÇO',
       'ativo'
     );
-    let optionsArray: AssetApiCampus[] = [option1, option2, option3];
+    let optionsArray: EquipmentApiCampus[] = [option1, option2, option3];
 
-    this.options = optionsArray;*/
+    this.options = optionsArray;
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value))
+      map((value: any) => this._filter(value))
     );
 
-    this.asset = window.history.state.asset;
+    this.equipment = window.history.state.equipment;
     this.conservationStates = Object.values(ConservationState);
     this.categories = await this.categoryService.getAllCategories();
-    if (this.asset) {
+    if (this.equipment) {
       let selectedConservationState = this.conservationStates.find(
         (conservationState: any) =>
-          conservationState === this.asset?.conservationState
+          conservationState === this.equipment?.conservationState
       );
       this.selectedConservationState = selectedConservationState
         ? selectedConservationState
         : '';
       let selectedCategoryId = this.categories.find(
-        (category: Category) => category.id === this.asset?.categoryId
+        (category: Category) => category.id === this.equipment?.categoryId
       )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
-      console.log(this.selectedCategoryId);
     }
   }
 
-  private _filter(value: string): AssetApiCampus[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(
-      (option) =>
-        option.numero.toLowerCase().includes(filterValue) ||
-        option.descricao.toLowerCase().includes(filterValue)
-    );
-  }
-
-  autocompleteInputFields(assetApiCampusNumber: string) {
-    const selectedAsset: AssetApiCampus | undefined = this.options.find(
-      (asset) => {
-        if (asset.numero.localeCompare(assetApiCampusNumber) === 0) {
-          return asset;
-        } else return;
-      }
-    );
-
-    const descriptionInput: HTMLTextAreaElement = <HTMLTextAreaElement>(
-      document.querySelector('#descriptionInput')
-    );
-
-    const numberInput: HTMLInputElement = <HTMLInputElement>(
-      document.querySelector('#numberInput')
-    );
-
-    if (selectedAsset != undefined) {
-      numberInput.value = selectedAsset.numero;
-      descriptionInput.value = selectedAsset.descricao;
-    }
-  }
-
-  async createAsset(
+  async createEquipment(
     selectedCategoryId: number,
     number: string,
     serialNumber: string,
@@ -149,9 +111,9 @@ export class EquipmentCreateComponent implements OnInit {
     addressMAC: string,
     filename: string
   ): Promise<void> {
-    if (this.asset) {
-      this.editAsset(
-        this.asset.id,
+    if (this.equipment) {
+      this.editEquipment(
+        this.equipment.id,
         selectedCategoryId,
         number,
         serialNumber,
@@ -172,7 +134,7 @@ export class EquipmentCreateComponent implements OnInit {
 
         let network = new Network(hostname, addressIP, addressMAC);
 
-        let asset = new Asset({
+        let equipment = new Equipment({
           categoryId: selectedCategoryId,
           number: Number.parseInt(number),
           serialNumber,
@@ -184,13 +146,13 @@ export class EquipmentCreateComponent implements OnInit {
           filename,
         });
 
-        const response = await this.equipmentService.createAsset(asset);
+        const response = await this.equipmentService.createEquipment(equipment);
         if (response.status == 201) {
-          const equipamamentoId = response.data['id'];
+          const equipmentId = response.data['id'];
           if (this.file.name != 'empty.txt') {
             const fileResponse = await this.equipmentService.sendFile(
               this.file,
-              equipamamentoId
+              equipmentId
             );
             if (fileResponse.status == 201) {
               this.router.navigate(['equipments'], {
@@ -211,7 +173,7 @@ export class EquipmentCreateComponent implements OnInit {
     }
   }
 
-  async editAsset(
+  async editEquipment(
     id: number,
     selectedCategoryId: number,
     number: string,
@@ -232,7 +194,7 @@ export class EquipmentCreateComponent implements OnInit {
 
       let network = new Network(hostname, addressIP, addressMAC);
 
-      let asset = new Asset(
+      let equipment = new Equipment(
         {
           categoryId: selectedCategoryId,
           number: Number.parseInt(number),
@@ -247,9 +209,11 @@ export class EquipmentCreateComponent implements OnInit {
         id
       );
 
-      let assetWasEdited = await this.equipmentService.editAsset(asset);
-      if (assetWasEdited === true) {
-        this.asset = undefined;
+      let equipmentWasEdited = await this.equipmentService.editEquipment(
+        equipment
+      );
+      if (equipmentWasEdited === true) {
+        this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
         alert('Oops, ocorreu um erro ao tentar editar esse Equipamento');
@@ -259,10 +223,10 @@ export class EquipmentCreateComponent implements OnInit {
     }
   }
 
-  async deleteAsset(id: number): Promise<void> {
+  async deleteEquipment(id: number): Promise<void> {
     if (id) {
-      let assetWasDeleted = await this.equipmentService.deleteAsset(id);
-      if (assetWasDeleted === true) {
+      let equipmentWasDeleted = await this.equipmentService.deleteEquipment(id);
+      if (equipmentWasDeleted === true) {
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
         alert('Oops, ocorreu um erro ao tentar remover esse Equipamento');
@@ -270,5 +234,37 @@ export class EquipmentCreateComponent implements OnInit {
     } else {
       alert('Equipamento Não Encontrado');
     }
+  }
+
+  public autoCompleteInputFields(equipmentApiCampusNumber: string) {
+    const selectedEquipment: EquipmentApiCampus | undefined = this.options.find(
+      (equipment) => {
+        if (equipment.number.localeCompare(equipmentApiCampusNumber) === 0) {
+          return equipment;
+        } else return;
+      }
+    );
+
+    const descriptionInput: HTMLTextAreaElement = <HTMLTextAreaElement>(
+      document.querySelector('#descriptionInput')
+    );
+
+    const numberInput: HTMLInputElement = <HTMLInputElement>(
+      document.querySelector('#numberInput')
+    );
+
+    if (selectedEquipment != undefined) {
+      numberInput.value = selectedEquipment.number;
+      descriptionInput.value = selectedEquipment.description;
+    }
+  }
+
+  private _filter(value: string): EquipmentApiCampus[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(
+      (option) =>
+        option.number.toLowerCase().includes(filterValue) ||
+        option.description.toLowerCase().includes(filterValue)
+    );
   }
 }

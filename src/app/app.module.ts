@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { EquipmentsModule } from './equipments/equipments.module';
+import { AssetsModule } from './assets/assets.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { EquipmentsModule } from './equipments/equipments.module';
     MatCardModule,
     MatGridListModule,
     EquipmentsModule,
+    AssetsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

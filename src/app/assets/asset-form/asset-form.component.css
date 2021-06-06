@@ -1,0 +1,58 @@
+.container {
+  width: 100%;
+}
+
+.header-asset-create {
+  padding-top: 1rem;
+  padding-right: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-save {
+  background-color: #1fd181;
+}
+
+.btn-delete {
+  background-color: #cf2a27;
+  color: white;
+}
+
+.content-asset-create {
+  padding-right: 0.8rem;
+  padding-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 60%;
+}
+
+mat-label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.one-field-container {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  justify-content: space-between;
+  padding-bottom: 0.7rem;
+}
+
+.one-field-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.medium-input {
+  padding-right: 1rem;
+}
+
+.small-input {
+  padding-right: 1rem;
+  width: 50%;
+}
