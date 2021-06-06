@@ -54,7 +54,11 @@ export class EquipmentService {
             block: assetServer.bloco,
             room: assetServer.sala,
             conservationState: assetServer.estadoConservacao,
-            network: assetServer.rede,
+            network: {
+              hostname: assetServer.rede.hostname,
+              addressIP: assetServer.rede.enderecoIP,
+              addressMAC: assetServer.rede.enderecoMAC,
+            },
             filename: assetServer.nomeArquivo,
           },
           assetServer.id
@@ -71,11 +75,15 @@ export class EquipmentService {
   async sendFile(file: File, equipamamentoId: number): Promise<AxiosResponse> {
     try {
       let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`
+        Authorization: `Bearer ${this.authenticationService.token}`,
       };
       const formData = new FormData();
       formData.append('arquivo', file);
-      const response = await api.post(`/equipamentos/${equipamamentoId}/file`, formData, { headers });
+      const response = await api.post(
+        `/equipamentos/${equipamamentoId}/file`,
+        formData,
+        { headers }
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -105,7 +113,9 @@ export class EquipmentService {
         },
         nomeArquivo: asset.filename,
       };
-      const response = await api.post('/equipamentos', assetServer, { headers });
+      const response = await api.post('/equipamentos', assetServer, {
+        headers,
+      });
       return response;
     } catch (error) {
       console.error(error);

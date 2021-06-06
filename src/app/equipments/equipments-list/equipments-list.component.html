@@ -22,17 +22,21 @@
           <li *ngFor="let asset of assets">
             <mat-grid-tile>
               <mat-card class="card-equipment">
-                <div class="header-card">
-                  <span>{{ asset.description }}</span>
-                </div>
-                <div class="header-icon">
-                  <button
-                    class="mx-1"
-                    mat-icon-button
-                    (click)="detailAsset(asset.id)"
-                  >
-                    <i class="material-icons v-middle color-card-icon">edit</i>
-                  </button>
+                <div class="container-title">
+                  <div class="header-card">
+                    <span>{{ asset.description | slice: 0:45 }}</span>
+                  </div>
+                  <div class="header-icon">
+                    <button
+                      class="mx-1 edit-button"
+                      mat-icon-button
+                      (click)="detailAsset(asset.id)"
+                    >
+                      <i class="material-icons v-middle color-card-icon"
+                        >edit</i
+                      >
+                    </button>
+                  </div>
                 </div>
 
                 <div class="content-card">

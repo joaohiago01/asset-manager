@@ -29,8 +29,7 @@ export class EquipmentCreateComponent implements OnInit {
   public options: AssetApiCampus[] = [];
   public filteredOptions?: Observable<AssetApiCampus[]>;
 
-  public file: File = new File(["empty"], "empty.txt", 
-    {type: "text/plain",});
+  public file: File = new File(['empty'], 'empty.txt', { type: 'text/plain' });
 
   constructor(
     private router: Router,
@@ -60,8 +59,8 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    //this.options = await this.equipmentService.getAllAssetsSuggestions();
-    let option1: AssetApiCampus = new AssetApiCampus(
+    this.options = await this.equipmentService.getAllAssetsSuggestions();
+    /*let option1: AssetApiCampus = new AssetApiCampus(
       '215305',
       'IMPRESSORA ECO-TANK. MARCA: EPSON',
       'ativo'
@@ -78,7 +77,7 @@ export class EquipmentCreateComponent implements OnInit {
     );
     let optionsArray: AssetApiCampus[] = [option1, option2, option3];
 
-    this.options = optionsArray;
+    this.options = optionsArray;*/
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -189,12 +188,19 @@ export class EquipmentCreateComponent implements OnInit {
         if (response.status == 201) {
           const equipamamentoId = response.data['id'];
           if (this.file.name != 'empty.txt') {
-            const fileResponse = await this.equipmentService.sendFile(this.file, equipamamentoId);
+            const fileResponse = await this.equipmentService.sendFile(
+              this.file,
+              equipamamentoId
+            );
             if (fileResponse.status == 201) {
-              this.router.navigate(['equipments'], { state: { needReload: true } });
+              this.router.navigate(['equipments'], {
+                state: { needReload: true },
+              });
             }
           } else {
-            this.router.navigate(['equipments'], { state: { needReload: true } });
+            this.router.navigate(['equipments'], {
+              state: { needReload: true },
+            });
           }
         } else {
           alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento');
