@@ -24,6 +24,7 @@
       >
         <div class="header-equipment-create">
           <button
+            id="save"
             class="btn-save"
             mat-raised-button
             color="primary"
@@ -33,6 +34,7 @@
           </button>
 
           <button
+            id="delete"
             *ngIf="equipment ? equipment.id : 0"
             class="btn-delete"
             mat-raised-button
@@ -52,7 +54,7 @@
             <mat-label>Número:</mat-label>
             <input
               #number
-              id="numberInput"
+              id="number"
               class="input medium-input"
               placeholder="Digite o Número"
               value="{{ equipment ? equipment.number : '' }}"
@@ -75,6 +77,7 @@
           <div class="two-fields-box">
             <mat-label class="two-labels">Número de série:</mat-label>
             <input
+              id="serialNumber"
               #serialNumber
               matInput
               class="input medium-input"
@@ -87,9 +90,9 @@
         <div class="description">
           <mat-label>Descrição:</mat-label>
           <textarea
+            id="description"
             class="inputDescription"
             type="text"
-            id="descriptionInput"
             #description
             matInput
             >{{ equipment ? equipment.description : "" }}</textarea
@@ -98,7 +101,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Categoria:</mat-label>
-          <mat-select id="category" [(ngModel)]="selectedCategoryId">
+          <mat-select id="categories" [(ngModel)]="selectedCategoryId">
             <mat-option
               *ngFor="let category of categories"
               [value]="category.id"
@@ -111,7 +114,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Estado De Conservação:</mat-label>
           <mat-select
-            id="conservationState"
+            id="conservationStates"
             [(ngModel)]="selectedConservationState"
           >
             <mat-option
@@ -127,6 +130,7 @@
           <div class="two-fields-box">
             <mat-label class="two-labels">Bloco:</mat-label>
             <input
+              id="block"
               #block
               matInput
               class="input medium-input"
@@ -137,6 +141,7 @@
           <div class="two-fields-box">
             <mat-label class="two-labels">Sala:</mat-label>
             <input
+              id="room"
               #room
               matInput
               class="input medium-input"
@@ -151,6 +156,7 @@
         <div class="two-fields-box">
           <mat-label class="two-labels">Hostname (opcional):</mat-label>
           <input
+            id="hostname"
             #hostname
             matInput
             class="input medium-input"
@@ -161,6 +167,7 @@
         <div class="two-fields-box">
           <mat-label class="two-labels">Endereço IP (opcional):</mat-label>
           <input
+            id="addressIP"
             #addressIP
             matInput
             class="input medium-input"
@@ -173,6 +180,7 @@
         <div class="one-field-box">
           <mat-label>Endereço MAC (opcional):</mat-label>
           <input
+            id="addressMAC"
             #addressMAC
             matInput
             class="input medium-input"
@@ -183,7 +191,7 @@
       </div>
       <div class="file">
         <label class="file-label">
-          <input #filename class="file-input" type="file" (change)="inputFileChange($event)" />
+          <input id="filename" #filename class="file-input" type="file" (change)="inputFileChange($event)" />
           <span class="file-cta">
             <span class="file-icon">
               <i class="fa fa-upload"></i>

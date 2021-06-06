@@ -20,6 +20,7 @@
       >
         <div class="header-asset-create">
           <button
+            id="create"
             class="btn-save"
             mat-raised-button
             color="primary"
@@ -29,6 +30,7 @@
           </button>
 
           <button
+            id="delete"
             *ngIf="asset ? asset.id : 0"
             class="btn-delete"
             mat-raised-button
@@ -44,7 +46,7 @@
         <div class="one-field-container">
           <mat-form-field appearance="fill">
           <mat-label>Categoria:</mat-label>
-          <mat-select id="category" [(ngModel)]="selectedCategoryId">
+          <mat-select id="categories" [(ngModel)]="selectedCategoryId">
             <mat-option
               *ngFor="let category of categories"
               [value]="category.id">
@@ -58,7 +60,7 @@
             <mat-label>Nome:</mat-label>
             <input
               #name
-              id="nameInput"
+              id="name"
               class="input medium-input"
               value="{{ asset ? asset.name : '' }}"
               placeholder="Digite o Nome"
@@ -71,7 +73,7 @@
             <mat-label>Estante:</mat-label>
             <input
               #bookcase
-              id="bookcaseInput"
+              id="bookcase"
               class="input medium-input"
               value="{{ asset ? asset.bookcase : '' }}"
               placeholder="Digite a Estante"
@@ -84,7 +86,7 @@
             <mat-label>Prateleira:</mat-label>
             <input
               #shelf
-              id="shelfInput"
+              id="shelf"
               class="input medium-input"
               value="{{ asset ? asset.shelf : '' }}"
               placeholder="Digite a Prateleira"
@@ -97,7 +99,7 @@
             <mat-label>Quantidade Mínima:</mat-label>
             <input
               #minQuantity
-              id="minQuantityInput"
+              id="minQuantity"
               class="input small-input"
               type="number"
               value="{{ asset ? asset.minQuantity : '' }}"
@@ -111,7 +113,7 @@
             <mat-label>Quantidade Atual:</mat-label>
             <input
               #currentQuantity
-              id="currentQuantityInput"
+              id="currentQuantity"
               class="input small-input"
               type="number"
               value="{{ asset ? asset.currentQuantity : '' }}"
@@ -125,7 +127,7 @@
             <mat-label>Unidade De Medida:</mat-label>
             <input
               #unitOfMeasurement
-              id="unitOfMeasurementInput"
+              id="unitOfMeasurement"
               class="input small-input"
               value="{{ asset ? asset.unitOfMeasurement : '' }}"
               placeholder="Digite a Unidade De Medida"

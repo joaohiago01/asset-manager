@@ -103,7 +103,7 @@ export class EquipmentFormComponent implements OnInit {
         filename
       );
     } else {
-      if (number && selectedConservationState) {
+      if (number && selectedConservationState && selectedCategoryId) {
         const conservationState: ConservationState = <ConservationState>(selectedConservationState);
 
         let network = new Network(hostname, addressIP, addressMAC);
@@ -132,10 +132,10 @@ export class EquipmentFormComponent implements OnInit {
             this.router.navigate(['equipments'], { state: { needReload: true } });
           }
         } else {
-          alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento');
+          setTimeout(function() { alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento'); }, 2000);
         }
       } else {
-        alert('Dados Inválidos');
+        setTimeout(function() { alert('Dados Inválidos'); }, 2000);
       }
     }
   }
@@ -154,7 +154,7 @@ export class EquipmentFormComponent implements OnInit {
     addressMAC: string,
     filename: string
   ): Promise<void> {
-    if (id && number && selectedConservationState) {
+    if (id && number && selectedConservationState && selectedCategoryId) {
       const conservationState: ConservationState = <ConservationState>(selectedConservationState);
 
       let network = new Network(hostname, addressIP, addressMAC);
@@ -179,10 +179,10 @@ export class EquipmentFormComponent implements OnInit {
         this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        alert('Oops, ocorreu um erro ao tentar editar esse Equipamento');
+        setTimeout(function() { alert('Oops, ocorreu um erro ao tentar editar esse Equipamento'); }, 2000);
       }
     } else {
-      alert('Dados Inválidos');
+      setTimeout(function() { alert('Dados Inválidos'); }, 2000);
     }
   }
 
@@ -192,10 +192,10 @@ export class EquipmentFormComponent implements OnInit {
       if (equipmentWasDeleted === true) {
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        alert('Oops, ocorreu um erro ao tentar remover esse Equipamento');
+        setTimeout(function() { alert('Oops, ocorreu um erro ao tentar remover esse Equipamento'); }, 2000);
       }
     } else {
-      alert('Equipamento Não Encontrado');
+      setTimeout(function() { alert('Equipamento Não Encontrado'); }, 2000);
     }
   }
 

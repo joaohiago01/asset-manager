@@ -6,6 +6,7 @@
     <div class="container">
       <div class="header-equipment">
         <button
+          id="add"
           (click)="navigateToEquipmentCreate()"
           #btnCadastrar
           class="btn-cadastrar"
@@ -26,6 +27,7 @@
                   <span>{{ equipment.description }}</span>
                   <div class="header-icon">
                     <button
+                      id="edit"
                       class="mx-1"
                       mat-icon-button
                       (click)="detailEquipment(equipment.id)"
