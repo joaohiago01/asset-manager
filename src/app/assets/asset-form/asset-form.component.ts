@@ -21,9 +21,11 @@ export class AssetFormComponent implements OnInit {
   constructor(
     private router: Router,
     public assetService: AssetService,
-    public categoryService: CategoryService,
+    public categoryService: CategoryService
   ) {
-    const asset: Asset = <Asset>(this.router.getCurrentNavigation()?.extras.state);
+    const asset: Asset = <Asset>(
+      this.router.getCurrentNavigation()?.extras.state
+    );
 
     if (asset) {
       const map = new Map(Object.entries(Object.values(asset)));
@@ -37,7 +39,9 @@ export class AssetFormComponent implements OnInit {
     this.asset = window.history.state.asset;
     this.categories = await this.categoryService.getAllCategories();
     if (this.asset) {
-      let selectedCategoryId = this.categories.find((category: Category) => category.id === this.asset?.categoryId)?.id;
+      let selectedCategoryId = this.categories.find(
+        (category: Category) => category.id === this.asset?.categoryId
+      )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
     }
   }
@@ -71,7 +75,7 @@ export class AssetFormComponent implements OnInit {
           shelf: shelf,
           minQuantity: Number.parseFloat(minQuantity),
           currentQuantity: Number.parseFloat(currentQuantity),
-          unitOfMeasurement: unitOfMeasurement
+          unitOfMeasurement: unitOfMeasurement,
         });
 
         let assetWasCreated = await this.assetService.createAsset(asset);
@@ -105,7 +109,7 @@ export class AssetFormComponent implements OnInit {
           shelf: shelf,
           minQuantity: Number.parseFloat(minQuantity),
           currentQuantity: Number.parseFloat(currentQuantity),
-          unitOfMeasurement: unitOfMeasurement
+          unitOfMeasurement: unitOfMeasurement,
         },
         id
       );
@@ -122,7 +126,7 @@ export class AssetFormComponent implements OnInit {
     }
   }
 
-  async deleteAsset(id: number) {
+  async deleteAsset(id: number): Promise<void> {
     if (id) {
       let assetWasDeleted = await this.assetService.deleteAsset(id);
       if (assetWasDeleted === true) {

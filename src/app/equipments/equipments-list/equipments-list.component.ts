@@ -31,16 +31,11 @@ export class EquipmentsListComponent implements OnInit {
 
   async getAllEquipments(): Promise<void> {
     this.equipments = await this.equipmentService.getAllEquipments();
-    this.equipments = this.equipments.map((e : Equipment) => {
-      if (e.description.length > 25) {
-        e.description = e.description.slice(0, 25) + "...";
-      }
-      return e;
-    });
     let categories = await this.categoryService.getAllCategories();
     this.equipments = this.equipments.map((equipment: Equipment) => {
-      equipment.categoryName = categories.find((category: Category) =>
-        category.id === equipment.categoryId)?.name;
+      equipment.categoryName = categories.find(
+        (category: Category) => category.id === equipment.categoryId
+      )?.name;
       return equipment;
     });
 
@@ -50,7 +45,11 @@ export class EquipmentsListComponent implements OnInit {
   }
 
   detailEquipment(equipmentId: number) {
-    this.selectedEquipment = <Equipment>(this.equipments.find((equipment: Equipment) => equipment.id === equipmentId));
+    this.selectedEquipment = <Equipment>(
+      this.equipments.find(
+        (equipment: Equipment) => equipment.id === equipmentId
+      )
+    );
 
     this.router.navigate(['equipments/form'], {
       state: { equipment: this.selectedEquipment },

@@ -1,4 +1,4 @@
-.header-equipment {
+.header-asset {
   padding-top: 1rem;
   padding-right: 0.8rem;
   display: flex;
@@ -16,14 +16,13 @@ mat-grid-tile {
   border-radius: 4px;
 }
 
-.card-equipment {
+.card-asset {
   flex: 1;
   background-color: white;
 }
 
 .header-card {
   padding-top: 0.7em;
-  width: 85%;
 }
 
 .header-card > span {
@@ -73,7 +72,7 @@ mat-grid-tile {
   border-left: 10px solid #1fd181;
 }
 
-.card-equipment {
+.card-asset {
   flex: 1;
   background-color: white;
 }

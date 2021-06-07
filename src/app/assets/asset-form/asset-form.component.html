@@ -43,14 +43,15 @@
       <div class="content-asset-create">
         <div class="one-field-container">
           <mat-form-field appearance="fill">
-          <mat-label>Categoria:</mat-label>
-          <mat-select id="category" [(ngModel)]="selectedCategoryId">
-            <mat-option
-              *ngFor="let category of categories"
-              [value]="category.id">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
+            <mat-label>Categoria:</mat-label>
+            <mat-select id="category" [(ngModel)]="selectedCategoryId">
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category.id"
+              >
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="one-field-container">

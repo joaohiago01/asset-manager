@@ -29,7 +29,7 @@ import { AssetsModule } from './assets/assets.module';
     MatCardModule,
     MatGridListModule,
     EquipmentsModule,
-    AssetsModule
+    AssetsModule,
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

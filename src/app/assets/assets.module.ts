@@ -5,12 +5,18 @@ import { AssetsRoutingModule } from './assets-routing.module';
 import { AssetFormComponent } from './asset-form/asset-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { AssetCardComponent } from './asset-card/asset-card.component';
+import { AssetListComponent } from './asset-list/asset-list.component';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [AssetFormComponent],
+  declarations: [AssetFormComponent, AssetCardComponent, AssetListComponent],
   imports: [
     SharedModule,
     CommonModule,
@@ -18,7 +24,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     FormsModule,
     MatSelectModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    MatFormFieldModule,
+    MatFileUploadModule,
+    FormsModule,
+    MatGridListModule,
+    MatCardModule,
+  ],
 })
-export class AssetsModule { }
+export class AssetsModule {}

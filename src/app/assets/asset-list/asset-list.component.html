@@ -4,9 +4,9 @@
   </div>
   <div class="column is-9">
     <div class="container">
-      <div class="header-equipment">
+      <div class="header-asset">
         <button
-          (click)="navigateToEquipmentCreate()"
+          (click)="navigateToAssetCreate()"
           #btnCadastrar
           class="btn-cadastrar"
           mat-raised-button
@@ -19,18 +19,18 @@
 
       <div class="list">
         <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let equipment of equipments">
+          <li *ngFor="let asset of assets">
             <mat-grid-tile>
-              <mat-card class="card-equipment">
+              <mat-card class="card-asset">
                 <div class="container-title">
                   <div class="header-card">
-                    <span>{{ equipment.description | slice: 0:40 }}</span>
+                    <span>{{ asset.name | slice: 0:40 }}</span>
                   </div>
                   <div class="header-icon">
                     <button
                       class="mx-1 edit-button"
                       mat-icon-button
-                      (click)="detailEquipment(equipment.id)"
+                      (click)="detailAsset(asset.id)"
                     >
                       <i class="material-icons v-middle color-card-icon"
                         >edit</i
@@ -42,24 +42,24 @@
                 <div class="content-card">
                   <div>
                     <p class="field-title">Categoria:</p>
-                    <span>{{ equipment.categoryName }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Número:</p>
-                    <span>{{ equipment.number }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Número de Série:</p>
-                    <span>{{ equipment.serialNumber }}</span>
+                    <span>{{ asset.categoryName }}</span>
                   </div>
                   <div>
                     <p class="field-title">Localização:</p>
-                    <span>{{ equipment.block }}</span>
-                    <span>{{ equipment.room }}</span>
+                    <span>{{ asset.bookcase }}</span>
+                    <span>{{ asset.shelf }}</span>
                   </div>
                   <div>
-                    <p class="field-title">Estado de Conservação:</p>
-                    <span>{{ equipment.conservationState }}</span>
+                    <p class="field-title">Estoque:</p>
+                    <span>{{ asset.currentQuantity }}</span>
+                  </div>
+                  <div>
+                    <p class="field-title">Unidade de Medida:</p>
+                    <span>{{ asset.unitOfMeasurement }}</span>
+                  </div>
+                  <div>
+                    <p class="field-title">Quantidade Mínima:</p>
+                    <span>{{ asset.minQuantity }}</span>
                   </div>
                 </div>
               </mat-card>
