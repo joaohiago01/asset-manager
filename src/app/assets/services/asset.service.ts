@@ -70,6 +70,8 @@ export class AssetService {
       await api.delete(`/insumos/${id}`, { headers });
       assetWasDeleted = true;
 
+      alert('Deletado com sucesso!');
+
       return assetWasDeleted;
     } catch (error) {
       console.error(error);

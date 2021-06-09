@@ -55,8 +55,8 @@ export class EquipmentFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    // this.options = await this.equipmentService.getAllEquipmentsSuggestions();
-    let option1: EquipmentApiCampus = new EquipmentApiCampus(
+    this.options = await this.equipmentService.getAllEquipmentsSuggestions();
+    /*let option1: EquipmentApiCampus = new EquipmentApiCampus(
       '215305',
       'IMPRESSORA ECO-TANK. MARCA: EPSON',
       'ativo'
@@ -73,7 +73,7 @@ export class EquipmentFormComponent implements OnInit {
     );
     let optionsArray: EquipmentApiCampus[] = [option1, option2, option3];
 
-    this.options = optionsArray;
+    this.options = optionsArray;*/
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -165,10 +165,14 @@ export class EquipmentFormComponent implements OnInit {
             });
           }
         } else {
-          setTimeout(function() { alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento'); }, 2000);
+          setTimeout(function () {
+            alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento');
+          }, 2000);
         }
       } else {
-        setTimeout(function() { alert('Dados Inválidos'); }, 2000);
+        setTimeout(function () {
+          alert('Dados Inválidos');
+        }, 2000);
       }
     }
   }
@@ -216,10 +220,14 @@ export class EquipmentFormComponent implements OnInit {
         this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        setTimeout(function() { alert('Oops, ocorreu um erro ao tentar editar esse Equipamento'); }, 2000);
+        setTimeout(function () {
+          alert('Oops, ocorreu um erro ao tentar editar esse Equipamento');
+        }, 2000);
       }
     } else {
-      setTimeout(function() { alert('Dados Inválidos'); }, 2000);
+      setTimeout(function () {
+        alert('Dados Inválidos');
+      }, 2000);
     }
   }
 
@@ -229,10 +237,14 @@ export class EquipmentFormComponent implements OnInit {
       if (equipmentWasDeleted === true) {
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        setTimeout(function() { alert('Oops, ocorreu um erro ao tentar remover esse Equipamento'); }, 2000);
+        setTimeout(function () {
+          alert('Oops, ocorreu um erro ao tentar remover esse Equipamento');
+        }, 2000);
       }
     } else {
-      setTimeout(function() { alert('Equipamento Não Encontrado'); }, 2000);
+      setTimeout(function () {
+        alert('Equipamento Não Encontrado');
+      }, 2000);
     }
   }
 
@@ -246,11 +258,11 @@ export class EquipmentFormComponent implements OnInit {
     );
 
     const descriptionInput: HTMLTextAreaElement = <HTMLTextAreaElement>(
-      document.querySelector('#descriptionInput')
+      document.querySelector('#description')
     );
 
     const numberInput: HTMLInputElement = <HTMLInputElement>(
-      document.querySelector('#numberInput')
+      document.querySelector('#number')
     );
 
     if (selectedEquipment != undefined) {
