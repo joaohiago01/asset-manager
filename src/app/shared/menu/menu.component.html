@@ -41,7 +41,9 @@
       </a>
     </li>
     <li>
-      <a class="">
+      <a [ngClass]="{ 'text-menu-item-active': isActiveSoftwareLicenses }"
+        (click)="navigateToSoftwareLicenses()"
+      >
         <span class="icon is-medium"><i class="fa fa-key"></i></span>
         <strong class="has-text text-menu-item">Licenças</strong>
       </a>

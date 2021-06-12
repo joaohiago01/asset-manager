@@ -7,7 +7,9 @@ exports.config = {
     './src/app/category/category-list/category-list.component.spec.ts',
     './src/app/equipments/equipment-form/equipment-form.component.spec.ts',
     './src/app/equipments/equipments-list/equipments-list.component.spec.ts',
-    './src/app/assets/asset-form/asset-form.component.spec.ts'
+    './src/app/assets/asset-form/asset-form.component.spec.ts',
+    './src/app/assets/asset-list/asset-list.component.spec.ts',
+    './src/app/software-licenses/software-licenses-list/software-licenses-list.component.spec.ts'
   ],
 
   onPrepare: function(){

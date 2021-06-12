@@ -1,6 +1,6 @@
 //import { browser, element, by } from 'protractor';
 
-describe('List Assets', () => {
+describe('List Software Licenses', () => {
   beforeEach(() => {
     browser.driver.manage().window().maximize();
     browser.get('https://localhost:4200/login');
@@ -12,13 +12,13 @@ describe('List Assets', () => {
     browser.sleep(1000);
   });
 
-  it('should list all assets', () => {
-    browser.get('https://localhost:4200/assets');
+  it('should list all software licenses', () => {
+    browser.get('https://localhost:4200/software-licenses');
     browser.sleep(2000);
   });
 
-  it('should show details of asset', () => {
-    browser.get('https://localhost:4200/assets');
+  it('should show details of software license', () => {
+    browser.get('https://localhost:4200/software-licenses');
     browser.sleep(2000);
     element(by.id('edit')).getWebElement().click();
     browser.sleep(2000);

@@ -32,6 +32,11 @@ const routes: Routes = [
     path: 'assets',
     loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule),
     canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'software-licenses',
+    loadChildren: () => import('./software-licenses/software-licenses.module').then(m => m.SoftwareLicensesModule),
+    canActivate: [AuthenticationGuardService]
   }
 ];
 

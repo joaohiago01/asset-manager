@@ -10,8 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from './shared/services/authentication.service';
+import { CategoryModule } from './category/category.module';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { AssetsModule } from './assets/assets.module';
+import { SoftwareLicensesModule } from './software-licenses/software-licenses.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,8 +30,10 @@ import { AssetsModule } from './assets/assets.module';
     BrowserAnimationsModule,
     MatCardModule,
     MatGridListModule,
+    CategoryModule,
     EquipmentsModule,
     AssetsModule,
+    SoftwareLicensesModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

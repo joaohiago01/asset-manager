@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   public isActiveCategory: boolean = false;
   public isActiveEquipments: boolean = false;
   public isActiveAssets: boolean = false;
+  public isActiveSoftwareLicenses: boolean = false;
 
   constructor(
     public router: Router,
@@ -21,20 +22,30 @@ export class MenuComponent implements OnInit {
     if (this.router.url === '/dashboard') {
       this.isActiveDashboard = true;
       this.isActiveEquipments = false;
+      this.isActiveSoftwareLicenses = false;
       this.isActiveCategory = false;
       this.isActiveAssets = false;
     } else if (this.router.url === '/category') {
       this.isActiveCategory = true;
       this.isActiveEquipments = false;
+      this.isActiveSoftwareLicenses = false;
       this.isActiveDashboard = false;
       this.isActiveAssets = false;
     } else if (this.router.url === '/equipments' || this.router.url === '/equipments/form') {
       this.isActiveEquipments = true;
       this.isActiveCategory = false;
       this.isActiveAssets = false;
+      this.isActiveSoftwareLicenses = false;
       this.isActiveDashboard = false;
     } else if (this.router.url === '/assets' || this.router.url === '/assets/form') {
       this.isActiveAssets = true;
+      this.isActiveEquipments = false;
+      this.isActiveSoftwareLicenses = false;
+      this.isActiveCategory = false;
+      this.isActiveDashboard = false;
+    } else if (this.router.url === '/software-licenses' || this.router.url === '/software-licenses/form') {
+      this.isActiveSoftwareLicenses = true;
+      this.isActiveAssets = false;
       this.isActiveEquipments = false;
       this.isActiveCategory = false;
       this.isActiveDashboard = false;
@@ -55,6 +66,10 @@ export class MenuComponent implements OnInit {
 
   navigateToAssets() {
     this.router.navigate(['assets']);
+  }
+
+  navigateToSoftwareLicenses() {
+    this.router.navigate(['software-licenses']);
   }
 
   logout() {

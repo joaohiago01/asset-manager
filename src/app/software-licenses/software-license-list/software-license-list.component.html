@@ -4,9 +4,9 @@
   </div>
   <div class="column is-9">
     <div class="container">
-      <div class="header-asset">
+      <div class="header-software-license">
         <button
-          (click)="navigateToAssetCreate()"
+          (click)="navigateToSoftwareLicenseCreate()"
           #btnSave
           class="btn-save"
           mat-raised-button
@@ -19,18 +19,18 @@
 
       <div class="list">
         <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let asset of assets">
+          <li *ngFor="let softwareLicense of softwareLicenses">
             <mat-grid-tile>
-              <mat-card class="card-asset">
+              <mat-card class="card-software-license">
                 <div class="container-title">
                   <div class="header-card">
-                    <span>{{ asset.name | slice: 0:40 }}</span>
+                    <span>{{ softwareLicense.name }}</span>
                   </div>
                   <div class="header-icon">
                     <button
                       class="mx-1 edit-button"
                       mat-icon-button
-                      (click)="detailAsset(asset.id)"
+                      (click)="detailSoftwareLicense(softwareLicense.id)"
                     >
                       <i class="material-icons v-middle color-card-icon"
                         >edit</i
@@ -42,24 +42,23 @@
                 <div class="content-card">
                   <div>
                     <p class="field-title">Categoria:</p>
-                    <span>{{ asset.categoryName }}</span>
+                    <span>{{ softwareLicense.categoryName }}</span>
                   </div>
                   <div>
-                    <p class="field-title">Localização:</p>
-                    <span>{{ asset.bookcase }}</span>
-                    <span>{{ asset.shelf }}</span>
+                    <p class="field-title">Número:</p>
+                    <span>{{ softwareLicense.number }}</span>
                   </div>
                   <div>
-                    <p class="field-title">Estoque:</p>
-                    <span>{{ asset.currentQuantity }}</span>
+                    <p class="field-title">Chave de Ativação:</p>
+                    <span>{{ softwareLicense.activationKey }}</span>
                   </div>
                   <div>
-                    <p class="field-title">Unidade de Medida:</p>
-                    <span>{{ asset.unitOfMeasurement }}</span>
+                    <p class="field-title">Máximo de Ativações:</p>
+                    <span>{{ softwareLicense.maxActivations }}</span>
                   </div>
                   <div>
-                    <p class="field-title">Quantidade Mínima:</p>
-                    <span>{{ asset.minQuantity }}</span>
+                    <p class="field-title">Quantidade de Ativações Usadas:</p>
+                    <span>{{ softwareLicense.numberOfActivationsUsed }}</span>
                   </div>
                 </div>
               </mat-card>
