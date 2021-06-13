@@ -5,6 +5,7 @@ import { Asset } from 'src/app/shared/models/asset.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { AssetService } from 'src/app/assets/services/asset.service';
 import { CategoryService } from 'src/app/category/services/category.service';
+import { CategoryType } from 'src/app/shared/models/categoryType.enum';
 
 @Component({
   selector: 'app-asset-form',
@@ -37,7 +38,14 @@ export class AssetFormComponent implements OnInit {
 
   async ngOnInit() {
     this.asset = window.history.state.asset;
-    this.categories = await this.categoryService.getAllCategories();
+
+    let allCategories = await this.categoryService.getAllCategories();
+    allCategories.forEach((category) => {
+      if (category.categoryType !== CategoryType.SOFTWARE) {
+        this.categories.push(category);
+      }
+    });
+
     if (this.asset) {
       let selectedCategoryId = this.categories.find(
         (category: Category) => category.id === this.asset?.categoryId

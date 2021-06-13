@@ -1,1 +1,121 @@
-<p>software-license-form works!</p>
+<div class="columns">
+  <div class="column is-3 background-color">
+    <app-menu></app-menu>
+  </div>
+  <div class="column is-9">
+    <div class="container">
+      <form
+        role="form"
+        (submit)="
+          createSoftwareLicense(
+            selectedCategoryId,
+            name.value,
+            number.value,
+            activationKey.value,
+            maxActivations.value
+          )
+        "
+      >
+        <div class="header-software-licence-create">
+          <button
+            id="create"
+            class="btn-save"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Salvar
+          </button>
+
+          <button
+            id="delete"
+            *ngIf="softwareLicense ? softwareLicense.id : 0"
+            class="btn-delete"
+            mat-raised-button
+            type="button"
+            (click)="
+              softwareLicense && deleteSoftwareLicense(softwareLicense.id)
+            "
+          >
+            Deletar
+          </button>
+        </div>
+      </form>
+
+      <div class="content-software-licence-create">
+        <div class="one-field-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Categoria:</mat-label>
+            <mat-select id="categories" [(ngModel)]="selectedCategoryId">
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category.id"
+              >
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Software:</mat-label>
+            <input
+              #name
+              id="name"
+              class="input medium-input"
+              value="{{ softwareLicense ? softwareLicense.name : '' }}"
+              placeholder="Digite o nome do software"
+              matInput
+            />
+          </div>
+        </div>
+
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Número:</mat-label>
+            <input
+              #number
+              id="number"
+              class="input medium-input"
+              value="{{ softwareLicense ? softwareLicense.number : '' }}"
+              placeholder="Digite o número"
+              matInput
+            />
+          </div>
+        </div>
+
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Chave de ativação:</mat-label>
+            <input
+              #activationKey
+              id="activationKey"
+              class="input small-input"
+              value="{{ softwareLicense ? softwareLicense.activationKey : '' }}"
+              placeholder="Digite a chave de ativação"
+              matInput
+            />
+          </div>
+        </div>
+
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Máximo de ativações:</mat-label>
+            <input
+              #maxActivations
+              id="maxActivations"
+              class="input small-input"
+              type="number"
+              value="{{
+                softwareLicense ? softwareLicense.maxActivations : ''
+              }}"
+              placeholder="Digite a quantidade máxima de ativações"
+              matInput
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

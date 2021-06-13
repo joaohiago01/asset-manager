@@ -10,6 +10,7 @@ import { EquipmentApiCampus } from 'src/app/shared/models/equipmentApiCampus.mod
 import { Category } from 'src/app/shared/models/category.model';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { EquipmentService } from '../services/equipment.service';
+import { CategoryType } from 'src/app/shared/models/categoryType.enum';
 
 @Component({
   selector: 'app-equipment-form',
@@ -82,7 +83,14 @@ export class EquipmentFormComponent implements OnInit {
 
     this.equipment = window.history.state.equipment;
     this.conservationStates = Object.values(ConservationState);
-    this.categories = await this.categoryService.getAllCategories();
+
+    let allCategories = await this.categoryService.getAllCategories();
+    allCategories.forEach((category) => {
+      if (category.categoryType !== CategoryType.SOFTWARE) {
+        this.categories.push(category);
+      }
+    });
+
     if (this.equipment) {
       let selectedConservationState = this.conservationStates.find(
         (conservationState: any) =>

@@ -4,11 +4,69 @@ import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SoftwareLicenseService {
-
   constructor(private authenticationService: AuthenticationService) {}
+
+  async createSoftwareLicense(
+    softwareLicense: SoftwareLicense
+  ): Promise<boolean> {
+    let softwareLicenseWasCreated = false;
+
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`,
+      };
+
+      let softwareLicenseServer = {
+        categoriaId: softwareLicense.categoryId,
+        software: softwareLicense.name,
+        numero: softwareLicense.number,
+        chaveAtivacao: softwareLicense.activationKey,
+        maximoAtivacoes: softwareLicense.maxActivations,
+        quantidadeUsada: softwareLicense.numberOfActivationsUsed,
+      };
+      await api.post('/licencas-software', softwareLicenseServer, { headers });
+      softwareLicenseWasCreated = true;
+      return softwareLicenseWasCreated;
+    } catch (error) {
+      console.error(error);
+      return (softwareLicenseWasCreated = false);
+    }
+  }
+
+  async editSoftwareLicense(
+    softwareLicense: SoftwareLicense
+  ): Promise<boolean> {
+    let softwareLicenseWasEdited = false;
+
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`,
+      };
+
+      let softwareLicenseServer = {
+        categoriaId: softwareLicense.categoryId,
+        software: softwareLicense.name,
+        numero: softwareLicense.number,
+        chaveAtivacao: softwareLicense.activationKey,
+        maximoAtivacoes: softwareLicense.maxActivations,
+        quantidadeUsada: softwareLicense.numberOfActivationsUsed,
+      };
+
+      await api.put(
+        `/licencas-software/${softwareLicense.id}`,
+        softwareLicenseServer,
+        { headers }
+      );
+      softwareLicenseWasEdited = true;
+      return softwareLicenseWasEdited;
+    } catch (error) {
+      console.error(error);
+      return (softwareLicenseWasEdited = false);
+    }
+  }
 
   async deleteSoftwareLicense(id: Number): Promise<boolean> {
     let softwareLicenseWasDeleted = false;
@@ -45,7 +103,8 @@ export class SoftwareLicenseService {
             number: softwareLicenseServer.numero,
             activationKey: softwareLicenseServer.chaveAtivacao,
             maxActivations: softwareLicenseServer.maxAtivacoes,
-            numberOfActivationsUsed: softwareLicenseServer.numeroDeAtivacoesUsadas,
+            numberOfActivationsUsed:
+              softwareLicenseServer.numeroDeAtivacoesUsadas,
             categoryId: softwareLicenseServer.categoria.id,
             categoryName: softwareLicenseServer.categoria.nome,
           },
