@@ -25,7 +25,6 @@ export class SoftwareLicenseService {
         numero: softwareLicense.number,
         chaveAtivacao: softwareLicense.activationKey,
         maximoAtivacoes: softwareLicense.maxActivations,
-        quantidadeUsada: softwareLicense.numberOfActivationsUsed,
       };
       await api.post('/licencas-software', softwareLicenseServer, { headers });
       softwareLicenseWasCreated = true;
@@ -52,7 +51,6 @@ export class SoftwareLicenseService {
         numero: softwareLicense.number,
         chaveAtivacao: softwareLicense.activationKey,
         maximoAtivacoes: softwareLicense.maxActivations,
-        quantidadeUsada: softwareLicense.numberOfActivationsUsed,
       };
 
       await api.put(
@@ -95,16 +93,16 @@ export class SoftwareLicenseService {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      const response = await api.get('/licenca-software', { headers });
+      const response = await api.get('/licencas-software', { headers });
       softwareLicenses = response.data.map((softwareLicenseServer: any) => {
         return new SoftwareLicense(
           {
-            name: softwareLicenseServer.nome,
+            name: softwareLicenseServer.software,
             number: softwareLicenseServer.numero,
             activationKey: softwareLicenseServer.chaveAtivacao,
-            maxActivations: softwareLicenseServer.maxAtivacoes,
+            maxActivations: softwareLicenseServer.maximoAtivacoes,
             numberOfActivationsUsed:
-              softwareLicenseServer.numeroDeAtivacoesUsadas,
+              softwareLicenseServer.quantidadeUsada,
             categoryId: softwareLicenseServer.categoria.id,
             categoryName: softwareLicenseServer.categoria.nome,
           },
