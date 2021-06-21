@@ -1,0 +1,169 @@
+.container {
+    width: 100%;
+  }
+  
+  .header-software-licence-create {
+    padding-top: 1rem;
+    padding-right: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn-save {
+    background-color: #1fd181;
+  }
+  
+  .content-software-licence-create {
+    padding-right: 0.8rem;
+    padding-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  mat-form-field {
+    width: 60%;
+  }
+  
+  mat-label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .one-field-container {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-between;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .one-field-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .medium-input {
+    padding-right: 1rem;
+  }
+  
+  .small-input {
+    padding-right: 1rem;
+    width: 50%;
+  }
+
+  .button {
+    width: 8rem;
+    height: 2.4rem;
+    font-size: 15px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 1.2rem;
+    right: 2rem;
+    font-size: 5rem;
+    color: #333;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  .modal-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55%;
+  
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 5;
+  }
+
+  .list {
+    padding-right: 0.8rem;
+    padding-top: 1.2rem;
+  }
+  
+  mat-grid-tile {
+    border: 2px solid gray;
+    border-left: 8px solid gray;
+    border-radius: 4px;
+  }
+  
+  .card-equipment {
+    flex: 1;
+    background-color: white;
+  }
+  
+  .header-card {
+    padding-top: 0.7em;
+    width: 85%;
+  }
+  
+  .header-card > span {
+    font-weight: bold;
+    font-size: 1.3em;
+    border-radius: 3px;
+  }
+
+  .container-title {
+    display: flex;
+  }
+
+  .header-icon > .unlink-button {
+    flex: 1;
+    background-color: gray;
+    border-radius: 5px;
+    width: 2.2rem;
+    margin-top: 0.5rem;
+  }
+  
+  .header-icon {
+    border-radius: 5px;
+  }
+  
+  .header-icon > button {
+    display: flex;
+    width: 2em;
+    height: 2em;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content-card {
+    margin-top: 1.2em;
+  }
+  
+  .container {
+    width: 100%;
+  }
+  
+  .field-title {
+    margin-bottom: 2px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .field-title > span {
+    margin-left: 5px;
+    font-weight: normal;
+  }

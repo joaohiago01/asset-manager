@@ -1,0 +1,220 @@
+<div class="columns">
+    <div class="column is-3 background-color">
+        <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+        <div class="container">
+        <!-- MODAL PARA CADASTRAR CATEGORIA -->
+      <div id="modalAssociate" class="modal-window hidden" style="width: 45%">
+        <header class="modal-card-head">
+          <p class="modal-card-title font-color title m-2">
+            Associar Licença a um Equipamento
+          </p>
+          <button
+            id="btnFechar"
+            class="delete"
+            aria-label="close"
+            (click)="hideModal('#modalAssociate')"
+          ></button>
+        </header>
+        <section class="modal-card-body m-2">
+
+          <p class="subtitle is-6">Você está prestes a associar a seguinte licença:</p>
+          <p class="title is-5">{{ softwareLicense?.name}}</p>
+
+          <mat-label class="two-labels">Pesquise um equipamento:</mat-label>
+          <div class="control has-icons-left mb-5">
+            <input
+              #equipmentSearch
+              id="equipmentSearch"
+              class="input medium-input"
+              placeholder="Digite o nome ou número..."
+              [formControl]="myControl"
+              matInput
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                (click)="autoCompleteEquipmentFields(option.number)"
+              >
+                {{ option.description }}
+              </mat-option>
+            </mat-autocomplete>
+            <span class="icon is-small is-left">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+          
+          <div class="columns">
+            <div class="column is-one-quarter">
+              <mat-label class="two-labels">Número:</mat-label>
+              <input
+                id="number"
+                #number
+                matInput
+                disabled
+                class="input medium-input"
+                value="{{ selectedEquipment?.number }}"
+              />
+            </div>
+            
+            <div class="column">
+              <mat-label class="two-labels">Nome:</mat-label>
+              <input
+                id="name"
+                #name
+                matInput
+                disabled
+                class="input medium-input"
+                value="{{ selectedEquipment?.description }}"/>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-one-third">
+              <mat-label class="two-labels">Hostname:</mat-label>
+              <input
+                id="hostname"
+                #hostname
+                matInput
+                disabled
+                class="input medium-input"
+                value="{{ selectedEquipment?.network?.hostname }}"/>
+            </div>
+
+            <div class="column">
+              <mat-label class="two-labels">Endereço IP:</mat-label>
+              <input
+                id="addressIP"
+                #addressIP
+                matInput
+                disabled
+                class="input medium-input"
+                value="{{ selectedEquipment?.network?.addressIP }}"/>
+            </div>
+            
+            <div class="column">
+              <mat-label class="two-labels">Endereço MAC:</mat-label>
+              <input
+                id="addressMAC"
+                #addressMAC
+                matInput
+                disabled
+                class="input medium-input"
+                value="{{ selectedEquipment?.network?.addressMAC }}"/>
+            </div>
+          </div>
+
+        </section>
+
+        <footer class="modal-card-foot is-justify-content-center is-align-items-center">
+          <form
+          role="form"
+          (submit)="associateSoftwareLicense(selectedEquipment?.id)">
+
+            <button id="create" type="submit" class="button is-success">Confirmar</button>
+          </form>
+
+          <button class="button" (click)="hideModal('#modalAssociate')">
+            Cancelar
+          </button>
+        </footer>
+      </div>
+      <div class="overlay hidden"></div>
+
+        <div class="header-software-licence-create">
+          <div class="header-category">
+            <button
+              id="associate"
+              #btnAssociate
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="showModal('#modalAssociate')"
+            >
+              <i class="material-icons">link</i>
+              Associar
+            </button>
+          </div>
+        </div>
+      </div>
+  
+        <div class="content-software-licence-create">
+
+            <div>
+                <p class="subtitle is-5">Informações da Licença de Software</p>
+
+                <p class="field-title has-text-weight-bold">Nome: <span>{{ softwareLicense?.name }}</span></p>
+          
+                <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
+                
+                <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
+                
+                <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
+                
+                <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
+                
+                <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
+            </div>
+
+            <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Equipamentos Associados:</p>
+
+            <div class="list">
+              <div *ngIf="associatedEquipments.length < 1">
+                <p class="title is-6 has-text-centered mt-5">Nenhum equipamento associado foi encontrado!</p>
+              </div>
+
+                <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem" *ngIf="associatedEquipments.length > 0">
+                  <li *ngFor="let equipment of associatedEquipments">
+                    <mat-grid-tile>
+                      <mat-card class="card-equipment">
+                        <div class="container-title">
+                          <div class="header-card">
+                            <span>{{ equipment.description | slice: 0:40 }}</span>
+                          </div>
+                          <div class="header-icon">
+                            <button
+                              id="unlink"
+                              class="mx-1 unlink-button"
+                              mat-icon-button
+                              (click)="disassociateSoftwareLicense(equipment.id)"
+                            >
+                              <i class="material-icons v-middle color-card-icon"
+                                >link_off</i>
+                            </button>
+                          </div>
+                        </div>
+        
+                        <div class="content-card">
+                          <div>
+                            <p class="field-title">Categoria: <span>{{ equipment.categoryName }}</span></p>
+                          </div>
+
+                          <div>
+                            <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
+                          </div>
+
+                          <div>
+                            <p class="field-title">Hostname: <span>{{ equipment.network.hostname }}</span></p>
+                          </div>
+
+                          <div>
+                            <p class="field-title">Endereço IP: <span>{{ equipment.network.addressIP }}</span></p>
+                          </div>
+                          
+                          <div>
+                            <p class="field-title">Endereço MAC: <span>{{ equipment.network.addressMAC }}</span></p>
+                          </div>
+
+                        </div>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </li>
+                </mat-grid-list>
+              </div>
+
+        </div>
+
+    </div>
+  </div>

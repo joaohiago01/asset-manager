@@ -4,67 +4,6 @@
   </div>
   <div class="column is-9">
     <div class="container">
-      <!-- MODAL PARA CADASTRAR CATEGORIA -->
-      <div id="modalAssociate" class="modal-window hidden" style="width: 45%">
-        <header class="modal-card-head">
-          <p class="modal-card-title font-color title m-2">
-            Associar Licença a um Equipamento
-          </p>
-          <button
-            id="btnFechar"
-            class="delete"
-            aria-label="close"
-            (click)="hideModal('#modalAssociate')"
-          ></button>
-        </header>
-        <section class="modal-card-body m-2">
-          <p class="subtitle is-6">Pesquise um Equipamento</p>
-          <div class="control has-icons-left mb-5">
-            <input
-              #name
-              id="equipmentSearch"
-              class="input medium-input"
-              placeholder="Digite o nome ou número..."
-              matInput
-            />
-            <span class="icon is-small is-left">
-              <i class="fa fa-search"></i>
-            </span>
-          </div>
-          
-          <div class="two-fields-container">
-            <div class="two-fields-box">
-              <mat-label>Número:</mat-label>
-              <input
-                #number
-                id="number"
-                class="input medium-input"
-                aria-label="Número"
-                matInput
-              />
-            </div>
-
-            <div class="two-fields-box">
-              <mat-label class="two-labels">Nome</mat-label>
-              <input
-                #description
-                id="description"
-                class="input medium-input"
-                matInput
-              />
-            </div>
-          </div>
-        </section>
-
-        <footer
-          class="modal-card-foot is-justify-content-center is-align-items-center">
-          <button class="button" (click)="hideModal('#modalAssociate')">
-            Cancelar
-          </button>
-        </footer>
-      </div>
-      <div class="overlay hidden"></div>
-
       <div class="header-software-license">
         <button
           (click)="navigateToSoftwareLicenseCreate()"
@@ -85,9 +24,18 @@
               <mat-card class="card-software-license">
                 <div class="container-title">
                   <div class="header-card">
-                    <span>{{ softwareLicense.name }}</span>
+                    <span>{{ softwareLicense.name | slice: 0:40 }}</span>
                   </div>
                   <div class="header-icon">
+                    <button
+                      class="mx-1 info-button"
+                      mat-icon-button
+                      (click)="detailSoftwareLicenseAssociations(softwareLicense.id)"
+                    >
+                      <i class="material-icons v-middle color-card-icon"
+                        >info</i
+                      >
+                    </button>
                     <button
                       class="mx-1 edit-button"
                       mat-icon-button

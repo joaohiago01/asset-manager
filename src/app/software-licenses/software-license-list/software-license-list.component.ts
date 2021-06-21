@@ -64,8 +64,23 @@ export class SoftwareLicenseListComponent implements OnInit {
     this.router.navigate(['/software-licenses/form']);
   }
 
-  async associateSoftwareLicense(): Promise<void> {}
+  detailSoftwareLicenseAssociations(softwareLicenseId: number) {
+    this.selectedSoftwareLicense = <SoftwareLicense>(
+      this.softwareLicenses.find(
+        (softwareLicense: SoftwareLicense) =>
+          softwareLicense.id === softwareLicenseId
+      )
+    );
 
+    this.router.navigate(['software-licenses/associations'], {
+      state: { softwareLicense: this.selectedSoftwareLicense },
+    });
+  }
+
+  navigateToSoftwareLicenseAssociations(): void {
+    this.router.navigate(['/software-licenses/associations']);
+  }
+  
   showModal(modalSelector: string) {
     const modal: HTMLDivElement = <HTMLDivElement>(
       document.querySelector(modalSelector)

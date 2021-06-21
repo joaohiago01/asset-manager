@@ -55,7 +55,7 @@ export class EquipmentService {
       equipments = response.data.map((equipmentServer: any) => {
         return new Equipment(
           {
-            categoryId: equipmentServer.categoriaId,
+            categoryId: equipmentServer.categoria.id,
             number: Number.parseInt(equipmentServer.numero),
             serialNumber: equipmentServer.numeroSerie,
             description: equipmentServer.descricao,
