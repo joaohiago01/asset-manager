@@ -6,6 +6,7 @@
     <div class="container">
       <div class="header-software-license">
         <button
+          id="add"
           (click)="navigateToSoftwareLicenseCreate()"
           #btnSave
           class="btn-save"
@@ -28,6 +29,7 @@
                   </div>
                   <div class="header-icon">
                     <button
+                      id="detailWithAssociationsButton"
                       class="mx-1 info-button"
                       mat-icon-button
                       (click)="detailSoftwareLicenseAssociations(softwareLicense.id)"
@@ -37,6 +39,7 @@
                       >
                     </button>
                     <button
+                      id="edit"
                       class="mx-1 edit-button"
                       mat-icon-button
                       (click)="detailSoftwareLicense(softwareLicense.id)"

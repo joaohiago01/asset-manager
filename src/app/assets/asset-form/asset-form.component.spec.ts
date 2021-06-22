@@ -1,6 +1,6 @@
 //import { browser, element, by } from 'protractor';
 
-describe('Create or Edit New Equipment', () => {
+describe('Create or Edit New Asset', () => {
   beforeEach(() => {
     browser.driver.manage().window().maximize();
     browser.get('https://localhost:4200/login');

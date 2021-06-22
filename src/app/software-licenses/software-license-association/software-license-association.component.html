@@ -35,6 +35,7 @@
             />
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
+                id="equipmentSelected"
                 *ngFor="let option of filteredOptions | async"
                 (click)="autoCompleteEquipmentFields(option.number)"
               >
@@ -45,7 +46,7 @@
               <i class="fa fa-search"></i>
             </span>
           </div>
-          
+
           <div class="columns">
             <div class="column is-one-quarter">
               <mat-label class="two-labels">Número:</mat-label>
@@ -58,7 +59,7 @@
                 value="{{ selectedEquipment?.number }}"
               />
             </div>
-            
+
             <div class="column">
               <mat-label class="two-labels">Nome:</mat-label>
               <input
@@ -93,7 +94,7 @@
                 class="input medium-input"
                 value="{{ selectedEquipment?.network?.addressIP }}"/>
             </div>
-            
+
             <div class="column">
               <mat-label class="two-labels">Endereço MAC:</mat-label>
               <input
@@ -139,22 +140,22 @@
           </div>
         </div>
       </div>
-  
+
         <div class="content-software-licence-create">
 
             <div>
                 <p class="subtitle is-5">Informações da Licença de Software</p>
 
                 <p class="field-title has-text-weight-bold">Nome: <span>{{ softwareLicense?.name }}</span></p>
-          
+
                 <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
-                
+
                 <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
-                
+
                 <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
-                
+
                 <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
-                
+
                 <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
             </div>
 
@@ -185,7 +186,7 @@
                             </button>
                           </div>
                         </div>
-        
+
                         <div class="content-card">
                           <div>
                             <p class="field-title">Categoria: <span>{{ equipment.categoryName }}</span></p>
@@ -202,7 +203,7 @@
                           <div>
                             <p class="field-title">Endereço IP: <span>{{ equipment.network.addressIP }}</span></p>
                           </div>
-                          
+
                           <div>
                             <p class="field-title">Endereço MAC: <span>{{ equipment.network.addressMAC }}</span></p>
                           </div>
