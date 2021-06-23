@@ -119,6 +119,10 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
 
   }
 
+  navigateToSoftwareLicenses(): void {
+    this.router.navigate(['/software-licenses']);
+  }
+
   public autoCompleteEquipmentFields(equipmentNumber: number) {
     this.selectedEquipment = this.equipments.find(
       (equipment) => {
@@ -135,12 +139,16 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
   }
 
   private _filter(value: string): Equipment[] {
-    const filterValue = value.toLowerCase();
-    return this.equipments.filter(
-      (option) =>
-        String(option.number).toLowerCase().includes(filterValue) ||
-        option.description.toLowerCase().includes(filterValue)
-    );
+    if (value !== undefined) {
+      const filterValue = value.toLowerCase();
+      return this.equipments.filter(
+        (option) =>
+          String(option.number).toLowerCase().includes(filterValue) ||
+          option.description.toLowerCase().includes(filterValue)
+      );
+    }
+
+    return [];
   }
 
   showModal(modalSelector: string) {

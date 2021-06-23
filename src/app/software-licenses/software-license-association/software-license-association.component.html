@@ -127,6 +127,17 @@
         <div class="header-software-licence-create">
           <div class="header-category">
             <button
+              id="return"
+              #btnReturn
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="navigateToSoftwareLicenses()"
+            >
+              <i class="material-icons">arrow_back</i>
+              Voltar
+            </button>
+            <button
               id="associate"
               #btnAssociate
               class="btn-save"
