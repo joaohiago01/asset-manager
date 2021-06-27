@@ -37,6 +37,11 @@ const routes: Routes = [
     path: 'software-licenses',
     loadChildren: () => import('./software-licenses/software-licenses.module').then(m => m.SoftwareLicensesModule),
     canActivate: [AuthenticationGuardService]
+  },
+  {
+    path: 'departments',
+    loadChildren: () => import('./departments/departments.module').then(m => m.DepartmentsModule),
+    canActivate: [AuthenticationGuardService]
   }
 ];
 

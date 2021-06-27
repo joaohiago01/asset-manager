@@ -1,1 +1,169 @@
-<p>departments-list works!</p>
+<div class="columns">
+    <div class="column is-3 background-color">
+      <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+      <div class="container">
+        <!-- MODAL PARA CADASTRAR SETOR -->
+        <div id="modalCadastrar" class="modal-window hidden" style="width: 45%">
+          <header class="modal-card-head">
+            <p class="modal-card-title font-color title m-2">Cadastrar Setor</p>
+            <button
+              id="btnFechar"
+              class="delete"
+              aria-label="close"
+              (click)="hideModal('#modalCadastrar')"
+            ></button>
+          </header>
+          
+          <section
+            class="modal-card-body"
+            style="margin-right: 15%; margin-left: 15%"
+          >
+            <label for="name" class="label">Nome</label>
+            <input
+              id="nameModalNew"
+              type="text"
+              #name
+              class="input is-success mb-5"
+              placeholder="Nome do setor"
+            />
+  
+            <label for="acronym" class="label">Sigla</label>
+            <input
+              id="acronymModalNew"
+              type="text"
+              #acronym
+              class="input is-success mb-5"
+              placeholder="Sigla do setor"
+            />
+          </section>
+  
+          <footer
+            class="modal-card-foot is-justify-content-center is-align-items-center"
+          >
+            <form
+              role="form"
+              (submit)="createDepartment(name.value, acronym.value)"
+            >
+              <button id="create" type="submit" class="button is-success">Cadastrar</button>
+            </form>
+            <button class="button" (click)="hideModal('#modalCadastrar')">
+              Cancelar
+            </button>
+          </footer>
+        </div>
+        <div class="overlay hidden"></div>
+        <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
+  
+        <!-- BOTÃO PARA ABRIR O MODAL DE CADASTRO -->
+        <div class="header-department">
+          <button
+            id="add"
+            #btnCadastrar
+            class="btn-cadastrar"
+            mat-raised-button
+            color="primary"
+            (click)="showModal('#modalCadastrar')"
+          >
+            <i class="material-icons">add</i>
+            Cadastrar
+          </button>
+        </div>
+  
+        <!-- MODAL PARA EDITAR CATEGORIA -->
+        <div id="modalEditar" class="modal-window hidden" style="width: 45%">
+          <header class="modal-card-head">
+            <p class="modal-card-title font-color title m-2">Editar Setor</p>
+            <button
+              id="btnClose"
+              class="delete"
+              aria-label="close"
+              (click)="hideModal('#modalEditar')"
+            ></button>
+          </header>
+
+          <section
+            class="modal-card-body"
+            style="margin-right: 15%; margin-left: 15%"
+          >
+            <label for="name" class="label">Nome</label>
+            <input
+              id="nameModalEdit"
+              type="text"
+              #nameEdit
+              class="input is-success mb-5"
+              placeholder="Nome do setor"
+              [value]="department.name"
+            />
+  
+            <label for="acronym" class="label">Sigla</label>
+            <input
+              id="acronymModalEdit"
+              type="text"
+              #acronymEdit
+              class="input is-success mb-5"
+              placeholder="Sigla do setor"
+              [value]="department.acronym"
+            />
+          </section>
+  
+          <footer
+            class="modal-card-foot is-justify-content-center is-align-items-center"
+          >
+            <form
+              role="form"
+              (submit)="editDepartment(department.id, nameEdit.value, acronymEdit.value)"
+            >
+              <button id="edit" type="submit" class="button is-success">Salvar</button>
+            </form>
+            <button class="button" (click)="hideModal('#modalEditar')">
+              Cancelar
+            </button>
+          </footer>
+        </div>
+  
+        <!-- LISTA DE CARDS DE SETOR -->
+        <div class="list">
+          <mat-grid-list cols="3" rowHeight="8.5rem" gutterSize="0.8rem">
+            <li *ngFor="let department of departments">
+              <mat-grid-tile>
+                <mat-card class="card-department">
+                  <div class="container-title">
+                    <div class="header-card">
+                        <span>{{ department.acronym }}</span>
+                    </div>
+                    <div class="header-icon">
+                        <button
+                        id="edit"
+                        class="mx-1 edit-button"
+                        mat-icon-button
+                        (click)="detailDepartment(department.id)">
+                        <i class="material-icons v-middle color-card-icon">edit</i>
+                        </button>
+
+                        <button
+                        id="deleteButton"
+                        class="mx-1 delete-button"
+                        mat-icon-button
+                        (click)="deleteDepartment(department.id)">
+                        <i class="material-icons v-middle color-card-icon">delete</i>
+                        </button>
+                    </div>
+                  </div>
+
+                  <div class="content-card">
+                    <span>NOME</span>
+                    <div class="department-name">
+                      <span>{{ department.name | slice: 0:37 }}</span>
+                    </div>
+                  </div>
+                </mat-card>
+              </mat-grid-tile>
+            </li>
+          </mat-grid-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -40,7 +40,8 @@ export class DepartmentService {
     }
   }
 
-  async createDepartment(department: Department): Promise<AxiosResponse> {
+  async createDepartment(department: Department): Promise<boolean> {
+    let departmentWasCreated = false;
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -50,10 +51,13 @@ export class DepartmentService {
         nome: department.name,
         sigla: department.acronym,
       };
-      return await api.post('/setores', departmentServer, { headers });
+      await api.post('/setores', departmentServer, { headers });
+
+      departmentWasCreated = true;
+      return departmentWasCreated;
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      return (departmentWasCreated = false);
     }
   }
 
