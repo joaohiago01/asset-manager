@@ -14,6 +14,8 @@ import { CategoryModule } from './category/category.module';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { AssetsModule } from './assets/assets.module';
 import { SoftwareLicensesModule } from './software-licenses/software-licenses.module';
+import { DepartmentsListComponent } from './departments/departments-list/departments-list.component';
+import { DepartmentsModule } from './departments/departments.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +35,8 @@ import { SoftwareLicensesModule } from './software-licenses/software-licenses.mo
     CategoryModule,
     EquipmentsModule,
     AssetsModule,
-    SoftwareLicensesModule
+    SoftwareLicensesModule,
+    DepartmentsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],
