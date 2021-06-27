@@ -83,6 +83,8 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
       if (softwareLicenseWasAssociated) {
         alert('A Licença de Software foi associada com sucesso!')
 
+        this.softwareLicense.numberOfActivationsUsed++;
+
         this.router.navigate(['software-licenses/associations'], {
           state: { softwareLicense: this.softwareLicense },
         });
@@ -105,6 +107,8 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
 
       if (softwareLicenseWasDisassociated) {
         alert('A associação foi desfeita com sucesso!')
+
+        this.softwareLicense.numberOfActivationsUsed--;
 
         this.router.navigate(['software-licenses/associations'], {
           state: { softwareLicense: this.softwareLicense },
