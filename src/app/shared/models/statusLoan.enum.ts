@@ -1,0 +1,5 @@
+export enum StatusLoan {
+  EMPRESTADO = 'EMPRESTADO',
+	DEVOLVIDO = 'DEVOLVIDO',
+	EXPIRADO = 'EXPIRADO'
+}

@@ -60,7 +60,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
     maxActivations: string
   ): Promise<void> {
     if (this.softwareLicense) {
-      this.editAsset(
+      this.editSoftwareLicense(
         this.softwareLicense.id,
         selectedCategoryId,
         name,
@@ -100,7 +100,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
     }
   }
 
-  async editAsset(
+  async editSoftwareLicense(
     id: number,
     selectedCategoryId: number,
     name: string,
