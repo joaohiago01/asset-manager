@@ -77,4 +77,51 @@ export class LoanService {
       return (loanWasDeleted = false);
     }
   }
+
+  async getAllLoans(): Promise<Loan[]> {
+    try {
+      let loans!: Loan[];
+
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`,
+      };
+
+      const response = await api.get('/emprestimos', { headers });
+      loans = response.data.map((loanServer: any) => {
+        return new Loan(
+          {
+            callNumberSuap: loanServer.numeroChamadoSuap,
+            callLinkSuap: loanServer.linkChamadoSuap,
+            observations: loanServer.observacoes,
+            outputDate: loanServer.dataSaida,
+            returnDate: loanServer.dataPrevistaRetorno,
+            expectedReturnDate: loanServer.dataRetorno,
+            statusLoan: loanServer.status,
+            equipmentId: loanServer.equipamento.id,
+            equipmentName: loanServer.equipamento.descricao,
+            department: {
+              name: loanServer.setor.nome,
+              acronym: loanServer.setor.sigla,
+              id: loanServer.setor.id,
+            },
+            requestor: {
+              name: loanServer.solicitante.nome,
+              registrationNumber: loanServer.solicitante.matricula,
+            },
+            consignor: {
+              name: loanServer.expedidor.nome,
+              registrationNumber: loanServer.expedidor.matricula,
+            },
+          },
+          loanServer.id
+        );
+      });
+
+      return loans;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
 }

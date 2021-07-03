@@ -16,9 +16,10 @@ import { AssetsModule } from './assets/assets.module';
 import { SoftwareLicensesModule } from './software-licenses/software-licenses.module';
 import { DepartmentsListComponent } from './departments/departments-list/departments-list.component';
 import { DepartmentsModule } from './departments/departments.module';
+import { LoanListComponent } from './loans/loan-list/loan-list.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoanListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

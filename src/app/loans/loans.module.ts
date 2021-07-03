@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { LoansRoutingModule } from './loans-routing.module';
 import { LoanFormComponent } from './loan-form/loan-form.component';
+import { LoanListComponent } from './loan-list/loan-list.component';
 
 
 @NgModule({
   declarations: [
-    LoanFormComponent
+    LoanFormComponent,
+    LoanListComponent
   ],
   imports: [
     CommonModule,
