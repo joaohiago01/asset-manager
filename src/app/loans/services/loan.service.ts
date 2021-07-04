@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Loan } from 'src/app/shared/models/loan.model';
+import { StatusLoan } from 'src/app/shared/models/statusLoan.enum';
 import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
@@ -16,16 +17,34 @@ export class LoanService {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
+      let equipamentoIdInputDTO = {
+        id: loan.equipmentId
+      };
+      let setorIdInputDTO = {
+        id: loan.department?.id
+      };
+      let expedidor = {
+        matricula: loan.consignor.registrationNumber,
+        nome: loan.consignor.name
+      };
+      let solicitante = {
+        matricula: loan.requestor.registrationNumber,
+        nome: loan.requestor.name
+      };
       let loanServer = {
         numeroChamadoSuap: loan.callNumberSuap,
         linkChamadoSuap: loan.callLinkSuap,
         observacoes: loan.observations,
-        dataSaida: loan.outputDate,
-        dataPrevistaRetorno: loan.returnDate,
-        dataRetorno: loan.expectedReturnDate,
-        status: loan.statusLoan,
-        equipamentoId: loan.equipmentId,
+        dataSaida: loan.outputDate.toISOString(),
+        dataPrevistaRetorno: loan.returnDate.toISOString(),
+        dataRetorno: loan.expectedReturnDate.toISOString(),
+        status: StatusLoan.EMPRESTADO,
+        equipamento: equipamentoIdInputDTO,
+        setor: setorIdInputDTO,
+        expedidor,
+        solicitante
       };
+
       await api.post('/emprestimos', loanServer, { headers });
       loanWasCreated = true;
       return loanWasCreated;
@@ -42,15 +61,31 @@ export class LoanService {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
+      let equipamentoIdInputDTO = {
+        id: loan.equipmentId
+      };
+      let setorIdInputDTO = {
+        id: loan.department?.id
+      };
+      let expedidor = {
+        matricula: loan.consignor.registrationNumber,
+        nome: loan.consignor.name
+      };
+      let solicitante = {
+        matricula: loan.requestor.registrationNumber,
+        nome: loan.requestor.name
+      };
       let loanServer = {
         numeroChamadoSuap: loan.callNumberSuap,
         linkChamadoSuap: loan.callLinkSuap,
         observacoes: loan.observations,
-        dataSaida: loan.outputDate,
-        dataPrevistaRetorno: loan.returnDate,
-        dataRetorno: loan.expectedReturnDate,
+        dataPrevistaRetorno: loan.returnDate.toISOString(),
+        dataRetorno: loan.expectedReturnDate.toISOString(),
         status: loan.statusLoan,
-        equipamentoId: loan.equipmentId,
+        equipamento: equipamentoIdInputDTO,
+        setor: setorIdInputDTO,
+        expedidor,
+        solicitante
       };
 
       await api.put(`/emprestimos/${loan.id}`, loanServer,{ headers });

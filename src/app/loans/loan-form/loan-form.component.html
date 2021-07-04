@@ -1,1 +1,199 @@
-<p>loan-form works!</p>
+<div class="columns">
+  <div class="column is-3 background-color">
+    <app-menu></app-menu>
+  </div>
+  <div class="column is-9">
+    <div class="container">
+      <form
+        role="form"
+        (submit)="createLoan(
+          selectedDepartmentId,
+          selectedEquipmentId,
+          callNumberSuap.value,
+          callLinkSuap.value,
+          observations.value,
+          returnDate.value,
+          expectedReturnDate.value,
+          selectedStatusLoan,
+          consignorName.value,
+          consignorRegistrationNumber.value,
+          requestorName.value,
+          requestorRegistrationNumber.value
+        )"
+      >
+        <div class="header-loan-create">
+          <button
+            id="create"
+            class="btn-save"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Salvar
+          </button>
+
+          <button
+            id="delete"
+            *ngIf="loan ? loan.id : 0"
+            class="btn-delete"
+            mat-raised-button
+            type="button"
+            (click)="loan && deleteLoan(loan.id)"
+          >
+            Deletar
+          </button>
+        </div>
+      </form>
+
+      <div class="content-loan-create">
+        <div class="two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Nome do Expedidor:</mat-label>
+            <input
+              #consignorName
+              id="consignorName"
+              class="input medium-input"
+              value="{{ loan ? loan.consignor.name : '' }}"
+              placeholder="Digite o Nome do Expedidor"
+              matInput
+            />
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Matrícula do Expedidor:</mat-label>
+            <input
+              #consignorRegistrationNumber
+              id="consignorRegistrationNumber"
+              class="input medium-input"
+              value="{{ loan ? loan.consignor.registrationNumber : '' }}"
+              placeholder="Digite a Matrícula do Expedidor"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Nome do Solicitante:</mat-label>
+            <input
+              #requestorName
+              id="requestorName"
+              class="input medium-input"
+              value="{{ loan ? loan.requestor.name : '' }}"
+              placeholder="Digite o Nome do Solicitante"
+              matInput
+            />
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Matrícula do Solicitante:</mat-label>
+            <input
+              #requestorRegistrationNumber
+              id="requestorRegistrationNumber"
+              class="input medium-input"
+              value="{{ loan ? loan.requestor.registrationNumber : '' }}"
+              placeholder="Digite a Matrícula do Solicitante"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">N° do Chamado do SUAP:</mat-label>
+            <input
+              #callNumberSuap
+              id="callNumberSuap"
+              class="input medium-input"
+              value="{{ loan ? loan.callNumberSuap : '' }}"
+              placeholder="Digite o N° do Chamado do SUAP"
+              matInput
+            />
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Link do Chamado do SUAP:</mat-label>
+            <input
+              #callLinkSuap
+              id="callLinkSuap"
+              class="input medium-input"
+              value="{{ loan ? loan.callLinkSuap : '' }}"
+              placeholder="Digite o Link do Chamado do SUAP"
+              matInput
+            />
+          </div>
+        </div>
+        <div class="two-fields-container">
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Data de Retorno:</mat-label>
+            <input
+              #returnDate
+              id="returnDate"
+              class="input medium-input"
+              value="{{ loan ? loan.returnDate : 'new Date()' }}"
+              type="datetime-local"
+            />
+          </div>
+          <div class="two-fields-box">
+            <mat-label class="two-labels">Data Prevista de Retorno:</mat-label>
+            <input
+              #expectedReturnDate
+              id="expectedReturnDate"
+              class="input medium-input"
+              value="{{ loan ? loan.expectedReturnDate : '' }}"
+              type="datetime-local"
+            />
+          </div>
+        </div>
+        <div class="one-field-container" *ngIf="loan">
+          <div class="one-field-box">
+            <mat-label>Status:</mat-label>
+            <div class="select is-fullwidth">
+              <select id="statusLoan" [(ngModel)]="selectedStatusLoan">
+                <option *ngFor="let status of statusLoans" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="two-fields-container">
+          <div class="two-fields-box">
+            <mat-form-field appearance="fill">
+              <mat-label>Equipamento:</mat-label>
+              <mat-select id="equipments" [(ngModel)]="selectedEquipmentId">
+                <mat-option
+                  *ngFor="let equipment of equipments"
+                  [value]="equipment.id"
+                >
+                  {{ equipment.description }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="two-fields-box">
+            <mat-form-field appearance="fill">
+              <mat-label>Setor:</mat-label>
+              <mat-select id="departments" [(ngModel)]="selectedDepartmentId">
+                <mat-option
+                  *ngFor="let department of departments"
+                  [value]="department.id"
+                >
+                  {{ department.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Observações:</mat-label>
+            <textarea
+              #observations
+              id="observations"
+              type="text"
+              class="inputObservation"
+              value="{{ loan ? loan.observations : '' }}"
+              placeholder="Digite as Observações"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
