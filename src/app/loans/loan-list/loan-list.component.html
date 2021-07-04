@@ -55,6 +55,10 @@
                       <span>{{ loan.callNumberSuap }}</span>
                     </div>
                     <div>
+                      <p class="field-title">Setor:</p>
+                      <span>{{ loan.department?.name | slice: 0:25 }}</span>
+                    </div>
+                    <div>
                       <p class="field-title">Status:</p>
                       <span>{{ loan.statusLoan }}</span>
                     </div>
