@@ -7,6 +7,7 @@ import { Contributor } from 'src/app/shared/models/contributor.model';
 import { Department } from 'src/app/shared/models/department.model';
 import { Equipment } from 'src/app/shared/models/equipment.model';
 import { Loan } from 'src/app/shared/models/loan.model';
+import { StatusLoan } from 'src/app/shared/models/statusLoan.enum';
 import { LoanService } from '../services/loan.service';
 
 @Component({
@@ -20,6 +21,8 @@ export class LoanFormComponent implements OnInit {
   public selectedDepartmentId: number = 0;
   public equipments: Equipment[] = [];
   public selectedEquipmentId: number = 0;
+  public statusLoans: string[] = [];
+  public selectedStatusLoan: string = '';
   public myControl = new FormControl();
 
   constructor(
@@ -41,7 +44,12 @@ export class LoanFormComponent implements OnInit {
     this.loan = window.history.state.loan;
     this.equipments = await this.equipmentService.getAllEquipments();
     this.departments = await this.departmentService.getAllDepartments();
+    this.statusLoans = Object.values(StatusLoan);
     if (this.loan) {
+      let selectedStatusLoan = this.statusLoans.find(
+        (statusLoan: any) => statusLoan === this.loan?.statusLoan
+      );
+      this.selectedStatusLoan = selectedStatusLoan ? selectedStatusLoan : '';
       let selectedEquipmentId = this.equipments.find(
         (equipment: Equipment) => equipment.id === this.loan?.equipmentId
       )?.id;
@@ -61,6 +69,7 @@ export class LoanFormComponent implements OnInit {
     observations: string,
     returnDate: string,
     expectedReturnDate: string,
+    statusLoan: string,
     consignorName: string,
     consignorRegistrationNumber: string,
     requestorName: string,
@@ -76,6 +85,7 @@ export class LoanFormComponent implements OnInit {
         observations,
         returnDate,
         expectedReturnDate,
+        statusLoan,
         consignorName,
         consignorRegistrationNumber,
         requestorName,
@@ -126,12 +136,14 @@ export class LoanFormComponent implements OnInit {
     observations: string,
     returnDate: string,
     expectedReturnDate: string,
+    statusLoan: string,
     consignorName: string,
     consignorRegistrationNumber: string,
     requestorName: string,
     requestorRegistrationNumber: string
   ): Promise<void> {
     if (id && selectedDepartmentId && selectedEquipmentId) {
+      const statusLoanSelected: StatusLoan = <StatusLoan> statusLoan;
       const selectedDepartment = this.departments.find(d => d.id === selectedDepartmentId);
       const consignor = new Contributor({
         name: consignorName,
@@ -150,6 +162,7 @@ export class LoanFormComponent implements OnInit {
           outputDate: new Date(),
           returnDate: new Date(returnDate),
           expectedReturnDate: new Date(expectedReturnDate),
+          statusLoan: statusLoanSelected,
           department: selectedDepartment,
           consignor,
           requestor
