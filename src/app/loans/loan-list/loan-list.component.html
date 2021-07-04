@@ -1,1 +1,70 @@
-<p>loan-list works!</p>
+<div class="columns">
+    <div class="column is-3 background-color">
+      <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+      <div class="container">
+        <div class="header-loan">
+          <button
+            id="add"
+            (click)="navigateToLoanCreate()"
+            #btnCadastrar
+            class="btn-cadastrar"
+            mat-raised-button
+            color="primary"
+          >
+            <i class="material-icons">add</i>
+            Cadastrar
+          </button>
+        </div>
+  
+        <div class="list">
+          <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
+            <li *ngFor="let loan of loans">
+              <mat-grid-tile>
+                <mat-card class="card-loan">
+                  <div class="container-title">
+                    <div class="header-card">
+                      <span>{{ loan.equipmentName | slice: 0:40 }}</span>
+                    </div>
+                    <div class="header-icon">
+                      <button
+                        id="edit"
+                        class="mx-1 edit-button"
+                        mat-icon-button
+                        (click)="detailLoan(loan.id)"
+                      >
+                        <i class="material-icons v-middle color-card-icon"
+                          >edit</i
+                        >
+                      </button>
+                    </div>
+                  </div>
+  
+                  <div class="content-card">
+                    <div>
+                      <p class="field-title">Data de saída:</p>
+                      <span>{{ loan.returnDate }}</span>
+                    </div>
+                    <div>
+                      <p class="field-title">Data de retorno esperada: </p>
+                      <span>{{ loan.expectedReturnDate }}</span>
+                    </div>
+                    <div>
+                      <p class="field-title">Nº chamado do SUAP:</p>
+                      <span>{{ loan.callNumberSuap }}</span>
+                    </div>
+                    <div>
+                      <p class="field-title">Status:</p>
+                      <span>{{ loan.statusLoan }}</span>
+                    </div>
+                  </div>
+                </mat-card>
+              </mat-grid-tile>
+            </li>
+          </mat-grid-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  

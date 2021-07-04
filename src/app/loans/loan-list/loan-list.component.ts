@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Loan } from 'src/app/shared/models/loan.model';
+import { LoanService } from '../services/loan.service';
 
 @Component({
   selector: 'app-loan-list',
@@ -7,9 +10,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoanListComponent implements OnInit {
 
-  constructor() { }
+  public loans: Loan[] = [];
+  public selectedLoan!: Loan;
 
-  ngOnInit(): void {
+  constructor(
+    private router: Router,
+    private loanService: LoanService
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    if (window.history.state.needReload) {
+      window.location.reload();
+    } else {
+      await this.getAllLoans();
+    }
+  }
+
+  async getAllLoans(): Promise<void> {
+    this.loans = await this.loanService.getAllLoans();
+
+    if (!this.loans) {
+      alert('Nenhum empréstimo encontrado');
+    }
+  }
+
+  detailLoan(loanId: number) {
+    this.selectedLoan = <Loan>(
+      this.loans.find(
+        (loan: Loan) => loan.id === loanId
+      )
+    );
+
+    this.router.navigate(['loans/form'], {
+      state: { loan: this.selectedLoan },
+    });
+  }
+
+  navigateToLoanCreate(): void {
+    this.router.navigate(['/loans/form']);
   }
 
 }
