@@ -14,12 +14,11 @@ import { CategoryModule } from './category/category.module';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { AssetsModule } from './assets/assets.module';
 import { SoftwareLicensesModule } from './software-licenses/software-licenses.module';
-import { DepartmentsListComponent } from './departments/departments-list/departments-list.component';
 import { DepartmentsModule } from './departments/departments.module';
-import { LoanListComponent } from './loans/loan-list/loan-list.component';
+import { LoansModule } from './loans/loans.module';
 
 @NgModule({
-  declarations: [AppComponent, LoanListComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,7 +36,8 @@ import { LoanListComponent } from './loans/loan-list/loan-list.component';
     EquipmentsModule,
     AssetsModule,
     SoftwareLicensesModule,
-    DepartmentsModule
+    DepartmentsModule,
+    LoansModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

@@ -14,6 +14,7 @@ export class MenuComponent implements OnInit {
   public isActiveAssets: boolean = false;
   public isActiveSoftwareLicenses: boolean = false;
   public isActiveDepartments: boolean = false;
+  public isActiveLoans: boolean = false;
 
   constructor(
     public router: Router,
@@ -27,6 +28,7 @@ export class MenuComponent implements OnInit {
       this.isActiveCategory = false;
       this.isActiveAssets = false;
       this.isActiveDepartments = false;
+      this.isActiveLoans = false;
     } else if (this.router.url === '/category') {
       this.isActiveCategory = true;
       this.isActiveEquipments = false;
@@ -34,6 +36,7 @@ export class MenuComponent implements OnInit {
       this.isActiveDashboard = false;
       this.isActiveAssets = false;
       this.isActiveDepartments = false;
+      this.isActiveLoans = false;
     } else if (this.router.url === '/equipments' || this.router.url === '/equipments/form') {
       this.isActiveEquipments = true;
       this.isActiveCategory = false;
@@ -41,6 +44,7 @@ export class MenuComponent implements OnInit {
       this.isActiveSoftwareLicenses = false;
       this.isActiveDashboard = false;
       this.isActiveDepartments = false;
+      this.isActiveLoans = false;
     } else if (this.router.url === '/assets' || this.router.url === '/assets/form') {
       this.isActiveAssets = true;
       this.isActiveEquipments = false;
@@ -48,6 +52,7 @@ export class MenuComponent implements OnInit {
       this.isActiveCategory = false;
       this.isActiveDashboard = false;
       this.isActiveDepartments = false;
+      this.isActiveLoans = false;
     } else if (this.router.url === '/software-licenses' || this.router.url === '/software-licenses/form') {
       this.isActiveSoftwareLicenses = true;
       this.isActiveAssets = false;
@@ -55,13 +60,23 @@ export class MenuComponent implements OnInit {
       this.isActiveCategory = false;
       this.isActiveDashboard = false;
       this.isActiveDepartments = false;
+      this.isActiveLoans = false;
     } else if (this.router.url === '/departments') {
+      this.isActiveDepartments = true;
       this.isActiveSoftwareLicenses = false;
       this.isActiveAssets = false;
       this.isActiveEquipments = false;
       this.isActiveCategory = false;
       this.isActiveDashboard = false;
-      this.isActiveDepartments = true;
+      this.isActiveLoans = false;
+    } else if (this.router.url === '/loans') {
+      this.isActiveLoans = true;
+      this.isActiveSoftwareLicenses = false;
+      this.isActiveAssets = false;
+      this.isActiveEquipments = false;
+      this.isActiveCategory = false;
+      this.isActiveDashboard = false;
+      this.isActiveDepartments = false;
     }
   }
 
@@ -87,6 +102,10 @@ export class MenuComponent implements OnInit {
 
   navigateToDepartments() {
     this.router.navigate(['departments']);
+  }
+
+  navigateToLoans() {
+    this.router.navigate(['loans']);
   }
 
   logout() {

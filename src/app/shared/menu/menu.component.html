@@ -56,7 +56,8 @@
       </a>
     </li>
     <li>
-      <a class="">
+      <a [ngClass]="{ 'text-menu-item-active': isActiveLoans }"
+      (click)="navigateToLoans()">
         <span class="icon is-medium"><i class="fa fa-address-card"></i></span>
         <strong class="has-text text-menu-item">Empréstimos</strong>
       </a>

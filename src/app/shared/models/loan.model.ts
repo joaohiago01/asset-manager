@@ -1,15 +1,15 @@
 import { Contributor } from "./contributor.model";
 import { Department } from "./department.model";
-import { Output } from "./outpup.model";
+import { Output } from "./output.model";
 import { StatusLoan } from "./statusLoan.enum";
 
 export class Loan extends Output {
   public returnDate: Date;
   public expectedReturnDate: Date;
-  public statusLoan: StatusLoan;
+  public statusLoan?: StatusLoan;
   public equipmentId: number;
   public equipmentName?: string;
-  public department: Department;
+  public department?: Department;
   public requestor: Contributor;
   public consignor: Contributor;
 
