@@ -4,8 +4,8 @@ import { Output } from "./output.model";
 import { StatusLoan } from "./statusLoan.enum";
 
 export class Loan extends Output {
-  public returnDate: Date;
-  public expectedReturnDate: Date;
+  public returnDate: any;
+  public expectedReturnDate: any;
   public statusLoan?: StatusLoan;
   public equipmentId: number;
   public equipmentName?: string;

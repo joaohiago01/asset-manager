@@ -3,7 +3,7 @@ export class Output {
   public callNumberSuap: string;
   public callLinkSuap: string;
   public observations: string;
-  public outputDate: Date;
+  public outputDate?: any;
 
   constructor(props: Omit<Output, 'id'>, id?: number) {
     this.callNumberSuap = props.callNumberSuap;

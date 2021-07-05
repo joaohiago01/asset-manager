@@ -17,7 +17,7 @@
             Cadastrar
           </button>
         </div>
-  
+
         <div class="list">
           <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
             <li *ngFor="let loan of loans">
@@ -40,11 +40,11 @@
                       </button>
                     </div>
                   </div>
-  
+
                   <div class="content-card">
                     <div>
                       <p class="field-title">Data de saída:</p>
-                      <span>{{ loan.returnDate }}</span>
+                      <span>{{ loan.outputDate }}</span>
                     </div>
                     <div>
                       <p class="field-title">Data de retorno esperada: </p>
@@ -71,4 +71,3 @@
       </div>
     </div>
   </div>
-  
