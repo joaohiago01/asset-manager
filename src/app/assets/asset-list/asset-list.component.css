@@ -5,30 +5,15 @@
   justify-content: flex-end;
 }
 
-.list {
-  padding-right: 0.8rem;
-  padding-top: 1.2rem;
-}
-
-mat-grid-tile {
-  border: 2px solid #1fd181;
-  border-left: 8px solid #1fd181;
-  border-radius: 4px;
-}
-
-.card-asset {
-  flex: 1;
-  background-color: white;
-}
-
 .header-card {
   padding-top: 0.7em;
-  width: 85%;
+  width: 70%;
 }
 
 .header-card > span {
   font-weight: bold;
-  font-size: 0.5em;
+  font-size: 1.2em;
+  word-break: break-all;
   border-radius: 3px;
 }
 
@@ -37,11 +22,41 @@ mat-grid-tile {
 }
 
 .header-icon > button {
-  display: flex;
+  display: inline-flex;
   width: 2em;
   height: 2em;
   align-items: center;
   justify-content: center;
+}
+
+.header-icon > .edit-button, .info-button {
+  flex: 1;
+  background-color: #1fd181;
+  border-radius: 5px;
+  width: 2rem;
+  margin-top: 0.5rem;
+}
+
+.header-icon > .info-button {
+  background-color: gray;
+  width: 2rem;
+}
+
+.header-category {
+  padding-top: 1rem;
+  padding-right: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list {
+  padding-right: 0.8rem;
+  padding-top: 1.2rem;
+}
+
+.card-asset {
+  flex: 1;
+  background-color: white;
 }
 
 .content-card {
@@ -52,58 +67,8 @@ mat-grid-tile {
   width: 100%;
 }
 
-.header-category {
-  padding-top: 1rem;
-  padding-right: 0.8rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .btn-save {
   background-color: #1fd181;
-}
-
-.list {
-  padding-right: 0.8rem;
-  padding-top: 1.2rem;
-}
-
-mat-grid-tile {
-  border: 2px solid #1fd181;
-  border-left: 10px solid #1fd181;
-}
-
-.card-asset {
-  flex: 1;
-  background-color: white;
-}
-
-.header-card {
-  display: flex;
-  padding-top: 0.7em;
-  justify-content: space-between;
-}
-
-.header-card > span {
-  font-weight: bold;
-  font-size: 1.3em;
-  border-radius: 3px;
-}
-
-.header-icon {
-  border-radius: 5px;
-}
-
-.header-icon > button {
-  display: flex;
-  width: 2em;
-  height: 2em;
-  align-items: center;
-  justify-content: center;
-}
-
-.content-card {
-  margin-top: 1.2em;
 }
 
 .content-card .category-type {
@@ -129,10 +94,14 @@ mat-grid-tile {
   display: flex;
 }
 
-.header-icon > .edit-button {
-  flex: 1;
-  background-color: #1fd181;
-  border-radius: 5px;
-  width: 2.2rem;
-  margin-top: 0.5rem;
+mat-grid-tile {
+  border: 2px solid #1fd181;
+  border-left: 8px solid #1fd181;
+  border-radius: 4px;
+}
+
+.button {
+  width: 8rem;
+  height: 2.4rem;
+  font-size: 15px;
 }

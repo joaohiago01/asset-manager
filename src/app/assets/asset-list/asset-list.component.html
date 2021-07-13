@@ -24,13 +24,23 @@
               <mat-card class="card-asset">
                 <div class="container-title">
                   <div class="header-card">
-                    <span>{{ asset.name | slice: 0:40 }}</span>
+                    <span>{{ asset.name | slice: 0:47 }}</span>
                   </div>
                   <div class="header-icon">
                     <button
-                      class="mx-1 edit-button"
+                      id="detailWithAssociationsButton"
+                      class="mx-1 info-button"
                       mat-icon-button
                       (click)="detailAsset(asset.id)"
+                    >
+                      <i class="material-icons v-middle color-card-icon"
+                        >info</i
+                      >
+                    </button>
+                    <button
+                      class="mx-1 edit-button"
+                      mat-icon-button
+                      (click)="editAsset(asset.id)"
                     >
                       <i class="material-icons v-middle color-card-icon"
                         >edit</i

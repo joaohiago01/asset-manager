@@ -14,9 +14,14 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AssetDetailsComponent } from './asset-details/asset-details.component';
 
 @NgModule({
-  declarations: [AssetFormComponent, AssetCardComponent, AssetListComponent],
+  declarations: [
+    AssetFormComponent, 
+    AssetCardComponent, 
+    AssetListComponent,
+    AssetDetailsComponent],
   imports: [
     SharedModule,
     CommonModule,

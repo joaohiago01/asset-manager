@@ -18,8 +18,8 @@ export class InputAssetService {
       };
 
       let inputAssetServer = {
-        data: new Date(),
-        dataValidade: new Date(),
+        data: inputAsset.inputDate,
+        dataValidade: inputAsset.expirationDate,
         quantidade: inputAsset.amount,
       };
       await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
@@ -40,8 +40,6 @@ export class InputAssetService {
 
       await api.delete(`/insumos/${assetId}/entradas/${inputAssetId}`, { headers });
       inputAssetWasDeleted = true;
-
-      alert('Deletado com sucesso!');
 
       return inputAssetWasDeleted;
     } catch (error) {

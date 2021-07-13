@@ -44,12 +44,25 @@ export class AssetListComponent implements OnInit {
     }
   }
 
-  detailAsset(assetId: number) {
+  editAsset(assetId: number) {
     this.selectedAsset = <Asset>(
       this.assets.find((asset: Asset) => asset.id === assetId)
     );
 
     this.router.navigate(['assets/form'], {
+      state: { asset: this.selectedAsset },
+    });
+  }
+
+  detailAsset(assetId: number) {
+    this.selectedAsset = <Asset>(
+      this.assets.find(
+        (asset: Asset) =>
+          asset.id === assetId
+      )
+    );
+
+    this.router.navigate(['assets/details'], {
       state: { asset: this.selectedAsset },
     });
   }

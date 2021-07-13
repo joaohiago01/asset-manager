@@ -1,0 +1,243 @@
+<div class="columns">
+    <div class="column is-3 background-color">
+        <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+        <div class="container">
+        <!-- MODAL PARA ENTRADA DE INSUMOS -->
+        <div id="modalInput" class="modal-window hidden" style="width: 45%">
+            <header class="modal-card-head">
+              <p class="modal-card-title font-color title m-2">Cadastrar Entrada de Insumo</p>
+              <button
+                id="btnCloseInput"
+                class="delete"
+                aria-label="close"
+                (click)="hideModal('#modalInput')"
+              ></button>
+            </header>
+            
+            <section
+              class="modal-card-body"
+              style="margin-right: 15%; margin-left: 15%">
+
+              <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
+              <p class="title is-5">{{ asset?.name }}</p>
+
+              <label for="dateModalInput" class="label">Data de Entrada</label>
+              <input
+                id="dateModalInput"
+                type="date"
+                #inputDate
+                class="input is-success mb-5"
+                placeholder="Data da Entrada"
+              />
+  
+              <label for="expirationDateModalInput" class="label">Data de Validade</label>
+              <input
+                id="expirationDateModalInput"
+                type="date"
+                #expirationDate
+                class="input is-success mb-5"
+                placeholder="Data de Validade"
+              />
+
+              <label for="amountModalInput" class="label">Quantidade</label>
+              <input
+                id="amountModalInput"
+                type="number"
+                #amount
+                class="input is-success mb-5"
+                placeholder="Quantidade"
+              />
+                
+            </section>
+    
+            <footer
+              class="modal-card-foot is-justify-content-center is-align-items-center">
+              <form
+                role="form"
+                (submit)="addAssetInput(inputDate.value, expirationDate.value, amount.value)">
+                <button id="create" type="submit" class="button is-success">Cadastrar</button>
+              </form>
+              <button class="button" (click)="hideModal('#modalInput')">
+                Cancelar
+              </button>
+            </footer>
+          </div>
+
+          <!-- MODAL PARA RETIRADA DE INSUMOS -->
+          <div id="modalOutput" class="modal-window hidden" style="width: 45%">
+            <header class="modal-card-head">
+              <p class="modal-card-title font-color title m-2">Cadastrar Retirada de Insumo</p>
+              <button
+                id="btnCloseOutput"
+                class="delete"
+                aria-label="close"
+                (click)="hideModal('#modalOutput')"
+              ></button>
+            </header>
+            
+            <section
+              class="modal-card-body"
+              style="margin-right: 15%; margin-left: 15%"
+            >
+              <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
+              <p class="title is-5">{{ asset?.name }}</p>
+
+              <label for="amountModalInput" class="label">Quantidade</label>
+              <input
+                id="amountModalInput"
+                type="text"
+                #amount
+                class="input is-success mb-5"
+                placeholder="Quantidade"
+              />
+            </section>
+    
+            <footer
+              class="modal-card-foot is-justify-content-center is-align-items-center">
+              <form
+                role="form"
+                (submit)="addAssetOutput()">
+                <button id="create" type="submit" class="button is-success">Cadastrar</button>
+              </form>
+              <button class="button" (click)="hideModal('#modalOutput')">
+                Cancelar
+              </button>
+            </footer>
+          </div>
+          <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
+          <div class="overlay hidden"></div>
+          
+        <div class="header-asset-details-create">
+          <div class="header-category">
+            <button
+              id="return"
+              #btnReturn
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="navigateToAssets()"
+            >
+              <i class="material-icons">arrow_back</i>
+              Voltar
+            </button>
+            <button
+              id="assetInput"
+              #btnInput
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="showModal('#modalInput')"
+            >
+              <i class="material-icons">add</i>
+              Cadastrar Entrada
+            </button>
+            <button
+              id="assetOutput"
+              #btnOutput
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="showModal('#modalOutput')"
+            >
+              <i class="material-icons">remove</i>
+              Cadastrar Retirada
+            </button>
+          </div>
+        </div>
+      </div>
+
+        <div class="content-asset-details-create">
+
+            <div>
+                <p class="subtitle is-5">Informações do Insumo</p>
+
+                <p class="field-title has-text-weight-bold">Nome: <span>{{ asset?.name }}</span></p>
+
+                <p class="field-title has-text-weight-bold">Categoria: <span>{{ asset?.categoryName }}</span></p>
+
+                <p class="field-title has-text-weight-bold">Localização:
+                  <span>{{ asset?.bookcase }}</span>
+                  <span>{{ asset?.shelf }}</span>
+                </p>
+
+                <p class="field-title has-text-weight-bold">Estoque: <span>{{ asset?.currentQuantity }}</span></p>
+
+                <p class="field-title has-text-weight-bold">Unidade de Medida: <span>{{ asset?.unitOfMeasurement }}</span></p>
+
+                <p class="field-title has-text-weight-bold">Quantidade Mínima: <span>{{ asset?.minQuantity }}</span></p>
+            </div>
+
+            <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Histórico de Entradas e Retiradas:</p>
+
+            <div class="tabs is-boxed">
+              <ul>
+                <li id="inputList" class="is-active">
+                  <a (click)="openInputListTab()">
+                    <span class="icon is-small"><i class="material-icons has-text-success">add</i></span>
+                    <span class="has-text-success has-text-weight-medium">Entradas</span>
+                  </a>
+                </li>
+                <li id="outputList">
+                  <a (click)="openOutputListTab()">
+                    <span class="icon is-small"><i class="material-icons has-text-success">remove</i></span>
+                    <span class="has-text-success has-text-weight-medium">Retiradas</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="list" *ngIf="inputActive == true">
+              <div *ngIf="assetInputs.length < 1">
+                <p class="title is-6 has-text-centered mt-5">Nenhuma entrada de insumo cadastrada!</p>
+              </div>
+
+              <div class="table-container" *ngIf="assetInputs.length > 0">
+                <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
+                  <thead>
+                    <tr>
+                      <th>Data de Entrada</th>
+                      <th>Data de Validade</th>
+                      <th>Quantidade</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let assetInput of assetInputs">
+                      <td>{{ assetInput.inputDate | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ assetInput.expirationDate | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ assetInput.amount }}</td>
+                      <td>
+                        <button
+                          class="button undo-button"
+                          mat-raised-button
+                          color="primary"
+                          (click)="undoAssetInput(assetInput.id)">
+                          <i class="material-icons">undo</i>
+                          Desfazer
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="list" *ngIf="outputActive == true">
+              <div>
+                <p class="title is-6 has-text-centered mt-5">Nenhuma retirada de insumo cadastrada!</p>
+              </div>
+
+              <div class="table-container">
+                <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
+                  
+                </table>
+              </div>
+
+            </div>
+
+        </div>
+
+    </div>
+  </div>
