@@ -1,5 +1,3 @@
-import { Contributor } from "./contributor.model";
-import { Department } from "./department.model";
 import { Output } from "./output.model";
 import { StatusLoan } from "./statusLoan.enum";
 
@@ -9,9 +7,6 @@ export class Loan extends Output {
   public statusLoan?: StatusLoan;
   public equipmentId: number;
   public equipmentName?: string;
-  public department?: Department;
-  public requestor: Contributor;
-  public consignor: Contributor;
 
   constructor(props: Omit<Loan, 'id'>, id?: number) {
     super(props);
@@ -19,9 +14,6 @@ export class Loan extends Output {
     this.expectedReturnDate = props.expectedReturnDate;
     this.statusLoan = props.statusLoan;
     this.equipmentId = props.equipmentId;
-    this.department = props.department;
-    this.requestor = props.requestor;
-    this.consignor = props.consignor;
     if (props.equipmentName != undefined) {
       this.equipmentName = props.equipmentName;
     }
