@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DepartmentService } from 'src/app/departments/services/department.service';
 import { Asset } from 'src/app/shared/models/asset.model';
+import { Department } from 'src/app/shared/models/department.model';
 import { InputAsset } from 'src/app/shared/models/inputAsset.model';
+import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
 import { AssetService } from '../services/asset.service';
 import { InputAssetService } from '../services/inputAsset.service';
+import { OutputAssetService } from '../services/outputAsset.service';
 
 @Component({
   selector: 'app-asset-details',
@@ -15,14 +19,22 @@ export class AssetDetailsComponent implements OnInit {
 
   public asset?: Asset = <Asset>{};
   public assetInputs: InputAsset[] = [];
+  public assetOutputs: OutputAsset[] = [];
   public myControl = new FormControl();
   public inputActive: boolean = true;
   public outputActive:boolean = false;
+
+  public selectedOutputAsset?: OutputAsset = <OutputAsset>{};
+
+  public departments: Department[] = [];
+  public selectedDepartmentId: number = 0;
 
   constructor(
     private router: Router,
     public assetService: AssetService,
     public inputAssetService: InputAssetService,
+    public outputAssetService: OutputAssetService,
+    public departmentService: DepartmentService
   ) {
     const asset: Asset = <Asset>(
       this.router.getCurrentNavigation()?.extras.state
@@ -31,6 +43,7 @@ export class AssetDetailsComponent implements OnInit {
     if (asset) {
       const map = new Map(Object.entries(Object.values(asset)));
       const assetNumber: string = map.get('0')['number'];
+      this.myControl.setValue(assetNumber);
     }
 
   }
@@ -42,13 +55,20 @@ export class AssetDetailsComponent implements OnInit {
       window.location.reload();
     } else {
       if (this.asset?.id) {
-        await this.getAllAssetInputs(this.asset?.id);
+        await this.getAllAssetInputs(this.asset.id);
+        await this.getAllAssetOutputs(this.asset.id)
       }
+
+      this.departments = await this.departmentService.getAllDepartments();
     }
   }
 
   async getAllAssetInputs(assetId: number): Promise<void> {
     this.assetInputs = await this.inputAssetService.getAllInputs(assetId);
+  }
+
+  async getAllAssetOutputs(assetId: number): Promise<void> {
+    this.assetOutputs = await this.outputAssetService.getAllOutputs(assetId);
   }
 
   async addAssetInput(inputDate: string, expirationDate: string, amount: string): Promise<void> {
@@ -75,12 +95,58 @@ export class AssetDetailsComponent implements OnInit {
     }
   }
 
+  async addAssetOutput(
+    amount: string,
+    selectedDepartmentId: number,
+    callNumberSuap: string,
+    callLinkSuap: string,
+    observations: string,
+    consignorName: string,
+    consignorRegistrationNumber: string,
+    requestorName: string,
+    requestorRegistrationNumber: string
+  ): Promise<void> {
+    if (this.asset?.id && selectedDepartmentId) {
+      const outputAsset = new OutputAsset({
+        amount: Number(amount),
+        assetId: this.asset?.id,
+        departmentId: selectedDepartmentId,
+        callNumberSuap: callNumberSuap,
+        callLinkSuap: callLinkSuap,
+        observations: observations,
+        consignor: {
+          registrationNumber: consignorRegistrationNumber,
+          name: consignorName,
+        },
+        requestor: {
+          registrationNumber: requestorRegistrationNumber,
+          name: requestorName,
+        },
+      });
+      
+      let assetOutputWasAdded = await this.outputAssetService.saveOutputAsset(this.asset.id, outputAsset);
+
+      if (assetOutputWasAdded) {
+        alert('Retirada de Insumo cadastrada!')
+
+        this.asset.currentQuantity -= outputAsset.amount;
+
+        this.router.navigate(['assets/details'], {
+          state: { asset: this.asset },
+        });
+      } else {
+        alert('Não foi possível cadastrar a Retirada de Insumo!'); 
+      }
+
+    }
+  }
+
   async undoAssetInput(assetInputId: number): Promise<void> {
     if (assetInputId != undefined && this.asset?.id) {
       let assetInputWasDeleted = await this.inputAssetService.deleteInputAsset(this.asset.id, assetInputId);
 
       if (assetInputWasDeleted) {
-        alert("A Entrada de Insumo foi desfeita!")
+        alert("A Retirada de Insumo foi desfeita!")
 
         let inputAsset = this.assetInputs.find((inputAsset: InputAsset) => inputAsset.id === assetInputId);
 
@@ -95,8 +161,24 @@ export class AssetDetailsComponent implements OnInit {
     }
   }
 
-  async addAssetOutput(): Promise<void> {
-    
+  async undoAssetOutput(assetOutputId: number): Promise<void> {
+    if (assetOutputId != undefined && this.asset?.id) {
+      let assetOutputWasDeleted = await this.outputAssetService.deleteOutputAsset(this.asset.id, assetOutputId);
+
+      if (assetOutputWasDeleted) {
+        alert("A Retirada de Insumo foi desfeita!")
+
+        let outputAsset = this.assetOutputs.find((outputAsset: OutputAsset) => outputAsset.id === assetOutputId);
+
+        if (outputAsset?.amount) {
+          this.asset.currentQuantity += outputAsset.amount;
+        }
+
+        this.router.navigate(['assets/details'], {
+          state: { asset: this.asset },
+        });
+      }
+    }
   }
 
   navigateToAssets(): void {

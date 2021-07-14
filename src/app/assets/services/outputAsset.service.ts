@@ -29,7 +29,7 @@ export class OutputAssetService {
             nome: outputAsset.requestor.name,
         },
         setor: {
-            id: outputAsset.department?.id,
+            id: outputAsset.departmentId,
         },
         quantidade: outputAsset.amount,
       };
@@ -78,7 +78,7 @@ export class OutputAssetService {
             observations: outputAssetServer.observacoes,
             consignor: {
                 registrationNumber: outputAssetServer.expedidor.matricula,
-                name: outputAssetServer.expedidor.name,
+                name: outputAssetServer.expedidor.nome,
             },
             requestor: {
                 registrationNumber: outputAssetServer.solicitante.matricula,
