@@ -1,7 +1,7 @@
 //import { browser, element, by } from 'protractor';
 
 describe('Create or Edit New Asset', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     browser.driver.manage().window().maximize();
     browser.get('https://localhost:4200/login');
     element(by.id('username')).getWebElement().sendKeys('admin');
@@ -14,7 +14,10 @@ describe('Create or Edit New Asset', () => {
   });
 
   it('should create new asset', () => {
-    element(by.id('categories')).sendKeys('Rede');
+    browser.get('https://localhost:4200/assets/form');
+    browser.sleep(2000);
+
+    element(by.id('categories')).sendKeys('Cabos de Rede');
     browser.sleep(1000);
     element(by.id('name')).getWebElement().sendKeys('Insumo Teste');
     browser.sleep(1000);
@@ -33,7 +36,10 @@ describe('Create or Edit New Asset', () => {
   });
 
   it('should not create new asset without min quantity', () => {
-    element(by.id('categories')).sendKeys('Rede');
+    browser.get('https://localhost:4200/assets/form');
+    browser.sleep(2000);
+
+    element(by.id('categories')).sendKeys('Cabos de Rede');
     browser.sleep(1000);
     element(by.id('name')).getWebElement().sendKeys('Insumo Teste');
     browser.sleep(1000);
@@ -50,6 +56,9 @@ describe('Create or Edit New Asset', () => {
   });
 
   it('should not create new asset without current quantity', () => {
+    browser.get('https://localhost:4200/assets/form');
+    browser.sleep(2000);
+
     element(by.id('categories')).sendKeys('Rede');
     browser.sleep(1000);
     element(by.id('name')).getWebElement().sendKeys('Insumo Teste');
