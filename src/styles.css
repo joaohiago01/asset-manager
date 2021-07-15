@@ -5,7 +5,23 @@
   background-color: #1fd181;
 }
 
-.font-color {
+.bg-primary {
+  background-color: #1fd181;
+}
+
+.bg-red {
+  background-color: #cf2a27;
+}
+
+.bg-gray {
+  background-color: gray;
+}
+
+.cl-primary {
+  color: #1fd181;
+}
+
+.font-color{
   color: #1fd181;
 }
 
@@ -20,8 +36,17 @@ body {
   height: 100%;
 }
 body {
+  box-sizing: border-box;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content blockquote:not(:last-child), .content dl:not(:last-child), .content ol:not(:last-child), .content p:not(:last-child), .content pre:not(:last-child), .content table:not(:last-child), .content ul:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.mat-body p, .mat-body-1 p, .mat-typography p {
+  margin: 0 0 0;
 }
 
 .v-middle {
@@ -71,4 +96,59 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(2px);
   z-index: 5;
+}
+
+.card {
+  border: 2px solid #1fd181;
+  border-left: 8px solid #1fd181;
+  border-radius: 6px;
+}
+
+.card-content {
+  padding: 0.8rem;
+}
+
+.header-card {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+
+.card-title {
+  margin-right: 5px;
+  width: auto;
+}
+
+.card-title > span {
+  font-weight: bold;
+  font-size: 1.2em;
+  word-break: break-all;
+  border-radius: 3px;
+}
+
+.card-buttons {
+  display: flex;
+  margin-left: auto;
+}
+
+.card-button {
+  display: inline-flex;
+  flex: 1;
+  width: 2em;
+  height: 2em;
+  border-radius: 5px;
+  align-items: center;
+  margin-left: 3px;
+}
+
+.field-title {
+  color: black;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.field-title > span {
+  font-weight: normal;
+  display: inline-block;
+  margin-block-end: 1px;
+  word-break: break-all;
 }

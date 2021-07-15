@@ -5,97 +5,41 @@
   justify-content: flex-end;
 }
 
-.header-card {
-  padding-top: 0.7em;
-  width: 70%;
-}
-
-.header-card > span {
-  font-weight: bold;
-  font-size: 1.1em;
-  background-color: lightgray;
-  border-radius: 3px;
-  padding: 4px;
-}
-
-.header-icon {
-  border-radius: 5px;
-}
-
-.header-icon > button {
-  display: inline-flex;
-  width: 2em;
-  height: 2em;
-  align-items: center;
-  justify-content: center;
-}
-
-.header-icon > .edit-button, .delete-button {
-  flex: 1;
-  background-color: #1fd181;
-  border-radius: 5px;
-  width: 2rem;
-  margin-top: 0.5rem;
-}
-
-.header-icon > .delete-button {
-  background-color: #cf2a27;
-  width: 2rem;
-}
-
-.card-department {
-  flex: 1;
-  background-color: white;
-}
-
-.content-card {
-  margin-top: 1.2em;
-}
-
-.container {
-  width: 100%;
-}
-
-.content-card .department-name {
-  display: flex;
-  padding-top: 0.4em;
-  justify-content: left;
-}
-
-.content-card .department-name > span {
-  font-size: 1.3em;
-  font-weight: bold;
-}
-
-.button {
-  width: 8rem;
-  height: 2.4rem;
-  font-size: 15px;
+.list {
+  padding-right: 0.8rem;
+  padding-top: 1.2rem;
 }
 
 .btn-cadastrar {
   background-color: #1fd181;
 }
 
-.list {
-  padding-right: 0.8rem;
-  padding-top: 1.2rem;
+.card-title {
+  margin-top: 5px;
 }
 
-.field-title {
-  display: inline-block;
-  color: black;
+.card-title > span {
   font-weight: bold;
-  margin-right: 6px;
-  margin-bottom: 0;
+  font-size: 1em;
+  background-color: lightgray;
+  border-radius: 3px;
+  padding: 4px;
+  margin-top: 2rem;
 }
 
-.container-title {
+.department-content .department-name {
   display: flex;
+  padding-top: 0.4em;
+  justify-content: left;
 }
 
-mat-grid-tile {
-  border: 2px solid #1fd181;
-  border-left: 8px solid #1fd181;
-  border-radius: 4px;
+.department-content > span {
+  color: black;
+}
+
+.department-content .department-name > span {
+  font-size: 1.4em;
+  font-weight: bold;
+  word-break: break-all;
+  color: black;
 }

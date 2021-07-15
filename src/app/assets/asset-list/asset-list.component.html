@@ -10,73 +10,53 @@
           #btnSave
           class="btn-save"
           mat-raised-button
-          color="primary"
-        >
+          color="primary">
           <i class="material-icons">add</i>
           Cadastrar
         </button>
       </div>
 
-      <div class="list">
-        <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let asset of assets">
-            <mat-grid-tile>
-              <mat-card class="card-asset">
-                <div class="container-title">
-                  <div class="header-card">
-                    <span>{{ asset.name | slice: 0:47 }}</span>
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let asset of assets">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ asset.name | slice: 0:46 }}</span>
                   </div>
-                  <div class="header-icon">
+                  <div class="card-buttons">
                     <button
-                      id="detailWithAssociationsButton"
-                      class="mx-1 info-button"
-                      mat-icon-button
-                      (click)="detailAsset(asset.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >info</i
-                      >
+                      class="button card-button bg-gray"
+                      (click)="detailAsset(asset.id)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
                     </button>
                     <button
-                      class="mx-1 edit-button"
-                      mat-icon-button
-                      (click)="editAsset(asset.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >edit</i
-                      >
+                      class="button card-button bg-primary"
+                      (click)="editAsset(asset.id)">
+                      <i class="material-icons v-middle color-card-icon">edit</i>
                     </button>
                   </div>
                 </div>
 
-                <div class="content-card">
-                  <div>
-                    <p class="field-title">Categoria:</p>
-                    <span>{{ asset.categoryName }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Localização:</p>
+                <div class="content">
+                  <p class="field-title">Categoria: <span>{{ asset.categoryName | slice: 0:28 }}</span></p>
+                  <p class="field-title">Localização: 
                     <span>{{ asset.bookcase }}</span>
                     <span>{{ asset.shelf }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Estoque:</p>
-                    <span>{{ asset.currentQuantity }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Unidade de Medida:</p>
-                    <span>{{ asset.unitOfMeasurement }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Quantidade Mínima:</p>
-                    <span>{{ asset.minQuantity }}</span>
-                  </div>
+                  </p>
+                  <p class="field-title">Estoque: <span>{{ asset.currentQuantity }}</span></p>
+                  <p class="field-title">Unidade de Medida: <span>{{ asset.unitOfMeasurement }}</span></p>
+                  <p class="field-title">Quantidade Mínima: <span>{{ asset.minQuantity }}</span></p>
                 </div>
-              </mat-card>
-            </mat-grid-tile>
-          </li>
-        </mat-grid-list>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 </div>

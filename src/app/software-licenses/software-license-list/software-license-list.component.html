@@ -18,66 +18,54 @@
         </button>
       </div>
 
-      <div class="list">
-        <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let softwareLicense of softwareLicenses">
-            <mat-grid-tile>
-              <mat-card class="card-software-license">
-                <div class="container-title">
-                  <div class="header-card">
-                    <span>{{ softwareLicense.name | slice: 0:40 }}</span>
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let softwareLicense of softwareLicenses">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ softwareLicense.name | slice: 0:46 }}</span>
                   </div>
-                  <div class="header-icon">
+                  <div class="card-buttons">
                     <button
-                      id="detailWithAssociationsButton"
-                      class="mx-1 info-button"
-                      mat-icon-button
-                      (click)="detailSoftwareLicenseAssociations(softwareLicense.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >info</i
-                      >
+                      class="button card-button bg-gray"
+                      (click)="detailSoftwareLicenseAssociations(softwareLicense.id)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
                     </button>
                     <button
-                      id="edit"
-                      class="mx-1 edit-button"
-                      mat-icon-button
-                      (click)="detailSoftwareLicense(softwareLicense.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >edit</i
-                      >
+                      class="button card-button bg-primary"
+                      (click)="detailSoftwareLicense(softwareLicense.id)">
+                      <i class="material-icons v-middle color-card-icon">edit</i>
                     </button>
                   </div>
                 </div>
 
-                <div class="content-card">
-                  <div>
-                    <p class="field-title">Categoria:</p>
-                    <span>{{ softwareLicense.categoryName }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Número:</p>
-                    <span>{{ softwareLicense.number }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Chave de Ativação:</p>
-                    <span>{{ softwareLicense.activationKey }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Máximo de Ativações:</p>
-                    <span>{{ softwareLicense.maxActivations }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Quantidade de Ativações Usadas:</p>
-                    <span>{{ softwareLicense.numberOfActivationsUsed }}</span>
-                  </div>
+                <div class="content">
+                    <p class="field-title">Categoria: 
+                      <span>{{ softwareLicense.categoryName | slice: 0:28 }}</span>
+                    </p>
+                    <p class="field-title">Número: 
+                      <span>{{ softwareLicense.number }}</span>
+                    </p>
+                    <p class="field-title">Chave de Ativação: 
+                      <span>{{ softwareLicense.activationKey }}</span>
+                    </p>
+                    <p class="field-title">Máximo de Ativações: 
+                      <span>{{ softwareLicense.maxActivations }}</span>
+                    </p>
+                    <p class="field-title">Quantidade de Ativações Usadas: 
+                      <span>{{ softwareLicense.numberOfActivationsUsed }}</span>
+                    </p>
                 </div>
-              </mat-card>
-            </mat-grid-tile>
-          </li>
-        </mat-grid-list>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 </div>

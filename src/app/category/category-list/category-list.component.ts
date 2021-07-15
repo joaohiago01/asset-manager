@@ -30,12 +30,6 @@ export class CategoryListComponent implements OnInit {
 
   async getAllCategories(): Promise<void> {
     this.categories = await this.categoryService.getAllCategories();
-    this.categories = this.categories.map((c : Category) => {
-      if (c.name.length > 25) {
-        c.name = c.name.slice(0, 25) + "...";
-      }
-      return c;
-    });
     if (!this.categories) {
       alert('Nenhuma Categoria Encontrada');
     }

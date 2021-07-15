@@ -53,25 +53,8 @@
             </button>
           </footer>
         </div>
-        <div class="overlay hidden"></div>
-        <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
-  
-        <!-- BOTÃO PARA ABRIR O MODAL DE CADASTRO -->
-        <div class="header-department">
-          <button
-            id="addButton"
-            #btnCadastrar
-            class="btn-cadastrar"
-            mat-raised-button
-            color="primary"
-            (click)="showModal('#modalCadastrar')"
-          >
-            <i class="material-icons">add</i>
-            Cadastrar
-          </button>
-        </div>
-  
-        <!-- MODAL PARA EDITAR CATEGORIA -->
+
+        <!-- MODAL PARA EDITAR SETOR -->
         <div id="modalEditar" class="modal-window hidden" style="width: 45%">
           <header class="modal-card-head">
             <p class="modal-card-title font-color title m-2">Editar Setor</p>
@@ -122,47 +105,61 @@
             </button>
           </footer>
         </div>
+
+        <div class="overlay hidden"></div>
+        <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
   
-        <!-- LISTA DE CARDS DE SETOR -->
-        <div class="list">
-          <mat-grid-list cols="3" rowHeight="8.5rem" gutterSize="0.8rem">
-            <li *ngFor="let department of departments">
-              <mat-grid-tile>
-                <mat-card class="card-department">
-                  <div class="container-title">
-                    <div class="header-card">
-                        <span>{{ department.acronym }}</span>
+        <!-- BOTÃO PARA ABRIR O MODAL DE CADASTRO -->
+        <div class="header-department">
+          <button
+            id="addButton"
+            #btnCadastrar
+            class="btn-cadastrar"
+            mat-raised-button
+            color="primary"
+            (click)="showModal('#modalCadastrar')">
+            <i class="material-icons">add</i>
+            Cadastrar
+          </button>
+        </div>
+        
+        <div class="container list">
+          <div class="columns is-multiline is-mobile">
+  
+            <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let department of departments">
+              <div class="card">
+                <div class="card-content">
+                  <div class="header-card">
+                    <div class="card-title">
+                      <span>{{ department.acronym }}</span>
                     </div>
-                    <div class="header-icon">
-                        <button
-                        id="edit"
-                        class="mx-1 edit-button"
-                        mat-icon-button
+                    <div class="card-buttons">
+                      <button
+                        class="button card-button bg-primary"
                         (click)="detailDepartment(department.id)">
                         <i class="material-icons v-middle color-card-icon">edit</i>
-                        </button>
-
-                        <button
-                        id="deleteButton"
-                        class="mx-1 delete-button"
-                        mat-icon-button
+                      </button>
+                      <button
+                        class="button card-button bg-red"
                         (click)="deleteDepartment(department.id)">
                         <i class="material-icons v-middle color-card-icon">delete</i>
-                        </button>
+                      </button>
                     </div>
                   </div>
-
-                  <div class="content-card">
+  
+                  <div class="content department-content">
                     <span>NOME</span>
                     <div class="department-name">
-                      <span>{{ department.name | slice: 0:37 }}</span>
+                      <span>{{ department.name | slice: 0:56 }}</span>
                     </div>
                   </div>
-                </mat-card>
-              </mat-grid-tile>
-            </li>
-          </mat-grid-list>
+                </div>
+              </div>
+            </div>
+  
+          </div>
         </div>
+
       </div>
     </div>
   </div>

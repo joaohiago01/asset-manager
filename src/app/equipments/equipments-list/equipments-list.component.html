@@ -18,57 +18,42 @@
         </button>
       </div>
 
-      <div class="list">
-        <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem">
-          <li *ngFor="let equipment of equipments">
-            <mat-grid-tile>
-              <mat-card class="card-equipment">
-                <div class="container-title">
-                  <div class="header-card">
-                    <span>{{ equipment.description | slice: 0:40 }}</span>
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let equipment of equipments">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ equipment.description | slice: 0:50 }}</span>
                   </div>
-                  <div class="header-icon">
+                  <div class="card-buttons">
                     <button
-                      id="edit"
-                      class="mx-1 edit-button"
-                      mat-icon-button
-                      (click)="detailEquipment(equipment.id)"
-                    >
-                      <i class="material-icons v-middle color-card-icon"
-                        >edit</i
-                      >
+                      class="button card-button bg-primary"
+                      (click)="detailEquipment(equipment.id)">
+                      <i class="material-icons v-middle color-card-icon">edit</i>
                     </button>
                   </div>
                 </div>
 
-                <div class="content-card">
-                  <div>
-                    <p class="field-title">Categoria:</p>
-                    <span>{{ equipment.categoryName }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Número:</p>
-                    <span>{{ equipment.number }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Número de Série:</p>
-                    <span>{{ equipment.serialNumber }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Localização:</p>
-                    <span>{{ equipment.block }}</span>
-                    <span>{{ equipment.room }}</span>
-                  </div>
-                  <div>
-                    <p class="field-title">Estado de Conservação:</p>
-                    <span>{{ equipment.conservationState }}</span>
-                  </div>
+                <div class="content">
+                    <p class="field-title">Categoria: <span>{{ equipment.categoryName | slice: 0:28 }}</span></p>
+                    <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
+                    <p class="field-title">Número de Série: <span>{{ equipment.serialNumber }}</span></p>
+                    <p class="field-title">Localização: 
+                      <span>{{ equipment.block }}</span>
+                      <span>{{ equipment.room }}</span>
+                    </p>
+                    <p class="field-title">Estado de Conservação: <span>{{ equipment.conservationState }}</span></p>
                 </div>
-              </mat-card>
-            </mat-grid-tile>
-          </li>
-        </mat-grid-list>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 </div>

@@ -4,7 +4,7 @@
     </div>
     <div class="column is-9">
         <div class="container">
-        <!-- MODAL PARA CADASTRAR CATEGORIA -->
+        <!-- MODAL PARA ASSOCIAR A LICENÇA -->
       <div id="modalAssociate" class="modal-window hidden" style="width: 45%">
         <header class="modal-card-head">
           <p class="modal-card-title font-color title m-2">
@@ -152,81 +152,73 @@
         </div>
       </div>
 
-        <div class="content-software-licence-create">
+      <div class="content-software-licence-create">
 
-            <div>
-                <p class="subtitle is-5">Informações da Licença de Software</p>
+          <div>
+            <p class="subtitle is-5">Informações da Licença de Software</p>
 
-                <p class="field-title has-text-weight-bold">Nome: <span>{{ softwareLicense?.name }}</span></p>
+            <p class="field-title has-text-weight-bold">Nome: <span>{{ softwareLicense?.name }}</span></p>
 
-                <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
+            <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
 
-                <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
+            <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
 
-                <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
+            <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
 
-                <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
+            <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
 
-                <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
+            <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
+          </div>
+
+        <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Equipamentos Associados:</p>
+
+        <div class="list">
+          <div *ngIf="associatedEquipments.length < 1">
+            <p class="title is-6 has-text-centered mt-5">Nenhum equipamento associado foi encontrado!</p>
+          </div>
+
+          <div class="columns is-multiline is-mobile" *ngIf="associatedEquipments.length > 0">
+  
+            <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let equipment of associatedEquipments">
+              <div class="card">
+                <div class="card-content">
+                  <div class="header-card">
+                    <div class="card-title">
+                      <span>{{ equipment.description | slice: 0:50 }}</span>
+                    </div>
+                    <div class="card-buttons">
+                      <button
+                        class="button card-button bg-gray"
+                        (click)="disassociateSoftwareLicense(equipment.id)">
+                        <i class="material-icons v-middle color-card-icon">link_off</i>
+                      </button>
+                    </div>
+                  </div>
+  
+                  <div class="content">
+                    <p class="field-title">Categoria: 
+                      <span>{{ equipment.categoryName }}</span>
+                    </p>
+                    <p class="field-title">Número: 
+                      <span>{{ equipment.number }}</span>
+                    </p>
+                    <p class="field-title">Hostname: 
+                      <span>{{ equipment.network.hostname }}</span>
+                    </p>
+                    <p class="field-title">Endereço IP: 
+                      <span>{{ equipment.network.addressIP }}</span>
+                    </p>
+                    <p class="field-title">Endereço MAC: 
+                      <span>{{ equipment.network.addressMAC }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Equipamentos Associados:</p>
-
-            <div class="list">
-              <div *ngIf="associatedEquipments.length < 1">
-                <p class="title is-6 has-text-centered mt-5">Nenhum equipamento associado foi encontrado!</p>
-              </div>
-
-                <mat-grid-list cols="3" rowHeight="12rem" gutterSize="0.8rem" *ngIf="associatedEquipments.length > 0">
-                  <li *ngFor="let equipment of associatedEquipments">
-                    <mat-grid-tile>
-                      <mat-card class="card-equipment">
-                        <div class="container-title">
-                          <div class="header-card">
-                            <span>{{ equipment.description | slice: 0:40 }}</span>
-                          </div>
-                          <div class="header-icon">
-                            <button
-                              id="unlink"
-                              class="mx-1 unlink-button"
-                              mat-icon-button
-                              (click)="disassociateSoftwareLicense(equipment.id)"
-                            >
-                              <i class="material-icons v-middle color-card-icon"
-                                >link_off</i>
-                            </button>
-                          </div>
-                        </div>
-
-                        <div class="content-card">
-                          <div>
-                            <p class="field-title">Categoria: <span>{{ equipment.categoryName }}</span></p>
-                          </div>
-
-                          <div>
-                            <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
-                          </div>
-
-                          <div>
-                            <p class="field-title">Hostname: <span>{{ equipment.network.hostname }}</span></p>
-                          </div>
-
-                          <div>
-                            <p class="field-title">Endereço IP: <span>{{ equipment.network.addressIP }}</span></p>
-                          </div>
-
-                          <div>
-                            <p class="field-title">Endereço MAC: <span>{{ equipment.network.addressMAC }}</span></p>
-                          </div>
-
-                        </div>
-                      </mat-card>
-                    </mat-grid-tile>
-                  </li>
-                </mat-grid-list>
-              </div>
-
+  
+          </div>
         </div>
 
     </div>
   </div>
+</div>
