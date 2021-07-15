@@ -14,7 +14,6 @@ import { MatCardModule } from '@angular/material/card';
 import { SoftwareLicenseAssociationComponent } from './software-license-association/software-license-association.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
 @NgModule({
   declarations: [
     SoftwareLicenseListComponent,
@@ -34,7 +33,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatGridListModule,
     MatCardModule,
     MatAutocompleteModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SoftwareLicensesModule { }

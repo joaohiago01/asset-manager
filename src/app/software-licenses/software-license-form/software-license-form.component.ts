@@ -16,6 +16,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
   public softwareLicense?: SoftwareLicense = <SoftwareLicense>{};
   public categories: Category[] = [];
   public selectedCategoryId: number = 0;
+  public ignoreMaxActivations?: boolean;
   public myControl = new FormControl();
 
   constructor(
@@ -26,6 +27,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
     const softwareLicense: SoftwareLicense = <SoftwareLicense>(
       this.router.getCurrentNavigation()?.extras.state
     );
+    this.ignoreMaxActivations = false;
 
     if (softwareLicense) {
       const map = new Map(Object.entries(Object.values(softwareLicense)));
@@ -49,6 +51,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
         (category: Category) => category.id === this.softwareLicense?.categoryId
       )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
+      this.ignoreMaxActivations = this.softwareLicense.ignoreMaxActivations;
     }
   }
 
@@ -70,14 +73,17 @@ export class SoftwareLicenseFormComponent implements OnInit {
         this.softwareLicense.numberOfActivationsUsed.toString()
       );
     } else {
-      if (maxActivations) {
+      if (Number(maxActivations) > 0 || this.ignoreMaxActivations === true) {
         let softwareLicense = new SoftwareLicense({
           categoryId: selectedCategoryId,
           name: name,
           number: number,
           activationKey: activationKey,
-          maxActivations: Number(maxActivations),
+          maxActivations: this.ignoreMaxActivations === false
+            ? Number(maxActivations)
+            : undefined,
           numberOfActivationsUsed: 0,
+          ignoreMaxActivations: this.ignoreMaxActivations
         });
 
         let softwareLicenseWasCreated =
@@ -109,15 +115,18 @@ export class SoftwareLicenseFormComponent implements OnInit {
     maxActivations: string,
     numberOfActivationsUsed: string
   ): Promise<void> {
-    if (id && maxActivations && numberOfActivationsUsed) {
+    if (id && Number(maxActivations) > 0 || this.ignoreMaxActivations === true) {
       let softwareLicense = new SoftwareLicense(
         {
           categoryId: selectedCategoryId,
           name: name,
           number: number,
           activationKey: activationKey,
-          maxActivations: Number(maxActivations),
+          maxActivations: this.ignoreMaxActivations === false
+            ? Number(maxActivations)
+            : undefined,
           numberOfActivationsUsed: Number(numberOfActivationsUsed),
+          ignoreMaxActivations: this.ignoreMaxActivations
         },
         id
       );
@@ -155,5 +164,9 @@ export class SoftwareLicenseFormComponent implements OnInit {
     } else {
       alert('Licença de Software Não Encontrada');
     }
+  }
+
+  changedIgnoreMaxActivations(event: any) {
+    this.ignoreMaxActivations = event.target.checked;
   }
 }

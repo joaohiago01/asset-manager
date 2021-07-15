@@ -3,8 +3,9 @@ export class SoftwareLicense {
   public name: string;
   public number: string;
   public activationKey: string;
-  public maxActivations: number;
+  public maxActivations?: any;
   public numberOfActivationsUsed: number;
+  public ignoreMaxActivations?: boolean;
   public categoryId: number;
   public categoryName?: string;
 
@@ -14,6 +15,7 @@ export class SoftwareLicense {
     this.activationKey = props.activationKey;
     this.maxActivations = props.maxActivations;
     this.numberOfActivationsUsed = props.numberOfActivationsUsed;
+    this.ignoreMaxActivations = props.ignoreMaxActivations;
     this.categoryId = props.categoryId;
     if (id != undefined) {
       this.id = id;

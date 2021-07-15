@@ -58,9 +58,6 @@ export class LoanFormComponent implements OnInit {
         (department: Department) => department.id === this.loan?.department?.id
       )?.id;
       this.selectedDepartmentId = selectedDepartmentId ? selectedDepartmentId : 0;
-      this.loan.outputDate = this.loan.outputDate.format('YYYY-MM-DD HH:MM:SS');
-      this.loan.expectedReturnDate = this.loan.expectedReturnDate.format('YYYY-MM-DD HH:MM:SS');
-      this.loan.returnDate = this.loan.returnDate.format('YYYY-MM-DD HH:MM:SS');
     }
   }
 

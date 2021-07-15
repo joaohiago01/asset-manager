@@ -17,6 +17,7 @@ import { SoftwareLicensesModule } from './software-licenses/software-licenses.mo
 import { DepartmentsModule } from './departments/departments.module';
 import { LoansModule } from './loans/loans.module';
 import { AssetDetailsComponent } from './assets/asset-details/asset-details.component';
+import { ServicesModule } from './services/services.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +39,8 @@ import { AssetDetailsComponent } from './assets/asset-details/asset-details.comp
     AssetsModule,
     SoftwareLicensesModule,
     DepartmentsModule,
-    LoansModule
+    LoansModule,
+    ServicesModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

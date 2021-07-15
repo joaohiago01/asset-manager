@@ -63,7 +63,8 @@
       </a>
     </li>
     <li>
-      <a class="">
+      <a [ngClass]="{ 'text-menu-item-active': isActiveServices }"
+      (click)="navigateToServices()">
         <span class="icon is-medium"><i class="fa fa-wrench"></i></span>
         <strong class="has-text text-menu-item">Serviços</strong>
       </a>

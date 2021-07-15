@@ -38,6 +38,9 @@ export class SoftwareLicenseListComponent implements OnInit {
         softwareLicense.categoryName = categories.find(
           (category: Category) => category.id === softwareLicense.categoryId
         )?.name;
+        softwareLicense.maxActivations = softwareLicense.ignoreMaxActivations === true
+          ? " - "
+          : softwareLicense.maxActivations;
         return softwareLicense;
       }
     );
@@ -80,7 +83,7 @@ export class SoftwareLicenseListComponent implements OnInit {
   navigateToSoftwareLicenseAssociations(): void {
     this.router.navigate(['/software-licenses/associations']);
   }
-  
+
   showModal(modalSelector: string) {
     const modal: HTMLDivElement = <HTMLDivElement>(
       document.querySelector(modalSelector)

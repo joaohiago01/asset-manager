@@ -11,7 +11,8 @@ exports.config = {
     './src/app/assets/asset-list/asset-list.component.spec.ts',
     './src/app/software-licenses/software-license-form/software-license-form.component.spec.ts',
     './src/app/software-licenses/software-license-list/software-license-list.component.spec.ts',
-    './src/app/software-licenses/software-license-association/software-license-association.component.spec.ts'
+    './src/app/software-licenses/software-license-association/software-license-association.component.spec.ts',
+    './src/app/loans/loan-form/loan-form.component.spec.ts'
   ],
 
   onPrepare: function(){

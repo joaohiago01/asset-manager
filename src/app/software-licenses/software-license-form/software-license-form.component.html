@@ -110,9 +110,24 @@
               value="{{
                 softwareLicense ? softwareLicense.maxActivations : ''
               }}"
+
               placeholder="Digite a quantidade máxima de ativações"
               matInput
             />
+          </div>
+        </div>
+        <div class="one-field-container">
+          <div class="one-field-box">
+            <mat-label>Não possui quantidade máxima de ativações?</mat-label>
+            <label class="checkbox">
+              <input
+              #ignoreMaxActivations
+              id="ignoreMaxActivations"
+              style="width: 20px; height: 20px;"
+              type="checkbox"
+              [checked]="ignoreMaxActivations" (changed)="changedIgnoreMaxActivations($event)"
+            />
+            </label>
           </div>
         </div>
       </div>

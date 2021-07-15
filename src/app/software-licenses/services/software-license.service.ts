@@ -25,6 +25,7 @@ export class SoftwareLicenseService {
         numero: softwareLicense.number,
         chaveAtivacao: softwareLicense.activationKey,
         maximoAtivacoes: softwareLicense.maxActivations,
+        ativacoesInfinitas: softwareLicense.ignoreMaxActivations
       };
       await api.post('/licencas-software', softwareLicenseServer, { headers });
       softwareLicenseWasCreated = true;
@@ -51,6 +52,7 @@ export class SoftwareLicenseService {
         numero: softwareLicense.number,
         chaveAtivacao: softwareLicense.activationKey,
         maximoAtivacoes: softwareLicense.maxActivations,
+        ativacoesInfinitas: softwareLicense.ignoreMaxActivations
       };
 
       await api.put(
@@ -103,6 +105,7 @@ export class SoftwareLicenseService {
             maxActivations: softwareLicenseServer.maximoAtivacoes,
             numberOfActivationsUsed:
               softwareLicenseServer.quantidadeUsada,
+            ignoreMaxActivations: softwareLicenseServer.ativacoesInfinitas,
             categoryId: softwareLicenseServer.categoria.id,
             categoryName: softwareLicenseServer.categoria.nome,
           },
