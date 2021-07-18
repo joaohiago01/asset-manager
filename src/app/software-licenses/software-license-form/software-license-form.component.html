@@ -110,9 +110,7 @@
               value="{{
                 softwareLicense ? softwareLicense.maxActivations : ''
               }}"
-
               placeholder="Digite a quantidade máxima de ativações"
-              matInput
             />
           </div>
         </div>
@@ -125,7 +123,8 @@
               id="ignoreMaxActivations"
               style="width: 20px; height: 20px;"
               type="checkbox"
-              [checked]="ignoreMaxActivations" (changed)="changedIgnoreMaxActivations($event)"
+              value="ignoreMaxActivations"
+              [ngModel]="ignoreMaxActivations" (ngModelChange)="changedIgnoreMaxActivations($event)"
             />
             </label>
           </div>

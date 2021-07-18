@@ -136,8 +136,6 @@ export class AssetFormComponent implements OnInit {
 
   async deleteAsset(id: number): Promise<void> {
     if (id) {
-      alert('ID: ' + id);
-
       let assetWasDeleted = await this.assetService.deleteAsset(id);
       if (assetWasDeleted === true) {
         this.router.navigate(['assets'], { state: { needReload: true } });
