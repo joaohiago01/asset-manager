@@ -26,7 +26,9 @@
               <div class="card-content">
                 <div class="header-card">
                   <div class="card-title">
-                    <span>{{ equipment.description | slice: 0:50 }}</span>
+                    <span>
+                      <strong>{{ equipment.description | slice: 0:50 }}...</strong>
+                    </span>
                   </div>
                   <div class="card-buttons">
                     <button
@@ -41,7 +43,7 @@
                     <p class="field-title">Categoria: <span>{{ equipment.categoryName | slice: 0:28 }}</span></p>
                     <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
                     <p class="field-title">Número de Série: <span>{{ equipment.serialNumber }}</span></p>
-                    <p class="field-title">Localização: 
+                    <p class="field-title">Localização:
                       <span>{{ equipment.block }}</span>
                       <span>{{ equipment.room }}</span>
                     </p>

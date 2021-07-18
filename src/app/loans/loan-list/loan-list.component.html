@@ -39,10 +39,10 @@
 
                   <div class="content">
                     <p class="field-title">Data de Saída:
-                      <span>{{ loan.outputDate }}</span>
+                      <span>{{ loan.outputDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
                     <p class="field-title">Data Esperada:
-                      <span>{{ loan.expectedReturnDate }}</span>
+                      <span>{{ loan.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
                     <p class="field-title">Nº chamado do SUAP:
                       <span>{{ loan.callNumberSuap }}</span>

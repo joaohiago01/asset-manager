@@ -28,12 +28,6 @@ export class LoanListComponent implements OnInit {
 
   async getAllLoans(): Promise<void> {
     this.loans = await this.loanService.getAllLoans();
-    this.loans = this.loans.map((loan: Loan) => {
-      loan.outputDate = new Date(loan.outputDate).toLocaleDateString('pt-br');
-      loan.expectedReturnDate = new Date(loan.expectedReturnDate).toLocaleDateString('pt-br');
-      loan.returnDate = new Date(loan.returnDate).toLocaleDateString('pt-br');
-      return loan;
-    });
 
     if (!this.loans) {
       alert('Nenhum empréstimo encontrado');
