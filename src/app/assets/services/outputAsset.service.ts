@@ -21,12 +21,12 @@ export class OutputAssetService {
         linkChamadoSuap: outputAsset.callLinkSuap,
         observacoes: outputAsset.observations,
         expedidor: {
-            matricula: outputAsset.consignor.registrationNumber,
-            nome: outputAsset.consignor.name,
+            matricula: outputAsset.consignor?.registrationNumber,
+            nome: outputAsset.consignor?.name,
         },
         solicitante: {
-            matricula: outputAsset.requestor.registrationNumber,
-            nome: outputAsset.requestor.name,
+            matricula: outputAsset.requestor?.registrationNumber,
+            nome: outputAsset.requestor?.name,
         },
         setor: {
             id: outputAsset.departmentId,

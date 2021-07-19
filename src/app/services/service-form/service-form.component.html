@@ -43,7 +43,7 @@
   
         <div class="content-equipment-create">
 
-          <!--<div class="tabs is-centered is-boxed">
+          <div class="tabs is-centered is-boxed">
             <ul>
               <li [ngClass]="{'is-active': serviceTab}">
                 <a (click)="serviceTab = true; suapTab = false; assetsTab = false">
@@ -57,16 +57,16 @@
                   <span>Dados do SUAP</span>
                 </a>
               </li>
-              <li [ngClass]="{'is-active': assetsTab}">
+              <li [ngClass]="{'is-active': assetsTab}" *ngIf="service?.id == undefined">
                 <a (click)="assetsTab = true; suapTab = false; serviceTab = false">
                   <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
                   <span>Insumos Selecionados</span>
                 </a>
               </li>
             </ul>
-          </div>-->
+          </div>
 
-          <!--<div id="serviceFieldsTab" *ngIf="serviceTab === true"> -->
+          <div id="serviceFieldsTab" [ngClass]="{'hidden': serviceTab === false}">
             <mat-label class="two-labels">Pesquise um equipamento:</mat-label>
             <div class="control has-icons-left mb-5">
               <input
@@ -165,9 +165,9 @@
                 </div>
               </div>
             </div>
-          <!-- </div> -->
+          </div>
 
-          <!-- <div id="suapFieldsTab" *ngIf="suapTab === true"> -->
+          <div id="suapFieldsTab" [ngClass]="{'hidden': suapTab === false}">
             <div class="columns">
               <div class="column">
                 <label for="callNumberSuap" class="label">N° do Chamado</label>
@@ -247,130 +247,123 @@
                 rows="4"></textarea>
               </div>
             </div>
-          <!-- </div> -->
-
-          <!-- <div id="assetSelectionTab" *ngIf="assetsTab === true"> -->
-          <div *ngIf="service?.id == undefined">
-            <mat-label class="two-labels">Pesquise um insumo:</mat-label>
-            <div class="control has-icons-left mb-5">
-              <input
-                #assetSearch
-                id="assetSearch"
-                class="input medium-input"
-                placeholder="Digite o nome do insumo..."
-                [formControl]="assetFormControl"
-                matInput
-                [matAutocomplete]="autoAssets"
-              />
-              <mat-autocomplete #autoAssets="matAutocomplete">
-                <mat-option
-                  id="assetSelected"
-                  *ngFor="let option of filteredAssets | async"
-                  (click)="autoCompleteAssetFields(option.id)"
-                >
-                  {{ option.name }}
-                </mat-option>
-              </mat-autocomplete>
-              <span class="icon is-small is-left">
-                <i class="fa fa-search"></i>
-              </span>
-            </div>
-
-            <div class="columns is-desktop is-vcentered">
-              <div class="column">
-                <mat-label class="two-labels">Nome</mat-label>
-                <input
-                  id="assetName"
-                  #assetName
-                  matInput
-                  disabled
-                  class="input medium-input"
-                  value="{{ selectedAsset?.name }}"/>
-              </div>
-
-              <div class="column is-2">
-                <mat-label class="two-labels">Estoque</mat-label>
-                <input
-                  id="assetStorage"
-                  #assetStorage
-                  matInput
-                  disabled
-                  class="input medium-input"
-                  value="{{ selectedAsset?.currentQuantity }}"/>
-              </div>
-
-              <div class="column is-2">
-                <mat-label class="two-labels">Unidade de Medida</mat-label>
-                <input
-                  id="unitOfMeasurement"
-                  #unitOfMeasurement
-                  matInput
-                  disabled
-                  class="input medium-input"
-                  value="{{ selectedAsset?.unitOfMeasurement }}"/>
-              </div>
-
-              <div class="column is-2">
-                <mat-label class="two-labels">Quantidade</mat-label>
-                <input
-                  id="assetAmount"
-                  #assetAmount
-                  matInput
-                  type="number"
-                  class="input medium-input"/>
-              </div>
-
-              <div class="column is-2 hero pt-5">
-                <button id="assetAddButton" class="button is-success"
-                (click)="createAssetOutput(
-                  assetAmount.value,
-                  selectedDepartmentId,
-                  consignorName.value,
-                  consignorRegistrationNumber.value,
-                  requestorName.value,
-                  requestorRegistrationNumber.value,
-                  callNumberSuap.value,
-                  callLinkSuap.value,
-                  observations.value)">
-                Adicionar</button>
-              </div>
-            </div>
-
-              <p class="title is-5">Retiradas de Insumo:</p>
-
-              <div *ngIf="assetOutputs.length < 1">
-                <p class="title is-6 has-text-centered mt-5">Nenhuma retirada de insumo foi adicionada!</p>
-              </div>
-
-              <div class="table-container mb-6" *ngIf="assetOutputs.length > 0">
-                <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
-                  <thead>
-                    <tr>
-                      <th>Insumo</th>
-                      <th>Quantidade</th>
-                      <th>Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let assetOutput of assetOutputs">
-                      <td>{{ assetOutput?.assetName }}</td>
-                      <td>{{ assetOutput.amount }}</td>
-                      <td>
-                        <button
-                          class="button undo-button"
-                          mat-raised-button
-                          color="primary">
-                          <i class="material-icons">delete</i>
-                          Excluir
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
           </div>
 
-          <!-- </div> -->
+          <div id="assetSelectionTab" [ngClass]="{'hidden': assetsTab === false}">
+            <div *ngIf="service?.id == undefined">
+              <mat-label class="two-labels">Pesquise um insumo:</mat-label>
+              <div class="control has-icons-left mb-5">
+                <input
+                  #assetSearch
+                  id="assetSearch"
+                  class="input medium-input"
+                  placeholder="Digite o nome do insumo..."
+                  [formControl]="assetFormControl"
+                  matInput
+                  [matAutocomplete]="autoAssets"
+                />
+                <mat-autocomplete #autoAssets="matAutocomplete">
+                  <mat-option
+                    id="assetSelected"
+                    *ngFor="let option of filteredAssets | async"
+                    (click)="autoCompleteAssetFields(option.id)"
+                  >
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+
+              <div class="columns is-desktop is-vcentered">
+                <div class="column">
+                  <mat-label class="two-labels">Nome</mat-label>
+                  <input
+                    id="assetName"
+                    #assetName
+                    matInput
+                    disabled
+                    class="input medium-input"
+                    value="{{ selectedAsset?.name }}"/>
+                </div>
+
+                <div class="column is-2">
+                  <mat-label class="two-labels">Estoque</mat-label>
+                  <input
+                    id="assetStorage"
+                    #assetStorage
+                    matInput
+                    disabled
+                    class="input medium-input"
+                    value="{{ selectedAsset?.currentQuantity }}"/>
+                </div>
+
+                <div class="column is-2">
+                  <mat-label class="two-labels">Unidade de Medida</mat-label>
+                  <input
+                    id="unitOfMeasurement"
+                    #unitOfMeasurement
+                    matInput
+                    disabled
+                    class="input medium-input"
+                    value="{{ selectedAsset?.unitOfMeasurement }}"/>
+                </div>
+
+                <div class="column is-2">
+                  <mat-label class="two-labels">Quantidade</mat-label>
+                  <input
+                    id="assetAmount"
+                    #assetAmount
+                    matInput
+                    type="number"
+                    class="input medium-input"/>
+                </div>
+
+                <div class="column is-2 hero pt-5">
+                  <button id="assetAddButton" class="button is-success"
+                  (click)="createAssetOutput(
+                    assetAmount.value,
+                    selectedDepartmentId)">
+                  Adicionar</button>
+                </div>
+              </div>
+
+                <p class="title is-5">Retiradas de Insumo:</p>
+
+                <div *ngIf="assetOutputs.length < 1">
+                  <p class="title is-6 has-text-centered mt-5">Nenhuma retirada de insumo foi adicionada!</p>
+                </div>
+
+                <div class="table-container mb-6" *ngIf="assetOutputs.length > 0">
+                  <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
+                    <thead>
+                      <tr>
+                        <th>Insumo</th>
+                        <th>Quantidade</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let assetOutput of assetOutputs">
+                        <td>{{ assetOutput?.assetName }}</td>
+                        <td>{{ assetOutput.amount }}</td>
+                        <td>
+                          <button
+                            class="button undo-button"
+                            mat-raised-button
+                            color="primary">
+                            <i class="material-icons">delete</i>
+                            Excluir
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+          </div>
 
       </div>
     </div>

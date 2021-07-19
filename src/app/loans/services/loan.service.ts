@@ -24,12 +24,12 @@ export class LoanService {
         id: loan.department?.id
       };
       let expedidor = {
-        matricula: loan.consignor.registrationNumber,
-        nome: loan.consignor.name
+        matricula: loan.consignor?.registrationNumber,
+        nome: loan.consignor?.name
       };
       let solicitante = {
-        matricula: loan.requestor.registrationNumber,
-        nome: loan.requestor.name
+        matricula: loan.requestor?.registrationNumber,
+        nome: loan.requestor?.name
       };
       let loanServer = {
         numeroChamadoSuap: loan.callNumberSuap,
@@ -68,12 +68,12 @@ export class LoanService {
         id: loan.department?.id
       };
       let expedidor = {
-        matricula: loan.consignor.registrationNumber,
-        nome: loan.consignor.name
+        matricula: loan.consignor?.registrationNumber,
+        nome: loan.consignor?.name
       };
       let solicitante = {
-        matricula: loan.requestor.registrationNumber,
-        nome: loan.requestor.name
+        matricula: loan.requestor?.registrationNumber,
+        nome: loan.requestor?.name
       };
       let loanServer = {
         numeroChamadoSuap: loan.callNumberSuap,

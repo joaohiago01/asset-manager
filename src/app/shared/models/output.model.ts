@@ -3,12 +3,12 @@ import { Department } from "./department.model";
 
 export class Output {
   public id!: number;
-  public callNumberSuap: string;
-  public callLinkSuap: string;
-  public observations: string;
+  public callNumberSuap?: string;
+  public callLinkSuap?: string;
+  public observations?: string;
   public outputDate?: any;
-  public requestor: Contributor;
-  public consignor: Contributor;
+  public requestor?: Contributor;
+  public consignor?: Contributor;
   public department?: Department;
 
   constructor(props: Omit<Output, 'id'>, id?: number) {

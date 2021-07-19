@@ -247,31 +247,13 @@ export class ServiceFormComponent implements OnInit {
 
   async createAssetOutput(
     amount: string,
-    selectedDepartmentId: number,
-    consignorName?: string,
-    consignorRegistrationNumber?: string,
-    requestorName?: string,
-    requestorRegistrationNumber?: string,
-    callNumberSuap?: string,
-    callLinkSuap?: string,
-    observations?: string): Promise<void> {
-      if (this.selectedAsset?.id && amount && consignorName && consignorRegistrationNumber && requestorName && requestorRegistrationNumber && callNumberSuap && callLinkSuap && observations) {
+    selectedDepartmentId: number): Promise<void> {
+      if (this.selectedAsset?.id && amount) {
       const assetOutput = new OutputAsset({
         amount: Number(amount),
         assetId: this.selectedAsset?.id,
         assetName: this.selectedAsset.name,
         departmentId: selectedDepartmentId,
-        callNumberSuap: callNumberSuap,
-        callLinkSuap: callLinkSuap,
-        observations: observations,
-        consignor: {
-          registrationNumber: consignorRegistrationNumber,
-          name: consignorName,
-        },
-        requestor: {
-          registrationNumber: requestorRegistrationNumber,
-          name: requestorName,
-        },
       });
 
       this.assetOutputs.push(assetOutput);
