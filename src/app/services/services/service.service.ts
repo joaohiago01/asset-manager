@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
 import { Service } from 'src/app/shared/models/service.model';
 import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -20,25 +21,39 @@ export class ServiceService {
         id: service.equipmentId
       };
       let setorIdInputDTO = {
-        id: service.department?.id
+        id: service.departmentId
       };
       let expedidor = {
-        matricula: service.consignor.registrationNumber,
-        nome: service.consignor.name
+        matricula: service.consignor?.registrationNumber,
+        nome: service.consignor?.name
       };
       let solicitante = {
-        matricula: service.requestor.registrationNumber,
-        nome: service.requestor.name
+        matricula: service.requestor?.registrationNumber,
+        nome: service.requestor?.name
       };
+      let retiradas = service.assetOutputs?.map((assetOutput) => (
+        {
+          quantidade: assetOutput.amount,
+          insumoId: assetOutput.assetId,
+          numeroChamadoSuap: service.callNumberSuap,
+          linkChamadoSuap: service.callLinkSuap,
+          observacoes: service.observations,
+          setor: setorIdInputDTO,
+          expedidor,
+          solicitante
+        }
+      ));
+      
       let serviceServer = {
         numeroChamadoSuap: service.callNumberSuap,
         linkChamadoSuap: service.callLinkSuap,
         observacoes: service.observations,
-        dataRetorno: service.returnDate.toISOString(),
+        dataRetorno: service.returnDate,
         descricao: service.description,
         tipoServico: service.serviceType,
         equipamento: equipamentoIdInputDTO,
         setor: setorIdInputDTO,
+        retiradas,
         expedidor,
         solicitante
       };
@@ -63,15 +78,15 @@ export class ServiceService {
         id: service.equipmentId
       };
       let setorIdInputDTO = {
-        id: service.department?.id
+        id: service.departmentId
       };
       let expedidor = {
-        matricula: service.consignor.registrationNumber,
-        nome: service.consignor.name
+        matricula: service.consignor?.registrationNumber,
+        nome: service.consignor?.name
       };
       let solicitante = {
-        matricula: service.requestor.registrationNumber,
-        nome: service.requestor.name
+        matricula: service.requestor?.registrationNumber,
+        nome: service.requestor?.name
       };
       let serviceServer = {
         numeroChamadoSuap: service.callNumberSuap,

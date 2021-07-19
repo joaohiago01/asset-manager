@@ -28,8 +28,8 @@ export class ServiceListComponent implements OnInit {
   async getAllServices(): Promise<void> {
     this.services = await this.service.getAllServices();
     this.services = this.services.map((service: Service) => {
-      service.outputDate = new Date(service.outputDate).toLocaleDateString('pt-br');
-      service.returnDate = new Date(service.returnDate).toLocaleDateString('pt-br');
+      service.outputDate = new Date(service.outputDate);
+      service.returnDate = new Date(service.returnDate);
       return service;
     });
 

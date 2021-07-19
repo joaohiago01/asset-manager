@@ -1,0 +1,378 @@
+<div class="columns">
+    <div class="column is-3 background-color">
+      <app-menu></app-menu>
+    </div>
+    <div class="column is-9">
+      <div class="container">
+        <form
+          role="form"
+          (submit)="createService(
+            selectedDepartmentId,
+            selectedServiceType,
+            description.value,
+            consignorName.value,
+            consignorRegistrationNumber.value,
+            requestorName.value,
+            requestorRegistrationNumber.value,
+            callNumberSuap.value,
+            callLinkSuap.value,
+            observations.value)">
+          <div class="header-equipment-create">
+            <button
+              id="save"
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              type="submit"
+            >
+              Salvar
+            </button>
+  
+            <button
+              id="delete"
+              *ngIf="service ? service.id : 0"
+              class="btn-delete"
+              mat-raised-button
+              type="button"
+              (click)="service && deleteService(service.id)"
+            >
+              Deletar
+            </button>
+          </div>
+        </form>
+  
+        <div class="content-equipment-create">
+
+          <!--<div class="tabs is-centered is-boxed">
+            <ul>
+              <li [ngClass]="{'is-active': serviceTab}">
+                <a (click)="serviceTab = true; suapTab = false; assetsTab = false">
+                  <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                  <span>Cadastro do Serviço</span>
+                </a>
+              </li>
+              <li [ngClass]="{'is-active': suapTab}">
+                <a (click)="suapTab = true; serviceTab = false; assetsTab = false">
+                  <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+                  <span>Dados do SUAP</span>
+                </a>
+              </li>
+              <li [ngClass]="{'is-active': assetsTab}">
+                <a (click)="assetsTab = true; suapTab = false; serviceTab = false">
+                  <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+                  <span>Insumos Selecionados</span>
+                </a>
+              </li>
+            </ul>
+          </div>-->
+
+          <!--<div id="serviceFieldsTab" *ngIf="serviceTab === true"> -->
+            <mat-label class="two-labels">Pesquise um equipamento:</mat-label>
+            <div class="control has-icons-left mb-5">
+              <input
+                #equipmentSearch
+                id="equipmentSearch"
+                class="input medium-input"
+                placeholder="Digite o nome ou número..."
+                [formControl]="myControl"
+                matInput
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  id="equipmentSelected"
+                  *ngFor="let option of filteredEquipments | async"
+                  (click)="autoCompleteEquipmentFields(option.number)"
+                >
+                  {{ option.description }}
+                </mat-option>
+              </mat-autocomplete>
+              <span class="icon is-small is-left">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+
+            <div class="columns">
+              <div class="column is-one-quarter">
+                <mat-label class="two-labels">Número</mat-label>
+                <input
+                  id="number"
+                  #number
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedEquipment?.number }}"
+                />
+              </div>
+
+              <div class="column">
+                <mat-label class="two-labels">Nome</mat-label>
+                <input
+                  id="name"
+                  #name
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedEquipment?.description }}"/>
+              </div>
+
+              <div class="column is-one-quarter">
+                <mat-label class="two-labels">Hostname</mat-label>
+                <input
+                  id="hostname"
+                  #hostname
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedEquipment?.network?.hostname }}"/>
+              </div>
+            </div>
+
+            <p class="title is-5">Informações do Serviço:</p>
+    
+            <div class="columns">
+              <div class="column">
+                <label for="amount" class="label">Descrição do Serviço</label>
+                <input
+                  id="description"
+                  #description
+                  matInput
+                  type="text"
+                  class="input medium-input"
+                  value="{{ service?.description }}"
+                />
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <label for="serviceTypes" class="label">Tipo de Serviço</label>
+                <div class="select is-success is-fullwidth">
+                  <select id="serviceTypes" class="is-size-6" [(ngModel)]="selectedServiceType">
+                    <option *ngFor="let serviceType of serviceTypes"
+                    [value]="serviceType">{{ serviceType }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="column">
+                <label for="departments" class="label">Setor</label>
+                <div class="select is-success is-fullwidth">
+                  <select id="departments" class="is-size-6" [(ngModel)]="selectedDepartmentId">
+                    <option *ngFor="let department of departments"
+                    [value]="department.id">{{ department.name }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          <!-- </div> -->
+
+          <!-- <div id="suapFieldsTab" *ngIf="suapTab === true"> -->
+            <div class="columns">
+              <div class="column">
+                <label for="callNumberSuap" class="label">N° do Chamado</label>
+                <input
+                  id="callNumberSuap"
+                  #callNumberSuap
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.callNumberSuap }}"/>
+              </div>
+
+              <div class="column">
+                <label for="callLinkSuap" class="label">Link do Chamado do SUAP</label>
+                <input
+                  id="callLinkSuap"
+                  type="url"
+                  #callLinkSuap
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.callLinkSuap }}"/>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column is-half">
+                <label for="consignorName" class="label">Nome do Expedidor</label>
+                <input
+                  id="consignorName"
+                  #consignorName
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.consignor?.name }}"/>
+              </div>
+
+              <div class="column is-half">
+                <label for="consignorRegistrationNumber" class="label">Matrícula do Expedidor</label>
+                <input
+                  id="consignorRegistrationNumber"
+                  #consignorRegistrationNumber
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.consignor?.registrationNumber }}"/>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column is-half">
+                <label for="requestorName" class="label">Nome do Solicitante</label>
+                <input
+                  id="requestorName"
+                  #requestorName
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.requestor?.name }}"/>
+              </div>
+
+              <div class="column is-half">
+                <label for="requestorRegistrationNumber" class="label">Matrícula do Solicitante</label>
+                <input
+                  id="requestorRegistrationNumber"
+                  #requestorRegistrationNumber
+                  matInput
+                  class="input medium-input"
+                  value="{{ service?.requestor?.registrationNumber }}"/>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <label for="observations" class="label">Observações</label>
+                <textarea 
+                #observations
+                id="observations" 
+                class="textarea is-success" 
+                placeholder="Digite as observações" 
+                value="{{ service?.observations }}"
+                rows="4"></textarea>
+              </div>
+            </div>
+          <!-- </div> -->
+
+          <!-- <div id="assetSelectionTab" *ngIf="assetsTab === true"> -->
+          <div *ngIf="service?.id == undefined">
+            <mat-label class="two-labels">Pesquise um insumo:</mat-label>
+            <div class="control has-icons-left mb-5">
+              <input
+                #assetSearch
+                id="assetSearch"
+                class="input medium-input"
+                placeholder="Digite o nome do insumo..."
+                [formControl]="assetFormControl"
+                matInput
+                [matAutocomplete]="autoAssets"
+              />
+              <mat-autocomplete #autoAssets="matAutocomplete">
+                <mat-option
+                  id="assetSelected"
+                  *ngFor="let option of filteredAssets | async"
+                  (click)="autoCompleteAssetFields(option.id)"
+                >
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+              <span class="icon is-small is-left">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+
+            <div class="columns is-desktop is-vcentered">
+              <div class="column">
+                <mat-label class="two-labels">Nome</mat-label>
+                <input
+                  id="assetName"
+                  #assetName
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedAsset?.name }}"/>
+              </div>
+
+              <div class="column is-2">
+                <mat-label class="two-labels">Estoque</mat-label>
+                <input
+                  id="assetStorage"
+                  #assetStorage
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedAsset?.currentQuantity }}"/>
+              </div>
+
+              <div class="column is-2">
+                <mat-label class="two-labels">Unidade de Medida</mat-label>
+                <input
+                  id="unitOfMeasurement"
+                  #unitOfMeasurement
+                  matInput
+                  disabled
+                  class="input medium-input"
+                  value="{{ selectedAsset?.unitOfMeasurement }}"/>
+              </div>
+
+              <div class="column is-2">
+                <mat-label class="two-labels">Quantidade</mat-label>
+                <input
+                  id="assetAmount"
+                  #assetAmount
+                  matInput
+                  type="number"
+                  class="input medium-input"/>
+              </div>
+
+              <div class="column is-2 hero pt-5">
+                <button id="assetAddButton" class="button is-success"
+                (click)="createAssetOutput(
+                  assetAmount.value,
+                  selectedDepartmentId,
+                  consignorName.value,
+                  consignorRegistrationNumber.value,
+                  requestorName.value,
+                  requestorRegistrationNumber.value,
+                  callNumberSuap.value,
+                  callLinkSuap.value,
+                  observations.value)">
+                Adicionar</button>
+              </div>
+            </div>
+
+              <p class="title is-5">Retiradas de Insumo:</p>
+
+              <div *ngIf="assetOutputs.length < 1">
+                <p class="title is-6 has-text-centered mt-5">Nenhuma retirada de insumo foi adicionada!</p>
+              </div>
+
+              <div class="table-container mb-6" *ngIf="assetOutputs.length > 0">
+                <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
+                  <thead>
+                    <tr>
+                      <th>Insumo</th>
+                      <th>Quantidade</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let assetOutput of assetOutputs">
+                      <td>{{ assetOutput?.assetName }}</td>
+                      <td>{{ assetOutput.amount }}</td>
+                      <td>
+                        <button
+                          class="button undo-button"
+                          mat-raised-button
+                          color="primary">
+                          <i class="material-icons">delete</i>
+                          Excluir
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+
+          <!-- </div> -->
+
+      </div>
+    </div>
+  </div>
+  

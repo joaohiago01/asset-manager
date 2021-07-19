@@ -1,27 +1,26 @@
 import { Contributor } from "./contributor.model";
 import { Department } from "./department.model";
 import { Output } from "./output.model";
+import { OutputAsset } from "./outputAsset.model";
 import { ServiceType } from "./serviceType.enum";
 
 export class Service extends Output {
-  public returnDate: any;
   public serviceType?: ServiceType;
   public description: string;
+  public returnDate: Date;
+  public departmentId?: number;
   public equipmentId: number;
   public equipmentName?: string;
-  public department?: Department;
-  public requestor: Contributor;
-  public consignor: Contributor;
+  public assetOutputs?: OutputAsset[];
 
   constructor(props: Omit<Service, 'id'>, id?: number) {
     super(props);
-    this.returnDate = props.returnDate;
     this.serviceType = props.serviceType;
     this.description = props.description;
+    this.returnDate = props.returnDate;
+    this.departmentId = props.departmentId;
     this.equipmentId = props.equipmentId;
-    this.department = props.department;
-    this.requestor = props.requestor;
-    this.consignor = props.consignor;
+    this.assetOutputs = props.assetOutputs;
     if (props.equipmentName != undefined) {
       this.equipmentName = props.equipmentName;
     }
