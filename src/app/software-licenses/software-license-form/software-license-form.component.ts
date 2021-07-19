@@ -27,11 +27,11 @@ export class SoftwareLicenseFormComponent implements OnInit {
     const softwareLicense: SoftwareLicense = <SoftwareLicense>(
       this.router.getCurrentNavigation()?.extras.state
     );
-    this.ignoreMaxActivations = false;
 
     if (softwareLicense) {
       const map = new Map(Object.entries(Object.values(softwareLicense)));
       const softwareLicenseNumber: string = map.get('0')['number'];
+      this.ignoreMaxActivations = softwareLicense.ignoreMaxActivations === undefined ? false : true;
       this.myControl.setValue(softwareLicenseNumber);
     }
   }
@@ -52,6 +52,13 @@ export class SoftwareLicenseFormComponent implements OnInit {
       )?.id;
       this.selectedCategoryId = selectedCategoryId ? selectedCategoryId : 0;
       this.ignoreMaxActivations = this.softwareLicense.ignoreMaxActivations;
+    }
+
+    let ignoreMaxActivations = (<HTMLInputElement> window.document.getElementById("ignoreMaxActivations"));
+    ignoreMaxActivations.checked = this.ignoreMaxActivations!;
+    let maxActivations = window.document.getElementById("maxActivations");
+    if (maxActivations && this.ignoreMaxActivations === true) {
+      maxActivations.setAttribute('disabled', 'disabled');
     }
   }
 
@@ -167,6 +174,16 @@ export class SoftwareLicenseFormComponent implements OnInit {
   }
 
   changedIgnoreMaxActivations(event: any) {
-    this.ignoreMaxActivations = event.target.checked;
+    this.ignoreMaxActivations = event;
+    if (this.softwareLicense) this.softwareLicense.maxActivations = null;
+    let maxActivations = (<HTMLInputElement> window.document.getElementById("maxActivations"));
+    if (maxActivations) {
+      if (this.ignoreMaxActivations === true) {
+        maxActivations.setAttribute('disabled', 'disabled');
+        maxActivations.value = '';
+      } else {
+        maxActivations.removeAttribute('disabled');
+      }
+    }
   }
 }

@@ -19,8 +19,8 @@ export class AssetService {
       let assetServer = {
         categoriaId: asset.categoryId,
         nome: asset.name,
-        estante: asset.bookcase,
-        prateleira: asset.shelf,
+        estante: asset.bookcase[0],
+        prateleira: asset.shelf[0],
         quantidadeMinima: asset.minQuantity,
         quantidadeAtual: asset.currentQuantity,
         unidadeDeMedida: asset.unitOfMeasurement,
@@ -44,8 +44,8 @@ export class AssetService {
       let assetServer = {
         categoriaId: asset.categoryId,
         nome: asset.name,
-        estante: asset.bookcase,
-        prateleira: asset.shelf,
+        estante: asset.bookcase[0],
+        prateleira: asset.shelf[0],
         quantidadeMinima: asset.minQuantity,
         quantidadeAtual: asset.currentQuantity,
         unidadeDeMedida: asset.unitOfMeasurement,

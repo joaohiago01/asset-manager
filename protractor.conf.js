@@ -14,6 +14,7 @@ exports.config = {
     './src/app/software-licenses/software-license-list/software-license-list.component.spec.ts',
     './src/app/software-licenses/software-license-association/software-license-association.component.spec.ts',
     './src/app/departments/departments-list/departments-list.component.spec.ts',
+    './src/app/loans/loan-list/loan-list.component.spec.ts',
     './src/app/loans/loan-form/loan-form.component.spec.ts'
   ],
 

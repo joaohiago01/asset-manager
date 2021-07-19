@@ -178,13 +178,15 @@
           </div>
 
           <div class="columns is-multiline is-mobile" *ngIf="associatedEquipments.length > 0">
-  
+
             <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let equipment of associatedEquipments">
               <div class="card">
                 <div class="card-content">
                   <div class="header-card">
                     <div class="card-title">
-                      <span>{{ equipment.description | slice: 0:50 }}</span>
+                      <span>
+                        <strong>{{ equipment.description | slice: 0:50 }}...</strong>
+                      </span>
                     </div>
                     <div class="card-buttons">
                       <button
@@ -194,28 +196,28 @@
                       </button>
                     </div>
                   </div>
-  
+
                   <div class="content">
-                    <p class="field-title">Categoria: 
+                    <p class="field-title">Categoria:
                       <span>{{ equipment.categoryName }}</span>
                     </p>
-                    <p class="field-title">Número: 
+                    <p class="field-title">Número:
                       <span>{{ equipment.number }}</span>
                     </p>
-                    <p class="field-title">Hostname: 
+                    <p class="field-title">Hostname:
                       <span>{{ equipment.network.hostname }}</span>
                     </p>
-                    <p class="field-title">Endereço IP: 
+                    <p class="field-title">Endereço IP:
                       <span>{{ equipment.network.addressIP }}</span>
                     </p>
-                    <p class="field-title">Endereço MAC: 
+                    <p class="field-title">Endereço MAC:
                       <span>{{ equipment.network.addressMAC }}</span>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-  
+
           </div>
         </div>
 

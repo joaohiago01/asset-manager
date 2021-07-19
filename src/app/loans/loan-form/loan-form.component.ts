@@ -58,6 +58,10 @@ export class LoanFormComponent implements OnInit {
         (department: Department) => department.id === this.loan?.department?.id
       )?.id;
       this.selectedDepartmentId = selectedDepartmentId ? selectedDepartmentId : 0;
+      let returnDateIndexOfHours = this.loan.returnDate.indexOf('T');
+      this.loan.returnDate = this.loan.returnDate.slice(0, returnDateIndexOfHours);
+      let expectedReturnDateIndexOfHours = this.loan.expectedReturnDate.indexOf('T');
+      this.loan.expectedReturnDate = this.loan.expectedReturnDate.slice(0, expectedReturnDateIndexOfHours);
     }
   }
 
@@ -159,8 +163,8 @@ export class LoanFormComponent implements OnInit {
           callNumberSuap: callNumberSuap,
           callLinkSuap: callLinkSuap,
           observations: observations,
-          returnDate: returnDate,
-          expectedReturnDate: expectedReturnDate,
+          returnDate: new Date(returnDate),
+          expectedReturnDate: new Date(expectedReturnDate),
           statusLoan: statusLoanSelected,
           department: selectedDepartment,
           consignor,

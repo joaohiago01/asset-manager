@@ -30,6 +30,7 @@
                     </div>
                     <div class="card-buttons">
                       <button
+                        id="edit"
                         class="button card-button bg-primary"
                         (click)="detailLoan(loan.id)">
                         <i class="material-icons v-middle color-card-icon">edit</i>
@@ -39,10 +40,10 @@
 
                   <div class="content">
                     <p class="field-title">Data de Saída:
-                      <span>{{ loan.outputDate }}</span>
+                      <span>{{ loan.outputDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
                     <p class="field-title">Data Esperada:
-                      <span>{{ loan.expectedReturnDate }}</span>
+                      <span>{{ loan.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
                     <p class="field-title">Nº chamado do SUAP:
                       <span>{{ loan.callNumberSuap }}</span>
@@ -51,7 +52,11 @@
                       <span>{{ loan.department?.acronym }}</span>
                     </p>
                     <p class="field-title">Status:
-                      <span>{{ loan.statusLoan }}</span>
+                      <span>
+                        <strong>
+                          {{ loan.statusLoan }}
+                        </strong>
+                      </span>
                     </p>
                   </div>
                 </div>
