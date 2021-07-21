@@ -65,7 +65,7 @@ describe('Create new Asset Input and Output', () => {
     element(by.id('departments')).sendKeys('Coordenação de Análise e Desenvolvimento de Sistemas');
     browser.sleep(1000);
 
-    element(by.id('create')).getWebElement().click();
+    element(by.id('createAssetOutput')).getWebElement().click();
     browser.sleep(3000);
 
     element(by.id('outputList')).getWebElement().click();

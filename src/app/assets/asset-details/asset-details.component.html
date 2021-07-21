@@ -194,7 +194,7 @@
                 requestorName.value,
                 requestorRegistrationNumber.value)">
     
-                <button id="create" type="submit" class="button is-success">Confirmar</button>
+                <button id="createAssetOutput" type="submit" class="button is-success">Confirmar</button>
               </form>
     
               <button class="button" (click)="hideModal('#modalOutput')">
@@ -349,8 +349,8 @@
                       <td>{{ assetOutput.callNumberSuap }} <br>
                         <a class="has-text-success has-text-weight-bold" href="{{ assetOutput.callLinkSuap }}" target="_blank">Ver no SUAP</a>
                       </td>
-                      <td>{{ assetOutput.consignor.name }} <br> {{ assetOutput.consignor.registrationNumber }}</td>
-                      <td>{{ assetOutput.requestor.name }} <br> {{ assetOutput.requestor.registrationNumber }}</td>
+                      <td>{{ assetOutput.consignor?.name }} <br> {{ assetOutput.consignor?.registrationNumber }}</td>
+                      <td>{{ assetOutput.requestor?.name }} <br> {{ assetOutput.requestor?.registrationNumber }}</td>
                       <td>{{ assetOutput.department?.acronym }}</td>
                       <td>
                         <button
