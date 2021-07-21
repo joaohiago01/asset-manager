@@ -42,11 +42,11 @@
 
                 <div class="content">
                     <p class="field-title">Data de Criação: <span>{{ service.outputDate | date: 'dd/MM/yyyy' }}</span></p>
-                    
-                    <p class="field-title">Nº chamado do SUAP: <span>{{ service.callNumberSuap }}</span></p>
-                    
+
+                    <p *ngIf="service.callNumberSuap" class="field-title">Nº chamado do SUAP: <span>{{ service.callNumberSuap }}</span></p>
+
                     <p class="field-title">Setor: <span>{{ service.department?.acronym | slice: 0:25 }}</span></p>
-                    
+
                     <p class="field-title">Tipo de Serviço:
                       <span>
                         <strong>
@@ -55,7 +55,7 @@
                       </span>
                     </p>
 
-                    <p class="field-title"> 
+                    <p *ngIf="service.callLinkSuap" class="field-title">
                       <a class="has-text-success has-text-weight-bold" href="{{ service.callLinkSuap }}" target="_blank">Ver no SUAP</a>
                     </p>
                 </div>

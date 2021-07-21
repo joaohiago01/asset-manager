@@ -45,7 +45,7 @@
                     <p class="field-title">Data Esperada:
                       <span>{{ loan.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
-                    <p class="field-title">Nº chamado do SUAP:
+                    <p class="field-title" *ngIf="loan.callNumberSuap">Nº chamado do SUAP:
                       <span>{{ loan.callNumberSuap }}</span>
                     </p>
                     <p class="field-title">Setor:

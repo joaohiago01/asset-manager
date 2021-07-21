@@ -53,7 +53,7 @@
               #consignorName
               id="consignorName"
               class="input medium-input"
-              value="{{ loan ? loan.consignor.name : '' }}"
+              value="{{ loan && loan.consignor ? loan.consignor.name : '' }}"
               placeholder="Digite o Nome do Expedidor"
               matInput
             />
@@ -64,7 +64,7 @@
               #consignorRegistrationNumber
               id="consignorRegistrationNumber"
               class="input medium-input"
-              value="{{ loan ? loan.consignor.registrationNumber : '' }}"
+              value="{{ loan && loan.consignor ? loan.consignor.registrationNumber : '' }}"
               placeholder="Digite a Matrícula do Expedidor"
               matInput
             />
@@ -77,7 +77,7 @@
               #requestorName
               id="requestorName"
               class="input medium-input"
-              value="{{ loan ? loan.requestor.name : '' }}"
+              value="{{ loan && loan.requestor ? loan.requestor.name : '' }}"
               placeholder="Digite o Nome do Solicitante"
               matInput
             />
@@ -88,7 +88,7 @@
               #requestorRegistrationNumber
               id="requestorRegistrationNumber"
               class="input medium-input"
-              value="{{ loan ? loan.requestor.registrationNumber : '' }}"
+              value="{{ loan && loan.requestor ? loan.requestor.registrationNumber : '' }}"
               placeholder="Digite a Matrícula do Solicitante"
               matInput
             />

@@ -15,7 +15,7 @@
                 (click)="hideModal('#modalInput')"
               ></button>
             </header>
-            
+
             <section
               class="modal-card-body">
 
@@ -30,7 +30,7 @@
                 class="input is-success mb-5"
                 placeholder="Data da Entrada"
               />
-  
+
               <label for="expirationDateModalInput" class="label">Data de Validade</label>
               <input
                 id="expirationDateModalInput"
@@ -48,9 +48,9 @@
                 class="input is-success mb-5"
                 placeholder="Quantidade"
               />
-                
+
             </section>
-    
+
             <footer
               class="modal-card-foot is-justify-content-center is-align-items-center">
               <form
@@ -78,7 +78,7 @@
               ></button>
             </header>
             <section class="modal-card-body m-2">
-    
+
               <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
               <p class="title is-5">{{ asset?.name }}</p>
 
@@ -165,22 +165,22 @@
                   </div>
                 </div>
               </div>
-    
+
               <div class="columns hidden">
                 <div class="column">
                   <label for="observations" class="label">Observações</label>
-                  <textarea 
+                  <textarea
                   #observations
-                  id="observations" 
-                  class="textarea is-success" 
-                  placeholder="Digite as observações" 
+                  id="observations"
+                  class="textarea is-success"
+                  placeholder="Digite as observações"
                   rows="3"></textarea>
                 </div>
-    
+
               </div>
-    
+
             </section>
-    
+
             <footer class="modal-card-foot is-justify-content-center is-align-items-center">
               <form
               role="form" (submit)="addAssetOutput(
@@ -196,16 +196,16 @@
     
                 <button id="createAssetOutput" type="submit" class="button is-success">Confirmar</button>
               </form>
-    
+
               <button class="button" (click)="hideModal('#modalOutput')">
                 Cancelar
               </button>
             </footer>
           </div>
-          
+
           <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
           <div class="overlay hidden"></div>
-          
+
         <div class="header-asset-details-create">
           <div class="header-category">
             <button
@@ -349,8 +349,8 @@
                       <td>{{ assetOutput.callNumberSuap }} <br>
                         <a class="has-text-success has-text-weight-bold" href="{{ assetOutput.callLinkSuap }}" target="_blank">Ver no SUAP</a>
                       </td>
-                      <td>{{ assetOutput.consignor?.name }} <br> {{ assetOutput.consignor?.registrationNumber }}</td>
-                      <td>{{ assetOutput.requestor?.name }} <br> {{ assetOutput.requestor?.registrationNumber }}</td>
+                      <td *ngIf="assetOutput.consignor">{{ assetOutput.consignor.name }} <br> {{ assetOutput.consignor.registrationNumber }}</td>
+                      <td *ngIf="assetOutput.requestor">{{ assetOutput.requestor.name }} <br> {{ assetOutput.requestor.registrationNumber }}</td>
                       <td>{{ assetOutput.department?.acronym }}</td>
                       <td>
                         <button
