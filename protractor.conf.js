@@ -15,7 +15,8 @@ exports.config = {
     './src/app/software-licenses/software-license-association/software-license-association.component.spec.ts',
     './src/app/departments/departments-list/departments-list.component.spec.ts',
     './src/app/loans/loan-list/loan-list.component.spec.ts',
-    './src/app/loans/loan-form/loan-form.component.spec.ts'
+    './src/app/loans/loan-form/loan-form.component.spec.ts',
+    './src/app/dashboard/dashboard/dashboard.component.spec.ts'
   ],
 
   onPrepare: function(){

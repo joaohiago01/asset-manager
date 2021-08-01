@@ -3,5 +3,196 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <div class="tabs is-boxed">
+      <ul>
+        <li [ngClass]="{'isActiveTab': loanTab}">
+          <a id="loanTabButton" (click)="loanTab = true; serviceTab = false; inputAssetTab = false; outputAssetTab = false">
+            <span class="icon is-small"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+            <span>Empréstimos</span>
+          </a>
+        </li>
+        <li [ngClass]="{'isActiveTab': serviceTab}">
+          <a id="serviceTabButton" (click)="serviceTab = true; loanTab = false; inputAssetTab = false; outputAssetTab = false">
+            <span class="icon is-small"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+            <span>Serviços</span>
+          </a>
+        </li>
+        <li [ngClass]="{'isActiveTab': inputAssetTab}">
+          <a id="inputAssetTabButton" (click)="inputAssetTab = true; outputAssetTab = false; loanTab = false; serviceTab = false">
+            <span class="icon is-small"><i class="fa fa-th-list" aria-hidden="true"></i></span>
+            <span>Entrada de Insumos</span>
+          </a>
+        </li>
+        <li [ngClass]="{'isActiveTab': outputAssetTab}">
+          <a id="outputAssetTabButton" (click)="outputAssetTab = true; inputAssetTab = false; loanTab = false; serviceTab = false">
+            <span class="icon is-small"><i class="fa fa-th-list" aria-hidden="true"></i></span>
+            <span>Retirada de Insumos</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div id="assetInputFieldsTab" [ngClass]="{'hidden': inputAssetTab === false}">
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let assetInput of assetInputs">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ assetInput.assetName | slice: 0:46 }}</span>
+                  </div>
+                  <div class="card-buttons">
+                    <button
+                      id="detailButtonAssetInput"
+                      class="button card-button bg-primary"
+                      (click)="detailAsset(assetInput.assetId)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
+                    </button>
+                  </div>
+                </div>
+                <div class="content">
+                  <p class="field-title">Data de Entrada:
+                    <span>{{ assetInput.inputDate | date: 'dd/MM/yyyy' }}</span>
+                  </p>
+                  <p class="field-title">Data de Validade:
+                    <span>{{ assetInput.expirationDate | date: 'dd/MM/yyyy' }}</span>
+                  </p>
+                  <p class="field-title">Quantidade:
+                    <span>{{ assetInput.amount }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="assetOutputFieldsTab" [ngClass]="{'hidden': outputAssetTab === false}">
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let assetOutput of assetOutputs">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ assetOutput.assetName | slice: 0:46 }}</span>
+                  </div>
+                  <div class="card-buttons">
+                    <button
+                      id="detailButtonAssetOutput"
+                      class="button card-button bg-primary"
+                      (click)="detailAsset(assetOutput.assetId)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
+                    </button>
+                  </div>
+                </div>
+                <div class="content">
+                  <p class="field-title">Data de Saída:
+                    <span>{{ assetOutput.outputDate | date: 'dd/MM/yyyy' }}</span>
+                  </p>
+                  <p class="field-title">Quantidade:
+                    <span>{{ assetOutput.amount }}</span>
+                  </p>
+                  <p *ngIf="assetOutput.consignor" class="field-title">Expedidor:
+                    <span>{{ assetOutput.consignor.name }}</span>
+                  </p>
+                  <p *ngIf="assetOutput.requestor" class="field-title">Solicitante:
+                    <span>{{ assetOutput.requestor.name }}</span>
+                  </p>
+                  <p class="field-title">Setor:
+                    <span>{{ assetOutput.department?.acronym }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loanFieldsTab" [ngClass]="{'hidden': loanTab === false}">
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let loan of loans">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>{{ loan.equipmentName | slice: 0:50 }}</span>
+                  </div>
+                  <div class="card-buttons">
+                    <button
+                      id="editButtonService"
+                      class="button card-button bg-primary"
+                      (click)="detailLoan(loan.id)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
+                    </button>
+                  </div>
+                </div>
+                <div class="content">
+                  <p class="field-title">Data de Saída:
+                    <span>{{ loan.outputDate | date: 'dd/MM/yyyy' }}</span>
+                  </p>
+                  <p class="field-title">Data Esperada:
+                    <span>{{ loan.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
+                  </p>
+                  <p class="field-title" *ngIf="loan.callNumberSuap">Nº chamado do SUAP:
+                    <span>{{ loan.callNumberSuap }}</span>
+                  </p>
+                  <p class="field-title">Setor:
+                    <span>{{ loan.department?.acronym }}</span>
+                  </p>
+                  <p class="field-title">Status:
+                    <span>
+                      <strong>
+                        {{ loan.statusLoan }}
+                      </strong>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="serviceFieldsTab" [ngClass]="{'hidden': serviceTab === false}">
+      <div class="container list">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-tablet is-one-third-desktop is-full-mobile" *ngFor="let service of services">
+            <div class="card">
+              <div class="card-content">
+                <div class="header-card">
+                  <div class="card-title">
+                    <span>
+                      <strong>{{ service?.equipmentName | slice: 0:50 }}</strong>
+                    </span>
+                  </div>
+                  <div class="card-buttons">
+                    <button
+                      id="editButtonService"
+                      class="button card-button bg-primary"
+                      (click)="detailService(service.id)">
+                      <i class="material-icons v-middle color-card-icon">info</i>
+                    </button>
+                  </div>
+                </div>
+                <div class="content">
+                    <p class="field-title">Data de Criação: <span>{{ service.outputDate | date: 'dd/MM/yyyy' }}</span></p>
+                    <p *ngIf="service.callNumberSuap" class="field-title">Nº chamado do SUAP: <span>{{ service.callNumberSuap }}</span></p>
+                    <p class="field-title">Setor: <span>{{ service.department?.acronym | slice: 0:25 }}</span></p>
+                    <p class="field-title">Tipo de Serviço:
+                      <span>
+                        <strong>
+                          {{ service.serviceType }}
+                        </strong>
+                      </span>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
