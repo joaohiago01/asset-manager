@@ -8,11 +8,20 @@
         <button
           (click)="navigateToAssetCreate()"
           #btnSave
-          class="btn-save"
+          class="btn"
           mat-raised-button
           color="primary">
           <i class="material-icons">add</i>
           Cadastrar
+        </button>
+        <button
+          (click)="export()"
+          #btnExport
+          class="btn"
+          mat-raised-button
+          color="primary">
+          <i class="material-icons">info</i>
+          Exportar
         </button>
       </div>
 
@@ -44,7 +53,7 @@
 
                 <div class="content">
                   <p class="field-title">Categoria: <span>{{ asset.categoryName | slice: 0:28 }}</span></p>
-                  <p class="field-title">Localização: 
+                  <p class="field-title">Localização:
                     <span>{{ asset.bookcase }}</span>
                     <span>{{ asset.shelf }}</span>
                   </p>

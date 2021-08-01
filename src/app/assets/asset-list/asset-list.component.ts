@@ -4,6 +4,7 @@ import { CategoryService } from 'src/app/category/services/category.service';
 import { Asset } from 'src/app/shared/models/asset.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { AssetService } from '../services/asset.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-asset-list',
@@ -65,6 +66,24 @@ export class AssetListComponent implements OnInit {
     this.router.navigate(['assets/details'], {
       state: { asset: this.selectedAsset },
     });
+  }
+
+  export() {
+    let assets = this.assets.map((asset: Asset) => {
+      return {
+        id: asset.id,
+        nome: asset.name,
+        estante: asset.bookcase,
+        prateleira: asset.shelf,
+        quantidadeMinima: asset.minQuantity,
+        quantidadeAtual: asset.currentQuantity,
+        unidadeDeMedida: asset.unitOfMeasurement,
+        categoriaNome: asset.categoryName,
+      };
+    });
+    let json = JSON.stringify(assets);
+    const file = new Blob([json], { type: 'application/json' });
+    saveAs(file, 'Insumos.json');
   }
 
   navigateToAssetCreate(): void {

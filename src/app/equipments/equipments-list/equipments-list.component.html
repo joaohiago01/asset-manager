@@ -9,12 +9,21 @@
           id="add"
           (click)="navigateToEquipmentCreate()"
           #btnCadastrar
-          class="btn-cadastrar"
+          class="btn"
           mat-raised-button
           color="primary"
         >
           <i class="material-icons">add</i>
           Cadastrar
+        </button>
+        <button
+          (click)="export()"
+          #btnExport
+          class="btn"
+          mat-raised-button
+          color="primary">
+          <i class="material-icons">info</i>
+          Exportar
         </button>
       </div>
 

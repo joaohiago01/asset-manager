@@ -56,6 +56,28 @@ export class EquipmentsListComponent implements OnInit {
     });
   }
 
+  export() {
+    let equipments = this.equipments.map((equipment: Equipment) => {
+      return {
+        id: equipment.id,
+        numero: equipment.number,
+        numeroSerie: equipment.serialNumber,
+        descricao: equipment.description,
+        bloco: equipment.block,
+        sala: equipment.room,
+        estadoConservacao: equipment.conservationState,
+        rede: {
+          hostname: equipment.network.hostname,
+          enderecoIP: equipment.network.addressIP,
+          enderecoMAC: equipment.network.addressMAC,
+        }
+      };
+    });
+    let json = JSON.stringify(equipments);
+    const file = new Blob([json], { type: 'application/json' });
+    saveAs(file, 'Equipamentos.json');
+  }
+
   navigateToEquipmentCreate(): void {
     this.router.navigate(['/equipments/form']);
   }
