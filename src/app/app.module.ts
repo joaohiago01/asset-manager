@@ -16,8 +16,8 @@ import { AssetsModule } from './assets/assets.module';
 import { SoftwareLicensesModule } from './software-licenses/software-licenses.module';
 import { DepartmentsModule } from './departments/departments.module';
 import { LoansModule } from './loans/loans.module';
-import { AssetDetailsComponent } from './assets/asset-details/asset-details.component';
 import { ServicesModule } from './services/services.module';
+import { UtilityService } from './shared/services/utility.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +42,7 @@ import { ServicesModule } from './services/services.module';
     LoansModule,
     ServicesModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, UtilityService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

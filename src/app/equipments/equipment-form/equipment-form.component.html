@@ -3,11 +3,7 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
-    <div id="notification" class="notification is-dark is-light hidden" style="z-index: 5; position: fixed; top:99vh;
-    transform:translateY(-100%)">
-      <button class="delete" (click)="closeNotification()"></button>
-      <span id="notificationMessage">Oops, ocorreu um erro!</span>
-    </div>
+    <app-notification></app-notification>
 
     <div class="container">  
       <form
@@ -217,6 +213,17 @@
           </span>
         </label>
       </div>
+
+      <button
+        (click)="downloadFile()"
+        #btnDownload
+        class="btn-save"
+        mat-raised-button
+        *ngIf="equipment?.id && equipment?.filename"
+        color="primary">
+        <i class="material-icons">download</i>
+        Baixar anexo
+      </button>
     </div>
   </div>
 </div>

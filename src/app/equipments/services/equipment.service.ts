@@ -99,6 +99,23 @@ export class EquipmentService {
     }
   }
 
+  async getFile(equipmentId: number): Promise<AxiosResponse> {
+    try {
+      let headers = {
+        Authorization: `Bearer ${this.authenticationService.token}`,
+      };
+      
+      const response = await api.get(
+        `/equipamentos/${equipmentId}/file`,
+        { headers }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async createEquipment(equipment: Equipment): Promise<AxiosResponse> {
     try {
       let headers = {

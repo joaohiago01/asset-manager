@@ -11,6 +11,7 @@ import { Category } from 'src/app/shared/models/category.model';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { EquipmentService } from '../services/equipment.service';
 import { CategoryType } from 'src/app/shared/models/categoryType.enum';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-equipment-form',
@@ -29,11 +30,13 @@ export class EquipmentFormComponent implements OnInit {
   public filteredOptions?: Observable<EquipmentApiCampus[]>;
 
   public file: File = new File(['empty'], 'empty.txt', { type: 'text/plain' });
+  public imageContent: string = '';
 
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    private utilityService: UtilityService
   ) {
     const equipment: Equipment = <Equipment>(
       this.router.getCurrentNavigation()?.extras.state
@@ -57,24 +60,6 @@ export class EquipmentFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.options = await this.equipmentService.getAllEquipmentsSuggestions();
-    /*let option1: EquipmentApiCampus = new EquipmentApiCampus(
-      '215305',
-      'IMPRESSORA ECO-TANK. MARCA: EPSON',
-      'ativo'
-    );
-    let option2: EquipmentApiCampus = new EquipmentApiCampus(
-      '215616',
-      'EQUIPAMENTO SLUMP TEST',
-      'ativo'
-    );
-    let option3: EquipmentApiCampus = new EquipmentApiCampus(
-      '216061',
-      'CADEIRA FIXA SEM APOIO DE BRAÇO',
-      'ativo'
-    );
-    let optionsArray: EquipmentApiCampus[] = [option1, option2, option3];
-
-    this.options = optionsArray;*/
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -173,18 +158,18 @@ export class EquipmentFormComponent implements OnInit {
             });
           }
         } else {
-          this.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse equipamento');
+          this.utilityService.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse equipamento');
 
           setTimeout(() => {
-            this.closeNotification();
+            this.utilityService.closeNotification();
           }, 6000);
         }
 
       } else {
-        this.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
+        this.utilityService.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
 
         setTimeout(() => {
-          this.closeNotification();
+          this.utilityService.closeNotification();
         }, 6000);
       }
     }
@@ -233,17 +218,17 @@ export class EquipmentFormComponent implements OnInit {
         this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        this.showNotification('Oops, ocorreu um erro ao tentar editar esse equipamento');
+        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar editar esse equipamento');
 
         setTimeout(() => {
-          this.closeNotification();
+          this.utilityService.closeNotification();
         }, 6000);
       }
     } else {
-      this.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
 
       setTimeout(() => {
-        this.closeNotification();
+        this.utilityService.closeNotification();
       }, 6000);
     }
   }
@@ -254,19 +239,39 @@ export class EquipmentFormComponent implements OnInit {
       if (equipmentWasDeleted === true) {
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        this.showNotification('Oops, ocorreu um erro ao tentar remover esse equipamento');
+        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar remover esse equipamento');
 
         setTimeout(() => {
-          this.closeNotification();
+          this.utilityService.closeNotification();
         }, 6000);
       }
     } else {
-      this.showNotification('Ocorreu um erro! Esse equipamento não foi encontrado');
+      this.utilityService.showNotification('Ocorreu um erro! Esse equipamento não foi encontrado');
 
       setTimeout(() => {
-        this.closeNotification();
+        this.utilityService.closeNotification();
       }, 6000);
     }
+  }
+
+  downloadFile() {
+    if (this.equipment?.id && this.equipment.filename) {
+      const promise = this.equipmentService.getFile(this.equipment?.id);
+
+      promise.then(response => {
+
+        // if (this.equipment?.filename)
+          // var file = new File(response.data, this.equipment?.filename, { type: 'image/jpg' });
+
+          // const data = JSON.stringify(response);
+          const file = new File([response.data], "imagem.jpg", { type: 'image/jpg' });
+
+          saveAs(file, this.equipment?.filename);
+      });
+      
+      
+    }
+    
   }
 
   public autoCompleteInputFields(equipmentApiCampusNumber: string) {
@@ -299,19 +304,6 @@ export class EquipmentFormComponent implements OnInit {
         option.number.toLowerCase().includes(filterValue) ||
         option.description.toLowerCase().includes(filterValue)
     );
-  }
-
-  showNotification(message: string) {
-    const notificationBox: HTMLDivElement = <HTMLDivElement> document.querySelector("#notification");
-    const notificationMessage: HTMLSpanElement = <HTMLSpanElement> document.querySelector("#notificationMessage");
-
-    notificationMessage.textContent = message;
-    notificationBox.classList.remove("hidden");
-  }
-
-  closeNotification() {
-    const notificationBox: HTMLDivElement = <HTMLDivElement> document.querySelector("#notification");
-    notificationBox.classList.add("hidden");
   }
 
 }
