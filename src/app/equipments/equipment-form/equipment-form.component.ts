@@ -173,14 +173,19 @@ export class EquipmentFormComponent implements OnInit {
             });
           }
         } else {
-          setTimeout(function () {
-            alert('Oops, ocorreu um erro ao tentar cadastrar esse Equipamento');
-          }, 2000);
+          this.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse equipamento');
+
+          setTimeout(() => {
+            this.closeNotification();
+          }, 6000);
         }
+
       } else {
-        setTimeout(function () {
-          alert('Dados Inválidos');
-        }, 2000);
+        this.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
+
+        setTimeout(() => {
+          this.closeNotification();
+        }, 6000);
       }
     }
   }
@@ -228,14 +233,18 @@ export class EquipmentFormComponent implements OnInit {
         this.equipment = undefined;
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        setTimeout(function () {
-          alert('Oops, ocorreu um erro ao tentar editar esse Equipamento');
-        }, 2000);
+        this.showNotification('Oops, ocorreu um erro ao tentar editar esse equipamento');
+
+        setTimeout(() => {
+          this.closeNotification();
+        }, 6000);
       }
     } else {
-      setTimeout(function () {
-        alert('Dados Inválidos');
-      }, 2000);
+      this.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
+
+      setTimeout(() => {
+        this.closeNotification();
+      }, 6000);
     }
   }
 
@@ -245,14 +254,18 @@ export class EquipmentFormComponent implements OnInit {
       if (equipmentWasDeleted === true) {
         this.router.navigate(['equipments'], { state: { needReload: true } });
       } else {
-        setTimeout(function () {
-          alert('Oops, ocorreu um erro ao tentar remover esse Equipamento');
-        }, 2000);
+        this.showNotification('Oops, ocorreu um erro ao tentar remover esse equipamento');
+
+        setTimeout(() => {
+          this.closeNotification();
+        }, 6000);
       }
     } else {
-      setTimeout(function () {
-        alert('Equipamento Não Encontrado');
-      }, 2000);
+      this.showNotification('Ocorreu um erro! Esse equipamento não foi encontrado');
+
+      setTimeout(() => {
+        this.closeNotification();
+      }, 6000);
     }
   }
 
@@ -287,4 +300,18 @@ export class EquipmentFormComponent implements OnInit {
         option.description.toLowerCase().includes(filterValue)
     );
   }
+
+  showNotification(message: string) {
+    const notificationBox: HTMLDivElement = <HTMLDivElement> document.querySelector("#notification");
+    const notificationMessage: HTMLSpanElement = <HTMLSpanElement> document.querySelector("#notificationMessage");
+
+    notificationMessage.textContent = message;
+    notificationBox.classList.remove("hidden");
+  }
+
+  closeNotification() {
+    const notificationBox: HTMLDivElement = <HTMLDivElement> document.querySelector("#notification");
+    notificationBox.classList.add("hidden");
+  }
+
 }

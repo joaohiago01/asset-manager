@@ -3,7 +3,13 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
-    <div class="container">
+    <div id="notification" class="notification is-dark is-light hidden" style="z-index: 5; position: fixed; top:99vh;
+    transform:translateY(-100%)">
+      <button class="delete" (click)="closeNotification()"></button>
+      <span id="notificationMessage">Oops, ocorreu um erro!</span>
+    </div>
+
+    <div class="container">  
       <form
         role="form"
         (submit)="
