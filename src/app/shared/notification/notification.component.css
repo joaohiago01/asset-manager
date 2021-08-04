@@ -1,5 +1,5 @@
 .notification {
-    z-index: 5; 
+    z-index: 20; 
     position: fixed; 
     top:99vh;
     transform:translateY(-100%)

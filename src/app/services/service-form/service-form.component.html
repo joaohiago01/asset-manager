@@ -3,6 +3,8 @@
       <app-menu></app-menu>
     </div>
     <div class="column is-9">
+      <app-notification></app-notification>
+
       <div class="container">
         <form
           role="form"
@@ -47,20 +49,20 @@
             <ul>
               <li [ngClass]="{'is-active': serviceTab}">
                 <a (click)="serviceTab = true; suapTab = false; assetsTab = false">
-                  <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-                  <span>Cadastro do Serviço</span>
+                  <span class="icon is-small"><i class="material-icons has-text-success">post_add</i></span>
+                  <span class="has-text-success has-text-weight-medium">Cadastro do Serviço</span>
                 </a>
               </li>
               <li [ngClass]="{'is-active': suapTab}">
                 <a (click)="suapTab = true; serviceTab = false; assetsTab = false">
-                  <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
-                  <span>Dados do SUAP</span>
+                  <span class="icon is-small"><i class="material-icons has-text-success">text_snippet</i></span>
+                  <span class="has-text-success has-text-weight-medium">Dados do SUAP</span>
                 </a>
               </li>
               <li [ngClass]="{'is-active': assetsTab}" *ngIf="service?.id == undefined">
                 <a (click)="assetsTab = true; suapTab = false; serviceTab = false">
-                  <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
-                  <span>Insumos Selecionados</span>
+                  <span class="icon is-small"><i class="material-icons has-text-success">format_list_bulleted</i></span>
+                  <span class="has-text-success has-text-weight-medium">Insumos Selecionados</span>
                 </a>
               </li>
             </ul>
@@ -329,7 +331,7 @@
                 </div>
               </div>
 
-                <p class="title is-5">Retiradas de Insumo:</p>
+                <p class="title is-5">Insumos Selecionados:</p>
 
                 <div *ngIf="assetOutputs.length < 1">
                   <p class="title is-6 has-text-centered mt-5">Nenhuma retirada de insumo foi adicionada!</p>
@@ -349,10 +351,7 @@
                         <td>{{ assetOutput?.assetName }}</td>
                         <td>{{ assetOutput.amount }}</td>
                         <td>
-                          <button
-                            class="button undo-button"
-                            mat-raised-button
-                            color="primary">
+                          <button class="button is-success is-outlined">
                             <i class="material-icons">delete</i>
                             Excluir
                           </button>

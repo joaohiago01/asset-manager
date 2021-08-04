@@ -6,6 +6,7 @@ import { Asset } from 'src/app/shared/models/asset.model';
 import { Department } from 'src/app/shared/models/department.model';
 import { InputAsset } from 'src/app/shared/models/inputAsset.model';
 import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { AssetService } from '../services/asset.service';
 import { InputAssetService } from '../services/inputAsset.service';
 import { OutputAssetService } from '../services/outputAsset.service';
@@ -34,7 +35,8 @@ export class AssetDetailsComponent implements OnInit {
     public assetService: AssetService,
     public inputAssetService: InputAssetService,
     public outputAssetService: OutputAssetService,
-    public departmentService: DepartmentService
+    public departmentService: DepartmentService,
+    public utilityService: UtilityService
   ) {
     const asset: Asset = <Asset>(
       this.router.getCurrentNavigation()?.extras.state
@@ -81,7 +83,11 @@ export class AssetDetailsComponent implements OnInit {
       let assetInputWasAdded = await this.inputAssetService.saveInputAsset(this.asset.id, inputAsset);
 
       if (assetInputWasAdded) {
-        alert('Entrada de Insumo cadastrada!')
+        this.utilityService.showNotification('A Entrada de Insumo foi cadastrada com sucesso');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
 
         this.asset.currentQuantity += inputAsset.amount;
 
@@ -89,7 +95,11 @@ export class AssetDetailsComponent implements OnInit {
           state: { asset: this.asset },
         });
       } else {
-        alert('Não foi possível cadastrar a Entrada de Insumo!'); 
+        this.utilityService.showNotification('Ocorreu um erro ao tentar cadastrar a Entrada de Insumo');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
 
     }
@@ -127,17 +137,25 @@ export class AssetDetailsComponent implements OnInit {
       let assetOutputWasAdded = await this.outputAssetService.saveOutputAsset(this.asset.id, outputAsset);
 
       if (assetOutputWasAdded) {
-        alert('Retirada de Insumo cadastrada!')
+        this.utilityService.showNotification('A Retirada de Insumos foi cadastrada com sucesso');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
 
         this.asset.currentQuantity -= outputAsset.amount;
 
         this.router.navigate(['assets/details'], {
           state: { asset: this.asset },
         });
-      } else {
-        alert('Não foi possível cadastrar a Retirada de Insumo!'); 
       }
 
+    } else {
+      this.utilityService.showNotification('Ocorreu um erro ao tentar cadastrar a Retirada de Insumo');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 6000);
     }
   }
 
@@ -146,7 +164,11 @@ export class AssetDetailsComponent implements OnInit {
       let assetInputWasDeleted = await this.inputAssetService.deleteInputAsset(this.asset.id, assetInputId);
 
       if (assetInputWasDeleted) {
-        alert("A Retirada de Insumo foi desfeita!")
+        this.utilityService.showNotification('A Entrada de Insumo foi desfeita com sucesso');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
 
         let inputAsset = this.assetInputs.find((inputAsset: InputAsset) => inputAsset.id === assetInputId);
 
@@ -157,6 +179,12 @@ export class AssetDetailsComponent implements OnInit {
         this.router.navigate(['assets/details'], {
           state: { asset: this.asset },
         });
+      } else {
+        this.utilityService.showNotification('Ocorreu um erro ao desfazer essa Entrada de Insumo');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
     }
   }
@@ -166,7 +194,11 @@ export class AssetDetailsComponent implements OnInit {
       let assetOutputWasDeleted = await this.outputAssetService.deleteOutputAsset(this.asset.id, assetOutputId);
 
       if (assetOutputWasDeleted) {
-        alert("A Retirada de Insumo foi desfeita!")
+        this.utilityService.showNotification('A Retirada de Insumo foi desfeita com sucesso');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
 
         let outputAsset = this.assetOutputs.find((outputAsset: OutputAsset) => outputAsset.id === assetOutputId);
 
@@ -177,6 +209,12 @@ export class AssetDetailsComponent implements OnInit {
         this.router.navigate(['assets/details'], {
           state: { asset: this.asset },
         });
+      } else {
+        this.utilityService.showNotification('Ocorreu um erro ao desfazer essa Retirada de Insumo');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
     }
   }

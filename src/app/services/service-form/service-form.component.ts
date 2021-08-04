@@ -13,6 +13,7 @@ import { Equipment } from 'src/app/shared/models/equipment.model';
 import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
 import { Service } from 'src/app/shared/models/service.model';
 import { ServiceType } from 'src/app/shared/models/serviceType.enum';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { ServiceService } from '../services/service.service';
 
 @Component({
@@ -48,7 +49,8 @@ export class ServiceFormComponent implements OnInit {
     public serviceService: ServiceService,
     public equipmentService: EquipmentService,
     public departmentService: DepartmentService,
-    public assetService: AssetService
+    public assetService: AssetService,
+    public utilityService: UtilityService
   ) {
     const service: Service = <Service>(
       this.router.getCurrentNavigation()?.extras.state
@@ -157,14 +159,18 @@ export class ServiceFormComponent implements OnInit {
           this.service = undefined;
           this.router.navigate(['services'], { state: { needReload: true } });
         } else {
-          setTimeout(function () {
-            alert('Oops, ocorreu um erro ao tentar cadastrar esse Serviço');
-          }, 2000);
+          this.utilityService.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse serviço');
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+          }, 6000);
         }
       } else {
-        setTimeout(function () {
-          alert('Dados Inválidos');
-        }, 2000);
+        this.utilityService.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
     }
   }
@@ -217,14 +223,18 @@ export class ServiceFormComponent implements OnInit {
         this.service = undefined;
         this.router.navigate(['services'], { state: { needReload: true } });
       } else {
-        setTimeout(function () {
-          alert('Oops, ocorreu um erro ao tentar editar esse Serviço');
-        }, 2000);
+        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar editar esse serviço');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
     } else {
-      setTimeout(function () {
-        alert('Dados Inválidos');
-      }, 2000);
+      this.utilityService.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 6000);
     }
   }
 
@@ -234,14 +244,18 @@ export class ServiceFormComponent implements OnInit {
       if (serviceWasDeleted === true) {
         this.router.navigate(['services'], { state: { needReload: true } });
       } else {
-        setTimeout(function () {
-          alert('Oops, ocorreu um erro ao tentar remover esse Serviço');
-        }, 2000);
+        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar remover esse serviço');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 6000);
       }
     } else {
-      setTimeout(function () {
-        alert('Serviço Não Encontrado');
-      }, 2000);
+      this.utilityService.showNotification('Ocorreu um erro! O serviço não foi encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 6000);
     }
   }
 
@@ -262,7 +276,11 @@ export class ServiceFormComponent implements OnInit {
       const assetAmountField: HTMLInputElement = <HTMLInputElement> document.querySelector("#assetAmount");
       assetAmountField.value = "";
     } else {
-      alert("Informe a quantidade de insumos retirados!");
+      this.utilityService.showNotification('Você não informou a quantidade de insumos a serem retirados');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 6000);
     }
 
   }

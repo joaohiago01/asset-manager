@@ -3,208 +3,210 @@
         <app-menu></app-menu>
     </div>
     <div class="column is-9">
-        <div class="container">
-        <!-- MODAL PARA ENTRADA DE INSUMOS -->
+      <app-notification></app-notification>
+
+      <div class="container">
+      <!-- MODAL PARA ENTRADA DE INSUMOS -->
         <div id="modalInput" class="modal-window hidden container is-max-desktop is-mobile">
-            <header class="modal-card-head">
-              <p class="modal-card-title is-size-5-mobile font-color title m-2">Cadastrar Entrada de Insumo</p>
-              <button
-                id="btnCloseInput"
-                class="delete"
-                aria-label="close"
-                (click)="hideModal('#modalInput')"
-              ></button>
-            </header>
+          <header class="modal-card-head">
+            <p class="modal-card-title is-size-5-mobile font-color title m-2">Cadastrar Entrada de Insumo</p>
+            <button
+              id="btnCloseInput"
+              class="delete"
+              aria-label="close"
+              (click)="hideModal('#modalInput')"
+            ></button>
+          </header>
 
-            <section
-              class="modal-card-body">
+          <section
+            class="modal-card-body">
 
-              <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
-              <p class="title is-5">{{ asset?.name }}</p>
+            <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
+            <p class="title is-5">{{ asset?.name }}</p>
 
-              <label for="dateModalInput" class="label">Data de Entrada</label>
-              <input
-                id="dateModalInput"
-                type="date"
-                #inputDate
-                class="input is-success mb-5"
-                placeholder="Data da Entrada"
-              />
+            <label for="dateModalInput" class="label">Data de Entrada</label>
+            <input
+              id="dateModalInput"
+              type="date"
+              #inputDate
+              class="input is-success mb-5"
+              placeholder="Data da Entrada"
+            />
 
-              <label for="expirationDateModalInput" class="label">Data de Validade</label>
-              <input
-                id="expirationDateModalInput"
-                type="date"
-                #expirationDate
-                class="input is-success mb-5"
-                placeholder="Data de Validade"
-              />
+            <label for="expirationDateModalInput" class="label">Data de Validade</label>
+            <input
+              id="expirationDateModalInput"
+              type="date"
+              #expirationDate
+              class="input is-success mb-5"
+              placeholder="Data de Validade"
+            />
 
-              <label for="amountModalInput" class="label">Quantidade</label>
-              <input
-                id="amountModalInput"
-                type="number"
-                #amount
-                class="input is-success mb-5"
-                placeholder="Quantidade"
-              />
+            <label for="amountModalInput" class="label">Quantidade</label>
+            <input
+              id="amountModalInput"
+              type="number"
+              #amount
+              class="input is-success mb-5"
+              placeholder="Quantidade"
+            />
 
-            </section>
+          </section>
 
-            <footer
-              class="modal-card-foot is-justify-content-center is-align-items-center">
-              <form
-                role="form"
-                (submit)="addAssetInput(inputDate.value, expirationDate.value, amount.value)">
-                <button id="create" type="submit" class="button is-success">Cadastrar</button>
-              </form>
-              <button class="button" (click)="hideModal('#modalInput')">
-                Cancelar
-              </button>
-            </footer>
-          </div>
+          <footer
+            class="modal-card-foot is-justify-content-center is-align-items-center">
+            <form
+              role="form"
+              (submit)="addAssetInput(inputDate.value, expirationDate.value, amount.value)">
+              <button id="create" type="submit" class="button is-success">Cadastrar</button>
+            </form>
+            <button class="button" (click)="hideModal('#modalInput')">
+              Cancelar
+            </button>
+          </footer>
+        </div>
 
-          <!-- MODAL PARA RETIRADA DE INSUMOS -->
-          <div id="modalOutput" class="modal-window hidden container is-max-desktop is-mobile" style="height: 85%">
-            <header class="modal-card-head">
-              <p class="modal-card-title is-size-5-mobile font-color title m-2">
-                Cadastrar Retirada de Insumo
-              </p>
-              <button
-                id="btnCloseOutput"
-                class="delete"
-                aria-label="close"
-                (click)="hideModal('#modalOutput')"
-              ></button>
-            </header>
-            <section class="modal-card-body m-2">
+        <!-- MODAL PARA RETIRADA DE INSUMOS -->
+        <div id="modalOutput" class="modal-window hidden container is-max-desktop is-mobile" style="height: 85%">
+          <header class="modal-card-head">
+            <p class="modal-card-title is-size-5-mobile font-color title m-2">
+              Cadastrar Retirada de Insumo
+            </p>
+            <button
+              id="btnCloseOutput"
+              class="delete"
+              aria-label="close"
+              (click)="hideModal('#modalOutput')"
+            ></button>
+          </header>
+          <section class="modal-card-body m-2">
 
-              <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
-              <p class="title is-5">{{ asset?.name }}</p>
+            <p class="subtitle is-6">Você está prestes a atualizar o seguinte insumo:</p>
+            <p class="title is-5">{{ asset?.name }}</p>
 
-              <div class="columns">
-                <div class="column is-one-fifth">
-                  <label for="amount" class="label">Quantidade</label>
-                  <input
-                    id="outputAmount"
-                    #outputAmount
-                    matInput
-                    type="number"
-                    class="input medium-input"
-                  />
-                </div>
-
-                <div class="column is-one-third">
-                  <label for="callNumberSuap" class="label">N° do Chamado</label>
-                  <input
-                    id="callNumberSuap"
-                    #callNumberSuap
-                    matInput
-                    class="input medium-input"/>
-                </div>
-
-                <div class="column">
-                  <label for="callLinkSuap" class="label">Link do Chamado do SUAP</label>
-                  <input
-                    id="callLinkSuap"
-                    type="url"
-                    #callLinkSuap
-                    matInput
-                    class="input medium-input"/>
-                </div>
+            <div class="columns">
+              <div class="column is-one-fifth">
+                <label for="amount" class="label">Quantidade</label>
+                <input
+                  id="outputAmount"
+                  #outputAmount
+                  matInput
+                  type="number"
+                  class="input medium-input"
+                />
               </div>
 
-              <div class="columns">
-                <div class="column is-half">
-                  <label for="consignorName" class="label">Nome do Expedidor</label>
-                  <input
-                    id="consignorName"
-                    #consignorName
-                    matInput
-                    class="input medium-input"/>
-                </div>
-
-                <div class="column is-half">
-                  <label for="consignorRegistrationNumber" class="label">Matrícula do Expedidor</label>
-                  <input
-                    id="consignorRegistrationNumber"
-                    #consignorRegistrationNumber
-                    matInput
-                    class="input medium-input"/>
-                </div>
+              <div class="column is-one-third">
+                <label for="callNumberSuap" class="label">N° do Chamado</label>
+                <input
+                  id="callNumberSuap"
+                  #callNumberSuap
+                  matInput
+                  class="input medium-input"/>
               </div>
 
-              <div class="columns">
-                <div class="column is-half">
-                  <label for="requestorName" class="label">Nome do Solicitante</label>
-                  <input
-                    id="requestorName"
-                    #requestorName
-                    matInput
-                    class="input medium-input"/>
-                </div>
+              <div class="column">
+                <label for="callLinkSuap" class="label">Link do Chamado do SUAP</label>
+                <input
+                  id="callLinkSuap"
+                  type="url"
+                  #callLinkSuap
+                  matInput
+                  class="input medium-input"/>
+              </div>
+            </div>
 
-                <div class="column is-half">
-                  <label for="requestorRegistrationNumber" class="label">Matrícula do Solicitante</label>
-                  <input
-                    id="requestorRegistrationNumber"
-                    #requestorRegistrationNumber
-                    matInput
-                    class="input medium-input"/>
-                </div>
+            <div class="columns">
+              <div class="column is-half">
+                <label for="consignorName" class="label">Nome do Expedidor</label>
+                <input
+                  id="consignorName"
+                  #consignorName
+                  matInput
+                  class="input medium-input"/>
               </div>
 
-              <div class="columns">
-                <div class="column">
-                  <label for="departments" class="label">Setor</label>
-                  <div class="select is-success is-fullwidth">
-                    <select id="departments" class="is-size-6" [(ngModel)]="selectedDepartmentId">
-                      <option *ngFor="let department of departments"
-                      [value]="department.id">{{ department.name }}</option>
-                    </select>
-                  </div>
-                </div>
+              <div class="column is-half">
+                <label for="consignorRegistrationNumber" class="label">Matrícula do Expedidor</label>
+                <input
+                  id="consignorRegistrationNumber"
+                  #consignorRegistrationNumber
+                  matInput
+                  class="input medium-input"/>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column is-half">
+                <label for="requestorName" class="label">Nome do Solicitante</label>
+                <input
+                  id="requestorName"
+                  #requestorName
+                  matInput
+                  class="input medium-input"/>
               </div>
 
-              <div class="columns hidden">
-                <div class="column">
-                  <label for="observations" class="label">Observações</label>
-                  <textarea
-                  #observations
-                  id="observations"
-                  class="textarea is-success"
-                  placeholder="Digite as observações"
-                  rows="3"></textarea>
-                </div>
+              <div class="column is-half">
+                <label for="requestorRegistrationNumber" class="label">Matrícula do Solicitante</label>
+                <input
+                  id="requestorRegistrationNumber"
+                  #requestorRegistrationNumber
+                  matInput
+                  class="input medium-input"/>
+              </div>
+            </div>
 
+            <div class="columns">
+              <div class="column">
+                <label for="departments" class="label">Setor</label>
+                <div class="select is-success is-fullwidth">
+                  <select id="departments" class="is-size-6" [(ngModel)]="selectedDepartmentId">
+                    <option *ngFor="let department of departments"
+                    [value]="department.id">{{ department.name }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="columns hidden">
+              <div class="column">
+                <label for="observations" class="label">Observações</label>
+                <textarea
+                #observations
+                id="observations"
+                class="textarea is-success"
+                placeholder="Digite as observações"
+                rows="3"></textarea>
               </div>
 
-            </section>
+            </div>
 
-            <footer class="modal-card-foot is-justify-content-center is-align-items-center">
-              <form
-              role="form" (submit)="addAssetOutput(
-                outputAmount.value,
-                selectedDepartmentId,
-                callNumberSuap.value,
-                callLinkSuap.value,
-                observations.value,
-                consignorName.value,
-                consignorRegistrationNumber.value,
-                requestorName.value,
-                requestorRegistrationNumber.value)">
-    
-                <button id="createAssetOutput" type="submit" class="button is-success">Confirmar</button>
-              </form>
+          </section>
 
-              <button class="button" (click)="hideModal('#modalOutput')">
-                Cancelar
-              </button>
-            </footer>
-          </div>
+          <footer class="modal-card-foot is-justify-content-center is-align-items-center">
+            <form
+            role="form" (submit)="addAssetOutput(
+              outputAmount.value,
+              selectedDepartmentId,
+              callNumberSuap.value,
+              callLinkSuap.value,
+              observations.value,
+              consignorName.value,
+              consignorRegistrationNumber.value,
+              requestorName.value,
+              requestorRegistrationNumber.value)">
+  
+              <button id="createAssetOutput" type="submit" class="button is-success">Confirmar</button>
+            </form>
 
-          <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
-          <div class="overlay hidden"></div>
+            <button class="button" (click)="hideModal('#modalOutput')">
+              Cancelar
+            </button>
+          </footer>
+        </div>
+
+        <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
+        <div class="overlay hidden"></div>
 
         <div class="header-asset-details-create">
           <div class="header-category">
@@ -214,32 +216,9 @@
               class="btn-save"
               mat-raised-button
               color="primary"
-              (click)="navigateToAssets()"
-            >
+              (click)="navigateToAssets()">
               <i class="material-icons">arrow_back</i>
               Voltar
-            </button>
-            <button
-              id="assetInput"
-              #btnInput
-              class="btn-save"
-              mat-raised-button
-              color="primary"
-              (click)="showModal('#modalInput')"
-            >
-              <i class="material-icons">add</i>
-              Cadastrar Entrada
-            </button>
-            <button
-              id="assetOutput"
-              #btnOutput
-              class="btn-save"
-              mat-raised-button
-              color="primary"
-              (click)="showModal('#modalOutput')"
-            >
-              <i class="material-icons">remove</i>
-              Cadastrar Retirada
             </button>
           </div>
         </div>
@@ -269,7 +248,30 @@
             </div>
           </article>
 
-            <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Histórico de Entradas e Retiradas:</p>
+          <div class="header-asset-history">
+            <button
+              id="assetInput"
+              #btnInput
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="showModal('#modalInput')">
+              <i class="material-icons">add</i>
+              Cadastrar Entrada
+            </button>
+            <button
+              id="assetOutput"
+              #btnOutput
+              class="btn-save"
+              mat-raised-button
+              color="primary"
+              (click)="showModal('#modalOutput')">
+              <i class="material-icons">remove</i>
+              Cadastrar Retirada
+            </button>
+          </div>
+
+            <p class="subtitle is-5" style="margin-bottom: 15px;">Histórico de Entradas e Retiradas:</p>
 
             <div class="tabs is-boxed">
               <ul>
