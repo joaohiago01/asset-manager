@@ -48,19 +48,19 @@
           <div class="tabs is-centered is-boxed">
             <ul>
               <li [ngClass]="{'is-active': serviceTab}">
-                <a (click)="serviceTab = true; suapTab = false; assetsTab = false">
+                <a id="serviceTab" (click)="serviceTab = true; suapTab = false; assetsTab = false">
                   <span class="icon is-small"><i class="material-icons has-text-success">post_add</i></span>
                   <span class="has-text-success has-text-weight-medium">Cadastro do Serviço</span>
                 </a>
               </li>
               <li [ngClass]="{'is-active': suapTab}">
-                <a (click)="suapTab = true; serviceTab = false; assetsTab = false">
+                <a id="suapTab" (click)="suapTab = true; serviceTab = false; assetsTab = false">
                   <span class="icon is-small"><i class="material-icons has-text-success">text_snippet</i></span>
                   <span class="has-text-success has-text-weight-medium">Dados do SUAP</span>
                 </a>
               </li>
               <li [ngClass]="{'is-active': assetsTab}" *ngIf="service?.id == undefined">
-                <a (click)="assetsTab = true; suapTab = false; serviceTab = false">
+                <a id="assetsTab" (click)="assetsTab = true; suapTab = false; serviceTab = false">
                   <span class="icon is-small"><i class="material-icons has-text-success">format_list_bulleted</i></span>
                   <span class="has-text-success has-text-weight-medium">Insumos Selecionados</span>
                 </a>

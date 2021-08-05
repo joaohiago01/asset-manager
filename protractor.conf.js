@@ -16,6 +16,7 @@ exports.config = {
     './src/app/departments/departments-list/departments-list.component.spec.ts',
     './src/app/loans/loan-list/loan-list.component.spec.ts',
     './src/app/loans/loan-form/loan-form.component.spec.ts',
+    './src/app/services/service-form/service-form.component.spec.ts',
     './src/app/dashboard/dashboard/dashboard.component.spec.ts'
   ],
 
