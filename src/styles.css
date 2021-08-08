@@ -102,6 +102,7 @@ body {
   border: 2px solid #1fd181;
   border-left: 8px solid #1fd181;
   border-radius: 6px;
+  padding-right: 0;
 }
 
 .card-content {
@@ -151,4 +152,43 @@ body {
   display: inline-block;
   margin-block-end: 1px;
   word-break: break-all;
+}
+
+.header-component {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container {
+  margin-right: 6px;
+}
+
+.header-component {
+  margin-right: 6px;
+}
+
+.content-component {
+  height: 100%;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 650px) {
+  .column {
+    margin: 0;
+    padding-top: 0;
+    padding-right: 0;
+  }
+
+  .container {
+    margin-right: 8px;
+    margin-left: 6px;
+  }
+
+  .header-component {
+    margin-right: 0;
+  }
 }

@@ -1,79 +1,85 @@
-<aside class="is-narrow-mobile is-fullheight section background-color">
-  <div class="is-flex is-justify-content-center">
-    <figure class="image image is-48x48">
-      <img src="assets/images/icon-login.png" />
-    </figure>
+<div class="sidebar" [ngClass]="{'hidden-sidebar': isSidebarHiddenOnMobile === false}">
+  <div class="sidebar-content is-narrow-mobile is-fullheight section background-color">
+    <div class="is-flex is-justify-content-center">
+      <figure class="image image is-48x48">
+        <img src="assets/images/icon-login.png" />
+      </figure>
+    </div>
+    <p class="menu-label is-flex is-justify-content-center p-2">
+      <strong class="text-menu-label">Olá, Coordenador</strong>
+    </p>
+    <ul class="menu-list">
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveDashboard }"
+          (click)="navigateToDashboard()"
+        >
+          <span class="icon is-medium"><i class="fa fa-list-alt"></i></span>
+          <strong class="has-text text-menu-item">Dashboard</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveCategory }"
+          (click)="navigateToCategories()"
+        >
+          <span class="icon is-medium"><i class="fa fa-object-ungroup"></i></span>
+          <strong class="has-text text-menu-item">Categorias</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveAssets }"
+          (click)="navigateToAssets()"
+        >
+          <span class="icon is-medium"><i class="fa fa-th-list"></i></span>
+          <strong class="has-text text-menu-item">Insumos</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveEquipments }"
+          (click)="navigateToEquipments()"
+        >
+          <span class="icon is-medium"><i class="fa fa-microchip"></i></span>
+          <strong class="has-text text-menu-item">Equipamentos</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveSoftwareLicenses }"
+          (click)="navigateToSoftwareLicenses()"
+        >
+          <span class="icon is-medium"><i class="fa fa-key"></i></span>
+          <strong class="has-text text-menu-item">Licenças</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveDepartments }"
+        (click)="navigateToDepartments()">
+          <span class="icon is-medium"><i class="fa fa-users"></i></span>
+          <strong class="has-text text-menu-item">Setores</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveLoans }"
+        (click)="navigateToLoans()">
+          <span class="icon is-medium"><i class="fa fa-address-card"></i></span>
+          <strong class="has-text text-menu-item">Empréstimos</strong>
+        </a>
+      </li>
+      <li>
+        <a [ngClass]="{ 'text-menu-item-active': isActiveServices }"
+        (click)="navigateToServices()">
+          <span class="icon is-medium"><i class="fa fa-wrench"></i></span>
+          <strong class="has-text text-menu-item">Serviços</strong>
+        </a>
+      </li>
+      <li>
+        <a class="" (click)="logout()">
+          <span class="icon is-medium"><i class="fa fa-sign-out"></i></span>
+          <strong class="has-text text-menu-item">Sair</strong>
+        </a>
+      </li>
+    </ul>
   </div>
-  <p class="menu-label is-hidden-touch is-flex is-justify-content-center p-2">
-    <strong class="text-menu-label">Olá, Coordenador</strong>
-  </p>
-  <ul class="menu-list">
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveDashboard }"
-        (click)="navigateToDashboard()"
-      >
-        <span class="icon is-medium"><i class="fa fa-list-alt"></i></span>
-        <strong class="has-text text-menu-item">Dashboard</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveCategory }"
-        (click)="navigateToCategories()"
-      >
-        <span class="icon is-medium"><i class="fa fa-object-ungroup"></i></span>
-        <strong class="has-text text-menu-item">Categorias</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveAssets }"
-        (click)="navigateToAssets()"
-      >
-        <span class="icon is-medium"><i class="fa fa-th-list"></i></span>
-        <strong class="has-text text-menu-item">Insumos</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveEquipments }"
-        (click)="navigateToEquipments()"
-      >
-        <span class="icon is-medium"><i class="fa fa-microchip"></i></span>
-        <strong class="has-text text-menu-item">Equipamentos</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveSoftwareLicenses }"
-        (click)="navigateToSoftwareLicenses()"
-      >
-        <span class="icon is-medium"><i class="fa fa-key"></i></span>
-        <strong class="has-text text-menu-item">Licenças</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveDepartments }"
-      (click)="navigateToDepartments()">
-        <span class="icon is-medium"><i class="fa fa-users"></i></span>
-        <strong class="has-text text-menu-item">Setores</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveLoans }"
-      (click)="navigateToLoans()">
-        <span class="icon is-medium"><i class="fa fa-address-card"></i></span>
-        <strong class="has-text text-menu-item">Empréstimos</strong>
-      </a>
-    </li>
-    <li>
-      <a [ngClass]="{ 'text-menu-item-active': isActiveServices }"
-      (click)="navigateToServices()">
-        <span class="icon is-medium"><i class="fa fa-wrench"></i></span>
-        <strong class="has-text text-menu-item">Serviços</strong>
-      </a>
-    </li>
-    <li>
-      <a class="" (click)="logout()">
-        <span class="icon is-medium"><i class="fa fa-sign-out"></i></span>
-        <strong class="has-text text-menu-item">Sair</strong>
-      </a>
-    </li>
-  </ul>
-</aside>
+  
+  <div class="button-container">
+    <button type="button" class="sidebar-button" (click)="switchSidebar()"><i class="material-icons">navigate_next</i></button>
+  </div>
+</div>

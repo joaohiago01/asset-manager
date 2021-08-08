@@ -17,6 +17,8 @@ export class MenuComponent implements OnInit {
   public isActiveLoans: boolean = false;
   public isActiveServices: boolean = false;
 
+  public isSidebarHiddenOnMobile: boolean = true;
+
   constructor(
     public router: Router,
     public authenticationService: AuthenticationService) { }
@@ -132,5 +134,14 @@ export class MenuComponent implements OnInit {
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['login']);
+  }
+
+  switchSidebar() {
+    if (this.isSidebarHiddenOnMobile) {
+      this.isSidebarHiddenOnMobile = false;
+
+    } else {
+      this.isSidebarHiddenOnMobile = true;
+    }
   }
 }
