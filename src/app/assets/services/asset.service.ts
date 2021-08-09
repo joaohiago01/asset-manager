@@ -10,7 +10,7 @@ export class AssetService {
   constructor(private authenticationService: AuthenticationService) {}
 
   async createAsset(asset: Asset): Promise<boolean> {
-    let equipmentWasCreated = false;
+    let assetWasCreated = false;
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -25,12 +25,26 @@ export class AssetService {
         quantidadeAtual: asset.currentQuantity,
         unidadeDeMedida: asset.unitOfMeasurement,
       };
-      await api.post('/insumos', assetServer, { headers });
-      equipmentWasCreated = true;
-      return equipmentWasCreated;
+      let response = await api.post('/insumos', assetServer, { headers });
+      let assetId = response.data.id;
+
+      let expirationDate = new Date();
+      expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+      let inputAssetServer = {
+        data: new Date(),
+        dataValidade: expirationDate,
+        quantidade: asset.currentQuantity
+      };
+      await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
+
+      assetServer.quantidadeAtual = asset.currentQuantity;
+      await api.put(`/insumos/${assetId}`, assetServer, { headers });
+
+      assetWasCreated = true;
+      return assetWasCreated;
     } catch (error) {
       console.error(error);
-      return (equipmentWasCreated = false);
+      return (assetWasCreated = false);
     }
   }
 
