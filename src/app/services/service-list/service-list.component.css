@@ -1,17 +1,6 @@
-.header-service {
-  padding-top: 1rem;
-  padding-right: 0.8rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .list {
   padding-right: 0.8rem;
   padding-top: 1.2rem;
-}
-
-.container {
-  width: 100%;
 }
 
 .btn-save {

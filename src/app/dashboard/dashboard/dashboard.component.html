@@ -3,34 +3,37 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
-    <div class="tabs is-boxed">
+    <div class="tabs is-centered is-boxed">
       <ul>
-        <li [ngClass]="{'isActiveTab': loanTab}">
+        <li [ngClass]="{'is-active': loanTab}">
           <a id="loanTabButton" (click)="loanTab = true; serviceTab = false; inputAssetTab = false; outputAssetTab = false">
-            <span class="icon is-small"><i class="fa fa-address-card" aria-hidden="true"></i></span>
-            <span>Empréstimos</span>
+            <span class="icon is-small"><i class="fa fa-address-card has-text-success" aria-hidden="true"></i></span>
+            <span class="has-text-success has-text-weight-medium">Empréstimos</span>
           </a>
         </li>
-        <li [ngClass]="{'isActiveTab': serviceTab}">
+        <li [ngClass]="{'is-active': serviceTab}">
           <a id="serviceTabButton" (click)="serviceTab = true; loanTab = false; inputAssetTab = false; outputAssetTab = false">
-            <span class="icon is-small"><i class="fa fa-wrench" aria-hidden="true"></i></span>
-            <span>Serviços</span>
+            <span class="icon is-small"><i class="fa fa-wrench has-text-success" aria-hidden="true"></i></span>
+            <span class="has-text-success has-text-weight-medium">Serviços</span>
           </a>
         </li>
-        <li [ngClass]="{'isActiveTab': inputAssetTab}">
+        <li [ngClass]="{'is-active': inputAssetTab}">
           <a id="inputAssetTabButton" (click)="inputAssetTab = true; outputAssetTab = false; loanTab = false; serviceTab = false">
-            <span class="icon is-small"><i class="fa fa-th-list" aria-hidden="true"></i></span>
-            <span>Entrada de Insumos</span>
+            <span class="icon is-small"><i class="fa fa-th-list has-text-success" aria-hidden="true"></i></span>
+            <span class="has-text-success has-text-weight-medium">Entrada de Insumos</span>
           </a>
         </li>
-        <li [ngClass]="{'isActiveTab': outputAssetTab}">
+        <li [ngClass]="{'is-active': outputAssetTab}">
           <a id="outputAssetTabButton" (click)="outputAssetTab = true; inputAssetTab = false; loanTab = false; serviceTab = false">
-            <span class="icon is-small"><i class="fa fa-th-list" aria-hidden="true"></i></span>
-            <span>Retirada de Insumos</span>
+            <span class="icon is-small"><i class="fa fa-th-list has-text-success" aria-hidden="true"></i></span>
+            <span class="has-text-success has-text-weight-medium">Retirada de Insumos</span>
           </a>
         </li>
       </ul>
     </div>
+
+    <div class="container">
+
     <div id="assetInputFieldsTab" [ngClass]="{'hidden': inputAssetTab === false}">
       <div class="container list">
         <div class="columns is-multiline is-mobile">
@@ -194,5 +197,8 @@
         </div>
       </div>
     </div>
+
+    </div>
+
   </div>
 </div>

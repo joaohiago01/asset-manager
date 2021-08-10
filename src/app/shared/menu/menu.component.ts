@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   public isActiveLoans: boolean = false;
   public isActiveServices: boolean = false;
 
-  public isSidebarHiddenOnMobile: boolean = true;
+  public isSidebarHiddenOnMobile: boolean = false;
 
   constructor(
     public router: Router,
