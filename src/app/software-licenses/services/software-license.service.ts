@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import { SoftwareLicense } from 'src/app/shared/models/softwareLicense.model';
 import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -11,9 +12,7 @@ export class SoftwareLicenseService {
 
   async createSoftwareLicense(
     softwareLicense: SoftwareLicense
-  ): Promise<boolean> {
-    let softwareLicenseWasCreated = false;
-
+  ): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -27,20 +26,16 @@ export class SoftwareLicenseService {
         maximoAtivacoes: softwareLicense.maxActivations,
         ativacoesInfinitas: softwareLicense.ignoreMaxActivations
       };
-      await api.post('/licencas-software', softwareLicenseServer, { headers });
-      softwareLicenseWasCreated = true;
-      return softwareLicenseWasCreated;
+      return await api.post('/licencas-software', softwareLicenseServer, { headers });
     } catch (error) {
       console.error(error);
-      return (softwareLicenseWasCreated = false);
+      throw new Error(error);
     }
   }
 
   async editSoftwareLicense(
     softwareLicense: SoftwareLicense
-  ): Promise<boolean> {
-    let softwareLicenseWasEdited = false;
-
+  ): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -55,35 +50,27 @@ export class SoftwareLicenseService {
         ativacoesInfinitas: softwareLicense.ignoreMaxActivations
       };
 
-      await api.put(
+      return await api.put(
         `/licencas-software/${softwareLicense.id}`,
         softwareLicenseServer,
         { headers }
       );
-      softwareLicenseWasEdited = true;
-      return softwareLicenseWasEdited;
     } catch (error) {
       console.error(error);
-      return (softwareLicenseWasEdited = false);
+      throw new Error(error);
     }
   }
 
-  async deleteSoftwareLicense(id: Number): Promise<boolean> {
-    let softwareLicenseWasDeleted = false;
+  async deleteSoftwareLicense(id: Number): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      await api.delete(`/licencas-software/${id}`, { headers });
-      softwareLicenseWasDeleted = true;
-
-      alert('Deletado com sucesso!');
-
-      return softwareLicenseWasDeleted;
+      return await api.delete(`/licencas-software/${id}`, { headers });
     } catch (error) {
       console.error(error);
-      return (softwareLicenseWasDeleted = false);
+      throw new Error(error);
     }
   }
 

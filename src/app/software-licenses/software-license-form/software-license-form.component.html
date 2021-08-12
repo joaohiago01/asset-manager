@@ -3,6 +3,8 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <app-notification></app-notification>
+
     <div class="container">
       <form
         role="form"
@@ -13,10 +15,8 @@
             number.value,
             activationKey.value,
             maxActivations.value
-          )
-        "
-      >
-        <div class="header-software-licence-create">
+          )">
+        <div class="header-component-form">
           <button
             id="create"
             class="btn-save"
@@ -42,93 +42,91 @@
         </div>
       </form>
 
-      <div class="content-software-licence-create">
-        <div class="one-field-container">
-          <mat-form-field appearance="fill">
-            <mat-label>Categoria:</mat-label>
-            <mat-select id="categories" [(ngModel)]="selectedCategoryId">
-              <mat-option
-                *ngFor="let category of categories"
-                [value]="category.id"
-              >
-                {{ category.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div class="content-component-form">
 
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Software:</mat-label>
+        <div class="columns">
+          <div class="column">
+            <label for="name" class="label">Software</label>
             <input
-              #name
               id="name"
+              #name
+              matInput
+              type="text"
               class="input medium-input"
-              value="{{ softwareLicense ? softwareLicense.name : '' }}"
               placeholder="Digite o nome do software"
-              matInput
+              value="{{ softwareLicense ? softwareLicense.name : '' }}"
             />
           </div>
         </div>
 
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Número:</mat-label>
+        <div class="columns">
+          <div class="column">
+            <label for="number" class="label">Número</label>
             <input
-              #number
               id="number"
+              #number
+              matInput
+              type="text"
               class="input medium-input"
-              value="{{ softwareLicense ? softwareLicense.number : '' }}"
               placeholder="Digite o número"
-              matInput
+              value="{{ softwareLicense ? softwareLicense.number : '' }}"
             />
+          </div>
+
+          <div class="column">
+            <label for="categories" class="label">Categoria</label>
+            <div class="select is-fullwidth">
+              <select id="categories" class="is-size-6" [(ngModel)]="selectedCategoryId">
+                <option *ngFor="let category of categories"
+                [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Chave de ativação:</mat-label>
+        <div class="columns">
+          <div class="column">
+            <label for="activationKey" class="label">Chave de ativação</label>
             <input
-              #activationKey
               id="activationKey"
-              class="input small-input"
-              value="{{ softwareLicense ? softwareLicense.activationKey : '' }}"
-              placeholder="Digite a chave de ativação"
+              #activationKey
               matInput
+              type="text"
+              class="input medium-input"
+              placeholder="Digite a chave de ativação"
+              value="{{ softwareLicense ? softwareLicense.activationKey : '' }}"
+            />
+          </div>
+
+          <div class="column">
+            <label for="maxActivations" class="label">Máximo de ativações</label>
+            <input
+              id="maxActivations"
+              #maxActivations
+              matInput
+              type="text"
+              class="input medium-input"
+              placeholder="Digite a quantidade máxima de ativações"
+              value="{{ softwareLicense ? softwareLicense.maxActivations : '' }}"
             />
           </div>
         </div>
 
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Máximo de ativações:</mat-label>
-            <input
-              #maxActivations
-              id="maxActivations"
-              class="input small-input"
-              type="number"
-              value="{{
-                softwareLicense ? softwareLicense.maxActivations : ''
-              }}"
-              placeholder="Digite a quantidade máxima de ativações"
-            />
-          </div>
-        </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Não possui quantidade máxima de ativações?</mat-label>
-            <label class="checkbox">
-              <input
+        <div class="columns">
+          <div class="column">
+            <label class="checkbox is-uppercase has-text-weight-semibold is-size-6">
+              <input type="checkbox"
+              class="is-size-6"
               #ignoreMaxActivations
-              id="ignoreMaxActivations"
-              style="width: 20px; height: 20px;"
-              type="checkbox"
-              value="ignoreMaxActivations"
-              [ngModel]="ignoreMaxActivations" (ngModelChange)="changedIgnoreMaxActivations($event)"
-            />
+              id="ignoreMaxActivations" 
+              value="ignoreMaxActivations" 
+              [ngModel]="ignoreMaxActivations" 
+              (ngModelChange)="changedIgnoreMaxActivations($event)">
+                Ignorar limite de ativações
             </label>
           </div>
         </div>
+
       </div>
     </div>
   </div>

@@ -157,21 +157,26 @@ body {
 .header-component {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  padding-right: 0.8rem;
+  padding-right: 0.2rem;
   display: flex;
   justify-content: flex-end;
+  margin-right: 6px;
+}
+
+.header-component-form {
+  margin: 1rem 1rem;
+  margin-right: 1.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-component-form {
+  margin: 2.2rem 1rem;
+  margin-right: 1.9rem;
 }
 
 .container {
   margin-right: 6px;
-}
-
-.header-component {
-  margin-right: 6px;
-}
-
-.content-component {
-  height: 100%;
 }
 
 @media only screen
@@ -188,7 +193,7 @@ and (max-device-width: 650px) {
     margin-left: 6px;
   }
 
-  .header-component {
-    margin-right: 0;
+  .header-component-form {
+    margin-right: 1rem;
   }
 }

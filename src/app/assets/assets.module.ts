@@ -8,7 +8,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { AssetCardComponent } from './asset-card/asset-card.component';
 import { AssetListComponent } from './asset-list/asset-list.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -18,8 +17,7 @@ import { AssetDetailsComponent } from './asset-details/asset-details.component';
 
 @NgModule({
   declarations: [
-    AssetFormComponent, 
-    AssetCardComponent, 
+    AssetFormComponent,
     AssetListComponent,
     AssetDetailsComponent],
   imports: [

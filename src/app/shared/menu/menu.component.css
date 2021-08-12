@@ -35,10 +35,15 @@
   border: 0;
   background-color: lightgray;
   color: gray;
+  opacity: .6;
   padding: 0;
   padding-right: 2px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+.sidebar-button:hover {
+  opacity: 1.0;
 }
 
 .hidden-sidebar {

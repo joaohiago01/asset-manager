@@ -5,6 +5,7 @@ import { CategoryService } from 'src/app/category/services/category.service';
 import { Category } from 'src/app/shared/models/category.model';
 import { CategoryType } from 'src/app/shared/models/categoryType.enum';
 import { SoftwareLicense } from 'src/app/shared/models/softwareLicense.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { SoftwareLicenseService } from '../services/software-license.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class SoftwareLicenseFormComponent implements OnInit {
   constructor(
     private router: Router,
     public softwareLicenseService: SoftwareLicenseService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {
     const softwareLicense: SoftwareLicense = <SoftwareLicense>(
       this.router.getCurrentNavigation()?.extras.state
@@ -93,22 +95,32 @@ export class SoftwareLicenseFormComponent implements OnInit {
           ignoreMaxActivations: this.ignoreMaxActivations
         });
 
-        let softwareLicenseWasCreated =
-          await this.softwareLicenseService.createSoftwareLicense(
-            softwareLicense
-          );
+        try {
+          const response = await this.softwareLicenseService.createSoftwareLicense(softwareLicense);
 
-        if (softwareLicenseWasCreated) {
-          this.router.navigate(['software-licenses'], {
-            state: { needReload: true },
-          });
-        } else {
-          alert(
-            'Oops, ocorreu um erro ao tentar cadastrar essa Licença de Software'
-          );
+          this.utilityService.showNotification('Licença de Software cadastrada com sucesso!');
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+
+            this.router.navigate(['software-licenses'], {
+              state: { needReload: true },
+            });
+          }, 3000);
+        } catch (error) {
+          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+          }, 5000);
         }
+        
       } else {
-        alert('Dados Inválidos');
+        this.utilityService.showNotification("Verifique se os campos estão preenchidos corretamente");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
     }
   }
@@ -138,38 +150,63 @@ export class SoftwareLicenseFormComponent implements OnInit {
         id
       );
 
-      let softwareLicenseWasEdited =
-        await this.softwareLicenseService.editSoftwareLicense(softwareLicense);
-      if (softwareLicenseWasEdited === true) {
-        this.softwareLicense = undefined;
-        this.router.navigate(['software-licenses'], {
-          state: { needReload: true },
-        });
-      } else {
-        alert(
-          'Oops, ocorreu um erro ao tentar editar essa Licença de Software'
-        );
+      try {
+        const response = await this.softwareLicenseService.editSoftwareLicense(softwareLicense);
+
+        this.utilityService.showNotification('Licença de Software atualizada com sucesso!');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['software-licenses'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+      } catch (error) {
+        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      alert('Dados Inválidos');
+      this.utilityService.showNotification("Verifique se os campos estão preenchidos corretamente");
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 
   async deleteSoftwareLicense(id: number): Promise<void> {
     if (id) {
-      let softwareLicenseWasDeleted =
-        await this.softwareLicenseService.deleteSoftwareLicense(id);
-      if (softwareLicenseWasDeleted === true) {
-        this.router.navigate(['software-licenses'], {
-          state: { needReload: true },
-        });
-      } else {
-        alert(
-          'Oops, ocorreu um erro ao tentar remover essa Licença de Software'
-        );
+      try {
+        const response = await this.softwareLicenseService.deleteSoftwareLicense(id);
+
+        this.utilityService.showNotification("A Licença de Software foi excluída com sucesso!");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['software-licenses'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+      } catch (error) {
+        this.utilityService.showNotification("A Licença de Software está em uso e não pode ser excluída");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      alert('Licença de Software Não Encontrada');
+      this.utilityService.showNotification("Licença de Software não encontrada");
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 
