@@ -3,6 +3,8 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <app-notification></app-notification>
+
     <div class="container">
       <form
         role="form"
@@ -21,7 +23,7 @@
           requestorRegistrationNumber.value
         )"
       >
-        <div class="header-loan-create">
+        <div class="header-component-form">
           <button
             id="create"
             class="btn-save"
@@ -45,92 +47,89 @@
         </div>
       </form>
 
-      <div class="content-loan-create">
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Nome do Expedidor:</mat-label>
+      <div class="content-component-form">
+
+        <div class="columns">
+          <div class="column">
+            <label for="consignorName" class="label">Nome do Expedidor</label>
             <input
               #consignorName
               id="consignorName"
               class="input medium-input"
               value="{{ loan && loan.consignor ? loan.consignor.name : '' }}"
-              placeholder="Digite o Nome do Expedidor"
+              placeholder="Digite o nome do expedidor"
               matInput
             />
           </div>
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Matrícula do Expedidor:</mat-label>
+
+          <div class="column">
+            <label for="consignorRegistrationNumber" class="label">Matrícula do Expedidor</label>
             <input
               #consignorRegistrationNumber
               id="consignorRegistrationNumber"
               class="input medium-input"
               value="{{ loan && loan.consignor ? loan.consignor.registrationNumber : '' }}"
-              placeholder="Digite a Matrícula do Expedidor"
+              placeholder="Digite a matrícula do expedidor"
               matInput
             />
           </div>
         </div>
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Nome do Solicitante:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="requestorName" class="label">Nome do Solicitante</label>
             <input
               #requestorName
               id="requestorName"
               class="input medium-input"
               value="{{ loan && loan.requestor ? loan.requestor.name : '' }}"
-              placeholder="Digite o Nome do Solicitante"
+              placeholder="Digite o nome do solicitante"
               matInput
             />
           </div>
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Matrícula do Solicitante:</mat-label>
+
+          <div class="column">
+            <label for="requestorRegistrationNumber" class="label">Matrícula do Solicitante</label>
             <input
               #requestorRegistrationNumber
               id="requestorRegistrationNumber"
               class="input medium-input"
               value="{{ loan && loan.requestor ? loan.requestor.registrationNumber : '' }}"
-              placeholder="Digite a Matrícula do Solicitante"
+              placeholder="Digite a matrícula do solicitante"
               matInput
             />
           </div>
         </div>
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label class="two-labels">N° do Chamado do SUAP:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="callNumberSuap" class="label">N° do Chamado do SUAP</label>
             <input
               #callNumberSuap
               id="callNumberSuap"
               class="input medium-input"
               value="{{ loan ? loan.callNumberSuap : '' }}"
-              placeholder="Digite o N° do Chamado do SUAP"
+              placeholder="Digite o N° do chamado do SUAP"
               matInput
             />
           </div>
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Link do Chamado do SUAP:</mat-label>
+
+          <div class="column">
+            <label for="callLinkSuap" class="label">Link do Chamado do SUAP</label>
             <input
               #callLinkSuap
               id="callLinkSuap"
               class="input medium-input"
               value="{{ loan ? loan.callLinkSuap : '' }}"
-              placeholder="Digite o Link do Chamado do SUAP"
+              placeholder="Digite o link do chamado do SUAP"
               matInput
             />
           </div>
         </div>
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Data de Retorno:</mat-label>
-            <input
-              #returnDate
-              id="returnDate"
-              class="input medium-input"
-              value="{{ loan ? loan.returnDate : '' }}"
-              type="date"
-            />
-          </div>
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Data Prevista de Retorno:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="expectedReturnDate" class="label">Data de Retorno Prevista</label>
             <input
               #expectedReturnDate
               id="expectedReturnDate"
@@ -139,60 +138,68 @@
               type="date"
             />
           </div>
+
+          <div class="column">
+            <label for="returnDate" class="label">Data de Retorno</label>
+            <input
+              #returnDate
+              id="returnDate"
+              class="input medium-input"
+              value="{{ loan ? loan.returnDate : '' }}"
+              type="date"
+            />
+          </div>
         </div>
-        <div class="one-field-container" *ngIf="loan">
-          <div class="one-field-box">
-            <mat-label>Status:</mat-label>
+
+        <div class="columns" *ngIf="loan">
+          <div class="column">
+            <label for="statusLoan" class="label">Status</label>
             <div class="select is-fullwidth">
-              <select id="statusLoan" [(ngModel)]="selectedStatusLoan">
-                <option *ngFor="let status of statusLoans" [value]="status">
-                  {{ status }}
-                </option>
+              <select id="statusLoan" class="is-size-6" [(ngModel)]="selectedStatusLoan">
+                <option *ngFor="let status of statusLoans"
+                [value]="status">{{ status }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-form-field appearance="fill">
-              <mat-label>Equipamento:</mat-label>
-              <mat-select id="equipments" [(ngModel)]="selectedEquipmentId">
-                <mat-option
-                  *ngFor="let equipment of equipments"
-                  [value]="equipment.id"
-                >
-                  {{ equipment.description }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+
+        <div class="columns">
+          <div class="column">
+            <label for="equipments" class="label">Equipamento</label>
+            <div class="select is-fullwidth">
+              <select id="equipments" class="is-size-6" [(ngModel)]="selectedEquipmentId">
+                <option *ngFor="let equipment of equipments"
+                [value]="equipment.id">{{ equipment.description }}</option>
+              </select>
+            </div>
           </div>
-          <div class="two-fields-box">
-            <mat-form-field appearance="fill">
-              <mat-label>Setor:</mat-label>
-              <mat-select id="departments" [(ngModel)]="selectedDepartmentId">
-                <mat-option
-                  *ngFor="let department of departments"
-                  [value]="department.id"
-                >
-                  {{ department.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+
+          <div class="column">
+            <label for="departments" class="label">Setor</label>
+            <div class="select is-fullwidth">
+              <select id="departments" class="is-size-6" [(ngModel)]="selectedDepartmentId">
+                <option *ngFor="let department of departments"
+                [value]="department.id">{{ department.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Observações:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="observations" class="label">Observações</label>
             <textarea
               #observations
               id="observations"
               type="text"
-              class="inputObservation"
+              class="textarea"
               value="{{ loan ? loan.observations : '' }}"
-              placeholder="Digite as Observações"
+              placeholder="Digite as observações"
+              rows="3"
             ></textarea>
           </div>
         </div>
+
       </div>
     </div>
   </div>

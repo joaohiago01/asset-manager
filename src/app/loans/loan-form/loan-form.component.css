@@ -1,14 +1,3 @@
-.container {
-  width: 100%;
-}
-
-.header-loan-create {
-  padding-top: 1rem;
-  padding-right: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-}
-
 .btn-save {
   background-color: #1fd181;
 }
@@ -16,58 +5,4 @@
 .btn-delete {
   background-color: #cf2a27;
   color: white;
-}
-
-.content-loan-create {
-  padding-right: 0.8rem;
-  padding-top: 1.2rem;
-  display: flex;
-  flex-direction: column;
-}
-
-mat-form-field {
-  width: 100%;
-}
-
-mat-label {
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.two-fields-container {
-  display: flex;
-  flex-direction: row;
-  width: 60%;
-  justify-content: space-between;
-  padding-bottom: 0.7rem;
-}
-
-.one-field-container {
-  display: flex;
-  flex-direction: row;
-  width: 60%;
-  justify-content: space-between;
-  padding-bottom: 0.7rem;
-}
-
-.two-fields-box {
-  display: flex;
-  flex-direction: column;
-  width: 49%;
-}
-
-.one-field-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.two-labels {
-  padding-right: 0.3rem;
-}
-
-.inputObservation {
-  width: 100%;
-  height: 10rem;
-  resize: none;
 }

@@ -8,6 +8,7 @@ import { Department } from 'src/app/shared/models/department.model';
 import { Equipment } from 'src/app/shared/models/equipment.model';
 import { Loan } from 'src/app/shared/models/loan.model';
 import { StatusLoan } from 'src/app/shared/models/statusLoan.enum';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { LoanService } from '../services/loan.service';
 
 @Component({
@@ -29,7 +30,9 @@ export class LoanFormComponent implements OnInit {
     private router: Router,
     public loanService: LoanService,
     public departmentService: DepartmentService,
-    public equipmentService: EquipmentService) {
+    public equipmentService: EquipmentService,
+    public utilityService: UtilityService
+    ) {
       const loan: Loan = <Loan>(
         this.router.getCurrentNavigation()?.extras.state
       );
@@ -97,7 +100,7 @@ export class LoanFormComponent implements OnInit {
       );
     } else {
       if (selectedDepartmentId && selectedEquipmentId) {
-        const selectedDepartment = this.departments.find(d => d.id === selectedDepartmentId);
+        const selectedDepartment = this.departments.find(d => d.id == selectedDepartmentId);
         const consignor = new Contributor({
           name: consignorName,
           registrationNumber: consignorRegistrationNumber
@@ -119,14 +122,35 @@ export class LoanFormComponent implements OnInit {
           requestor
         });
 
-        let loanWasCreated = await this.loanService.createLoan(loan);
-        if (loanWasCreated) {
-          this.router.navigate(['loans'], { state: { needReload: true }});
-        } else {
-          alert('Oops, ocorreu um erro ao tentar cadastrar esse Empréstimo');
+        console.log(loan);
+
+        try {
+          const response = await this.loanService.createLoan(loan);
+
+          this.utilityService.showNotification('Empréstimo cadastrado com sucesso!');
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+
+            this.router.navigate(['loans'], {
+              state: { needReload: true },
+            });
+          }, 3000);
+
+        } catch (error) {
+          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+          }, 5000);
         }
+        
       } else {
-        alert('Dados Inválidos');
+        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
     }
   }
@@ -172,30 +196,65 @@ export class LoanFormComponent implements OnInit {
         },
         id
       );
-      let loanWasEdited = await this.loanService.editLoan(loan);
-      if (loanWasEdited === true) {
-        this.loan = undefined;
-        this.router.navigate(['loans'], { state: { needReload: true }});
-      } else {
-        alert('Oops, ocorreu um erro ao tentar editar esse Empréstimo');
+
+      try {
+        const response = await this.loanService.editLoan(loan);
+
+        this.utilityService.showNotification('Empréstimo atualizado com sucesso!');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['loans'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+
+      } catch (error) {
+        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+      
     } else {
-      alert('Dados Inválidos');
+      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 
   async deleteLoan(id: number): Promise<void> {
     if (id) {
-      let loanWasDeleted = await this.loanService.deleteLoan(id);
-      if (loanWasDeleted === true) {
-        this.router.navigate(['loans'], { state: { needReload: true }});
-      } else {
-        alert(
-          'Oops, ocorreu um erro ao tentar remover esse Empréstimo'
-        );
+      try {
+        const response = await this.loanService.deleteLoan(id);
+
+        this.utilityService.showNotification("O Empréstimo foi excluído com sucesso!");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['loans'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+      } catch (error) {
+        this.utilityService.showNotification("O Empréstimo não pode ser excluído");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      alert('Empréstimo Não Encontrado');
+      this.utilityService.showNotification("Empréstimo não encontrado");
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import { Loan } from 'src/app/shared/models/loan.model';
 import { StatusLoan } from 'src/app/shared/models/statusLoan.enum';
 import api from 'src/app/shared/services/api';
@@ -10,8 +11,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 export class LoanService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async createLoan(loan: Loan): Promise<boolean> {
-    let loanWasCreated = false;
+  async createLoan(loan: Loan): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -45,17 +45,14 @@ export class LoanService {
         solicitante
       };
 
-      await api.post('/emprestimos', loanServer, { headers });
-      loanWasCreated = true;
-      return loanWasCreated;
+      return await api.post('/emprestimos', loanServer, { headers });
     } catch (error) {
       console.error(error);
-      return (loanWasCreated = false);
+      throw new Error(error);
     }
   }
 
-  async editLoan(loan: Loan): Promise<boolean> {
-    let loanWasEdited = false;
+  async editLoan(loan: Loan): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -88,28 +85,22 @@ export class LoanService {
         solicitante
       };
 
-      await api.put(`/emprestimos/${loan.id}`, loanServer,{ headers });
-      loanWasEdited = true;
-      return loanWasEdited;
+      return await api.put(`/emprestimos/${loan.id}`, loanServer,{ headers });
     } catch (error) {
       console.error(error);
-      return (loanWasEdited = false);
+      throw new Error(error);
     }
   }
 
-  async deleteLoan(id: Number): Promise<boolean> {
-    let loanWasDeleted = false;
+  async deleteLoan(id: Number): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
-      await api.delete(`/emprestimos/${id}`, { headers });
-      loanWasDeleted = true;
-      alert('Deletado com sucesso!');
-      return loanWasDeleted;
+      return await api.delete(`/emprestimos/${id}`, { headers });
     } catch (error) {
       console.error(error);
-      return (loanWasDeleted = false);
+      throw new Error(error);
     }
   }
 
