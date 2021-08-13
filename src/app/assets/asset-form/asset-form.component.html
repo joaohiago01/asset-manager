@@ -3,6 +3,8 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <app-notification></app-notification>
+
     <div class="container">
       <form
         role="form"
@@ -18,7 +20,7 @@
           )
         "
       >
-        <div class="header-asset-create">
+        <div class="header-component-form">
           <button
             id="create"
             class="btn-save"
@@ -42,78 +44,63 @@
         </div>
       </form>
 
-      <div class="content-asset-create">
-        <div class="one-field-container">
-          <mat-form-field appearance="fill">
-            <mat-label>Categoria:</mat-label>
-            <mat-select id="categories" [(ngModel)]="selectedCategoryId">
-              <mat-option
-                *ngFor="let category of categories"
-                [value]="category.id"
-              >
-                {{ category.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Nome:</mat-label>
+      <div class="content-component-form">
+
+        <div class="columns">
+          <div class="column">
+            <label for="name" class="label">Nome</label>
             <input
               #name
               id="name"
               class="input medium-input"
               value="{{ asset ? asset.name : '' }}"
-              placeholder="Digite o Nome"
+              placeholder="Digite o nome"
               matInput
             />
           </div>
+
+          <div class="column">
+            <label for="categories" class="label">Categoria</label>
+            <div class="select is-fullwidth">
+              <select id="categories" class="is-size-6" [(ngModel)]="selectedCategoryId">
+                <option *ngFor="let category of categories"
+                [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Estante:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="bookcase" class="label">Estante</label>
             <input
               #bookcase
               id="bookcase"
               maxlength="1"
               class="input medium-input"
               value="{{ asset ? asset.bookcase : '' }}"
-              placeholder="Digite a Estante"
+              placeholder="Digite o identificador da estante"
               matInput
             />
           </div>
-        </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Prateleira:</mat-label>
+
+          <div class="column">
+            <label for="shelf" class="label">Prateleira</label>
             <input
               #shelf
               id="shelf"
               maxlength="1"
               class="input medium-input"
               value="{{ asset ? asset.shelf : '' }}"
-              placeholder="Digite a Prateleira"
+              placeholder="Digite o identificador da prateleira"
               matInput
             />
           </div>
         </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Quantidade Mínima:</mat-label>
-            <input
-              #minQuantity
-              id="minQuantity"
-              class="input small-input"
-              type="number"
-              value="{{ asset ? asset.minQuantity : '' }}"
-              placeholder="Digite a Quantidade Mínima"
-              matInput
-            />
-          </div>
-        </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Quantidade Atual:</mat-label>
+
+        <div class="columns">
+          <div class="column">
+            <label for="currentQuantity" class="label">Estoque</label>
             <input
               #currentQuantity
               id="currentQuantity"
@@ -124,10 +111,22 @@
               matInput
             />
           </div>
-        </div>
-        <div class="one-field-container">
-          <div class="one-field-box">
-            <mat-label>Unidade De Medida:</mat-label>
+
+          <div class="column">
+            <label for="minQuantity" class="label">Quantidade Mínima</label>
+            <input
+              #minQuantity
+              id="minQuantity"
+              class="input small-input"
+              type="number"
+              value="{{ asset ? asset.minQuantity : '' }}"
+              placeholder="Digite a Quantidade Mínima"
+              matInput
+            />
+          </div>
+
+          <div class="column">
+            <label for="unitOfMeasurement" class="label">Unidade de Medida</label>
             <input
               #unitOfMeasurement
               id="unitOfMeasurement"
@@ -138,6 +137,7 @@
             />
           </div>
         </div>
+
       </div>
     </div>
   </div>

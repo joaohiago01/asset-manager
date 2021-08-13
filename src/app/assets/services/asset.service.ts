@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Asset } from 'src/app/shared/models/asset.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import api from 'src/app/shared/services/api';
+import { AxiosResponse } from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,7 @@ import api from 'src/app/shared/services/api';
 export class AssetService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async createAsset(asset: Asset): Promise<boolean> {
-    let assetWasCreated = false;
+  async createAsset(asset: Asset): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -38,18 +38,14 @@ export class AssetService {
       await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
 
       assetServer.quantidadeAtual = asset.currentQuantity;
-      await api.put(`/insumos/${assetId}`, assetServer, { headers });
-
-      assetWasCreated = true;
-      return assetWasCreated;
+      return await api.put(`/insumos/${assetId}`, assetServer, { headers });
     } catch (error) {
       console.error(error);
-      return (assetWasCreated = false);
+      throw new Error(error);
     }
   }
 
-  async editAsset(asset: Asset): Promise<boolean> {
-    let assetWasEdited = false;
+  async editAsset(asset: Asset): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -65,31 +61,23 @@ export class AssetService {
         unidadeDeMedida: asset.unitOfMeasurement,
       };
 
-      await api.put(`/insumos/${asset.id}`, assetServer, { headers });
-      assetWasEdited = true;
-      return assetWasEdited;
+      return await api.put(`/insumos/${asset.id}`, assetServer, { headers });
     } catch (error) {
       console.error(error);
-      return (assetWasEdited = false);
+      throw new Error(error);
     }
   }
 
-  async deleteAsset(id: Number): Promise<boolean> {
-    let assetWasDeleted = false;
+  async deleteAsset(id: Number): Promise<AxiosResponse> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      await api.delete(`/insumos/${id}`, { headers });
-      assetWasDeleted = true;
-
-      alert('Deletado com sucesso!');
-
-      return assetWasDeleted;
+      return await api.delete(`/insumos/${id}`, { headers });
     } catch (error) {
       console.error(error);
-      return (assetWasDeleted = false);
+      throw new Error(error);
     }
   }
 

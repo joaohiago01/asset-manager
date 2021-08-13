@@ -6,6 +6,7 @@ import { Category } from 'src/app/shared/models/category.model';
 import { AssetService } from 'src/app/assets/services/asset.service';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { CategoryType } from 'src/app/shared/models/categoryType.enum';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-asset-form',
@@ -22,7 +23,8 @@ export class AssetFormComponent implements OnInit {
   constructor(
     private router: Router,
     public assetService: AssetService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {
     const asset: Asset = <Asset>(
       this.router.getCurrentNavigation()?.extras.state
@@ -86,14 +88,33 @@ export class AssetFormComponent implements OnInit {
           unitOfMeasurement: unitOfMeasurement,
         });
 
-        let assetWasCreated = await this.assetService.createAsset(asset);
-        if (assetWasCreated) {
-          this.router.navigate(['assets'], { state: { needReload: true } });
-        } else {
-          alert('Oops, ocorreu um erro ao tentar cadastrar esse Insumo');
+        try {
+          const response = await this.assetService.createAsset(asset);
+
+          this.utilityService.showNotification('Equipamento cadastrado com sucesso!');
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+
+            this.router.navigate(['assets'], {
+              state: { needReload: true },
+            });
+          }, 3000);
+
+        } catch (error) {
+          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+          }, 5000);
         }
+        
       } else {
-        alert('Dados Inválidos');
+        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
     }
   }
@@ -122,28 +143,64 @@ export class AssetFormComponent implements OnInit {
         id
       );
 
-      let assetWasEdited = await this.assetService.editAsset(asset);
-      if (assetWasEdited === true) {
-        this.asset = undefined;
-        this.router.navigate(['assets'], { state: { needReload: true } });
-      } else {
-        alert('Oops, ocorreu um erro ao tentar editar esse Insumo');
+      try {
+        const response = await this.assetService.editAsset(asset);
+
+        this.utilityService.showNotification('Equipamento atualizado com sucesso!');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['assets'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+
+      } catch (error) {
+        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+      
     } else {
-      alert('Dados Inválidos');
+      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 
   async deleteAsset(id: number): Promise<void> {
     if (id) {
-      let assetWasDeleted = await this.assetService.deleteAsset(id);
-      if (assetWasDeleted === true) {
-        this.router.navigate(['assets'], { state: { needReload: true } });
-      } else {
-        alert('Oops, ocorreu um erro ao tentar remover esse Insumo');
+      try {
+        const response = await this.assetService.deleteAsset(id);
+
+        this.utilityService.showNotification("O Insumo foi excluído com sucesso!");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['assets'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+      } catch (error) {
+        this.utilityService.showNotification("O Insumo está em uso e não pode ser excluído");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      alert('Insumo Não Encontrado');
+      this.utilityService.showNotification("Insumo não encontrado");
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 5000);
     }
   }
 }
