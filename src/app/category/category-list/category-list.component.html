@@ -3,11 +3,16 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <app-notification></app-notification>
+
     <div class="container">
-      <!-- MODAL PARA CADASTRAR CATEGORIA -->
-      <div id="modalCadastrar" class="modal-window hidden" style="width: 45%">
+      <!-- MODAL PARA CADASTRAR E EDITAR CATEGORIA -->
+      <div id="modalCadastrar" class="modal-window hidden container is-max-desktop is-mobile">
         <header class="modal-card-head">
-          <p class="modal-card-title font-color title m-2">Cadastrar</p>
+          <p class="modal-card-title is-size-5-mobile font-color title m-2" *ngIf="!category.id">Cadastrar Categoria</p>
+
+          <p class="modal-card-title is-size-5-mobile font-color title m-2" *ngIf="category.id">Editar Categoria</p>
+
           <button
             id="btnFechar"
             class="delete"
@@ -17,44 +22,58 @@
         </header>
         <section
           class="modal-card-body"
-          style="margin-right: 15%; margin-left: 15%"
-        >
-          <label for="name" class="label">Nome</label>
-          <input
-            id="nameModalNew"
-            type="text"
-            #name
-            class="input is-success mb-5"
-            placeholder="Nome da categoria"
-          />
+          style="margin-right: 15%; margin-left: 15%">
 
-          <label for="tipoCategoria" class="label">Tipo de Categoria</label>
-          <div class="select is-success is-fullwidth">
-            <select id="categoryTypesModalNew" [(ngModel)]="selectedValue">
-              <option *ngFor="let tipo of types" [value]="tipo">
-                {{ tipo }}
-              </option>
-            </select>
+          <div class="columns">
+            <div class="column">
+              <label for="name" class="label">Nome</label>
+              <input
+                id="nameModalNew"
+                type="text"
+                #name
+                class="input is-success mb-5"
+                placeholder="Nome da categoria"
+                [value]="category.name ? category.name : '' "
+              />
+            </div>
           </div>
+
+          <div class="columns">
+            <div class="column">
+              <label for="tipoCategoria" class="label">Tipo de Categoria</label>
+              <div class="select is-success is-fullwidth">
+                <select id="categoryTypesModalNew" [(ngModel)]="selectedValue">
+                  <option *ngFor="let tipo of types" [value]="tipo">
+                    {{ tipo }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
         </section>
 
-        <footer
-          class="modal-card-foot is-justify-content-center is-align-items-center"
-        >
+        <footer class="modal-card-foot is-justify-content-center is-align-items-center">
           <form
             role="form"
-            (submit)="createCategory(name.value, selectedValue)"
-          >
+            (submit)="createCategory(name.value, selectedValue)" *ngIf="!category.id">
+
             <button id="create" type="submit" class="button is-success">Cadastrar</button>
           </form>
+
+          <form
+            role="form"
+            (submit)="editCategory(category.id, name.value, selectedValue)" *ngIf="category.id">
+
+            <button id="create" type="submit" class="button is-success">Salvar</button>
+          </form>
+          
           <button class="button" (click)="hideModal('#modalCadastrar')">
             Cancelar
           </button>
         </footer>
       </div>
-      <div class="overlay hidden"></div>
-      <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
-
+      
       <!-- BOTÃO PARA ABRIR O MODAL DE CADASTRO -->
       <div class="header-component">
         <button
@@ -70,57 +89,8 @@
         </button>
       </div>
 
-      <!-- MODAL PARA EDITAR CATEGORIA -->
-      <div id="modalEditar" class="modal-window hidden" style="width: 45%">
-        <header class="modal-card-head">
-          <p class="modal-card-title font-color title m-2">Editar categoria</p>
-          <button
-            id="btnClose"
-            class="delete"
-            aria-label="close"
-            (click)="hideModal('#modalEditar')"
-          ></button>
-        </header>
-        <section
-          class="modal-card-body"
-          style="margin-right: 15%; margin-left: 15%"
-        >
-          <label for="nameEdit" class="label">Nome</label>
-          <input
-            id="nameModalEdit"
-            type="text"
-            #nameEdit
-            class="input is-success mb-5"
-            placeholder="Nome da categoria"
-            [value]="category.name"
-          />
-
-          <label for="tipoCategoriaEdicao" class="label"
-            >Tipo de Categoria</label
-          >
-          <div class="select is-success is-fullwidth">
-            <select id="categoryTypesModalEdit" [(ngModel)]="selectedValue">
-              <option *ngFor="let tipo of types" [value]="tipo">
-                {{ tipo }}
-              </option>
-            </select>
-          </div>
-        </section>
-
-        <footer
-          class="modal-card-foot is-justify-content-center is-align-items-center"
-        >
-          <form
-            role="form"
-            (submit)="editCategory(category.id, nameEdit.value, selectedValue)"
-          >
-            <button id="edit" type="submit" class="button is-success">Salvar</button>
-          </form>
-          <button class="button" (click)="hideModal('#modalEditar')">
-            Cancelar
-          </button>
-        </footer>
-      </div>
+      <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
+      <div class="overlay hidden"></div>
 
       <div class="container list">
         <div class="columns is-multiline is-mobile">
@@ -137,6 +107,11 @@
                       class="button card-button bg-primary"
                       (click)="detailCategory(category.id)">
                       <i class="material-icons v-middle color-card-icon">edit</i>
+                    </button>
+                    <button
+                      class="button card-button bg-red"
+                      (click)="deleteCategory(category.id)">
+                      <i class="material-icons v-middle color-card-icon">delete</i>
                     </button>
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/shared/models/category.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { CategoryType } from '../../shared/models/categoryType.enum';
 import { CategoryService } from '../services/category.service';
 
@@ -19,7 +20,8 @@ export class CategoryListComponent implements OnInit {
   constructor(
     public httpClient: HttpClient,
     public router: Router,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {
     this.types = Object.values(CategoryType);
   }
@@ -31,7 +33,11 @@ export class CategoryListComponent implements OnInit {
   async getAllCategories(): Promise<void> {
     this.categories = await this.categoryService.getAllCategories();
     if (!this.categories) {
-      alert('Nenhuma Categoria Encontrada');
+      this.utilityService.showNotification('Nenhuma categoria encontrada');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 
@@ -39,24 +45,36 @@ export class CategoryListComponent implements OnInit {
     name: string,
     categoryTypeString: string
   ): Promise<void> {
-    if (name && categoryTypeString) {
       const categoryType: CategoryType = <CategoryType>categoryTypeString;
 
       let category = new Category({
         name,
         categoryType,
       });
-      let categoryWasCreated = await this.categoryService.createCategory(
-        category
-      );
-      if (categoryWasCreated === true) {
-        window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar cadastrar essa Categoria');
+
+      try {
+        const response = await this.categoryService.createCategory(category);
+
+        this.utilityService.showNotification('Categoria cadastrada com sucesso');
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          window.location.reload();
+        }, 1000);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+
+        this.utilityService.showNotification(error.response.data['detail']);
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
-    } else {
-      alert('Dados Inválidos');
-    }
+
   }
 
   detailCategory(categoryId: number) {
@@ -64,7 +82,7 @@ export class CategoryListComponent implements OnInit {
       this.categories.find((category: Category) => category.id === categoryId)
     );
     this.selectedValue = this.category.categoryType;
-    this.showModal('#modalEditar');
+    this.showModal('#modalCadastrar');
   }
 
   async editCategory(
@@ -72,39 +90,63 @@ export class CategoryListComponent implements OnInit {
     name: string,
     categoryTypeString: string
   ): Promise<void> {
-    if (name && categoryTypeString) {
-      const categoryType: CategoryType = <CategoryType>categoryTypeString;
-      let category = new Category(
-        {
-          name,
-          categoryType,
-        },
-        id
-      );
-      let categoryWasEdited = await this.categoryService.editCategory(category);
-      if (categoryWasEdited === true) {
+    const categoryType: CategoryType = <CategoryType>categoryTypeString;
+    let category = new Category(
+      {
+        name,
+        categoryType,
+      },
+      id
+    );
+    
+    try {
+      const response = await this.categoryService.editCategory(category);
+
+      this.utilityService.showNotification('Categoria atualizada com sucesso');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+
         window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar editar essa Categoria');
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
       }
-    } else {
-      alert('Dados Inválidos');
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
 
-    this.selectedValue = '';
   }
 
   async deleteCategory(id: number): Promise<void> {
     if (id) {
-      let categoryWasDeleted = await this.categoryService.deleteCategory(id);
-      if (categoryWasDeleted === true) {
-        window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar remover essa Categoria');
+      try {
+        const response = await this.categoryService.deleteCategory(id);
+  
+        this.utilityService.showNotification('Categoria excluída com sucesso');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+  
+          window.location.reload();
+        }, 1000);
+        
+      } catch (error) {
+        this.utilityService.showNotification('A categoria está em uso e não pode ser excluída');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
-    } else {
-      alert('Categoria Inválida');
+
     }
+
   }
 
   showModal(modalSelector: string) {
@@ -131,5 +173,6 @@ export class CategoryListComponent implements OnInit {
     overlay.classList.add('hidden');
 
     this.selectedValue = '';
+    this.category = <Category>{};
   }
 }

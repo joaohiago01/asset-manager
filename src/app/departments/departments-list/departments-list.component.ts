@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Department } from 'src/app/shared/models/department.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { DepartmentService } from '../services/department.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class DepartmentsListComponent implements OnInit {
   constructor(
     public httpClient: HttpClient,
     public router: Router,
-    public departmentService: DepartmentService
+    public departmentService: DepartmentService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -28,7 +30,11 @@ export class DepartmentsListComponent implements OnInit {
     this.departments = await this.departmentService.getAllDepartments();
 
     if (!this.departments) {
-      alert('Nenhum setor encontrado!')
+      this.utilityService.showNotification('Nenhum setor encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 
@@ -36,30 +42,41 @@ export class DepartmentsListComponent implements OnInit {
     name: string,
     acronym: string
   ): Promise<void> {
-    if (name && acronym) {
-      let department = new Department({
-        name,
-        acronym
-      });
+    let department = new Department({
+      name,
+      acronym
+    });
 
-      let departmentWasCreated = await this.departmentService.createDepartment(department);
+    try {
+      const response = await this.departmentService.createDepartment(department);
 
-      if (departmentWasCreated === true) {
+      this.utilityService.showNotification('Setor cadastrado com sucesso');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+
         window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar cadastrar esse setor');
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
       }
 
-    } else {
-      alert('Dados inválidos! Verifique os campos e tente novamente')
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
+
   }
 
   detailDepartment(departmentId: number) {
     this.department = <Department>(
       this.departments.find((department: Department) => department.id === departmentId)
     );
-    this.showModal('#modalEditar');
+    this.showModal('#modalCadastrar');
   }
 
   async editDepartment(
@@ -67,40 +84,60 @@ export class DepartmentsListComponent implements OnInit {
     name: string,
     acronym: string
   ): Promise<void> {
-    console.log(id, name, acronym);
-    if (id && name && acronym) {
-      let department = new Department({
-        name,
-        acronym,
-      },
-      id
-      );
+    let department = new Department({
+      name,
+      acronym,
+    },
+    id
+    );
 
-      let departmentWasEdited = await this.departmentService.editDepartment(department);
+    try {
+      const response = await this.departmentService.editDepartment(department);
 
-      if (departmentWasEdited === true) {
+      this.utilityService.showNotification('Setor atualizado com sucesso');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+
         window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar editar esse setor');
-      }
+      }, 1000);
       
-    } else {
-      alert('Dados inválidos! Verifique os campos e tente novamente')
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+      }
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
+
   }
 
   async deleteDepartment(id: number): Promise<void> {
     if (id) {
-      let departmentWasDeleted = await this.departmentService.deleteDepartment(id);
-
-      if (departmentWasDeleted === true) {
-        window.location.reload();
-      } else {
-        alert('Oops, ocorreu um erro ao tentar remover esse setor');
+      try {
+        const response = await this.departmentService.deleteDepartment(id);
+  
+        this.utilityService.showNotification('Setor excluído com sucesso');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+  
+          window.location.reload();
+        }, 1000);
+        
+      } catch (error) {
+        this.utilityService.showNotification('O setor está em uso e não pode ser excluído');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
-    } else {
-      alert('Setor inválido')
     }
+
   } 
 
   showModal(modalSelector: string) {

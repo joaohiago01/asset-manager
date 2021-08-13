@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import api from 'src/app/shared/services/api';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { environment } from 'src/environments/environment.prod';
@@ -37,63 +38,39 @@ export class CategoryService {
     }
   }
 
-  async createCategory(category: Category): Promise<boolean> {
-    let categoryWasCreated = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`
-      };
+  async createCategory(category: Category): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`
+    };
 
-      let categoryServer = {
-        nome: category.name,
-        tipoCategoria: category.categoryType
-      };
-      await api.post('/categorias', categoryServer, { headers });
-      categoryWasCreated = true;
-
-      return categoryWasCreated;
-    } catch (error) {
-      console.error(error);
-      return categoryWasCreated = false;
-    }
+    let categoryServer = {
+      nome: category.name,
+      tipoCategoria: category.categoryType
+    };
+    
+    return await api.post('/categorias', categoryServer, { headers });
   }
 
   async editCategory(category: Category): Promise<boolean> {
-    let categoryWasEdited = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`
+    };
 
-      let categoryServer = {
-        id: category.id,
-        nome: category.name,
-        tipoCategoria: category.categoryType
-      };
-      api.put(`/categorias/${category.id}`, categoryServer, { headers });
-      categoryWasEdited = true;
+    let categoryServer = {
+      id: category.id,
+      nome: category.name,
+      tipoCategoria: category.categoryType
+    };
 
-      return categoryWasEdited;
-    } catch (error) {
-      console.error(error);
-      return categoryWasEdited = false;
-    }
+    return api.put(`/categorias/${category.id}`, categoryServer, { headers });
   }
 
   async deleteCategory(id: Number): Promise<boolean> {
-    let categoryWasDeleted = false;
-    try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`
       };
 
-      api.delete(`/categorias/${id}`, { headers });
-      categoryWasDeleted = true;
-
-      return categoryWasDeleted;
-    } catch (error) {
-      console.error(error);
-      return categoryWasDeleted = false;
-    }
+      return api.delete(`/categorias/${id}`, { headers });
   }
+
 }

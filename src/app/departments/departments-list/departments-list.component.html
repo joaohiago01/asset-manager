@@ -3,11 +3,16 @@
       <app-menu></app-menu>
     </div>
     <div class="column is-9">
+      <app-notification></app-notification>
+
       <div class="container">
-        <!-- MODAL PARA CADASTRAR SETOR -->
-        <div id="modalCadastrar" class="modal-window hidden" style="width: 45%">
+        <!-- MODAL PARA CADASTRAR E EDITAR SETOR -->
+        <div id="modalCadastrar" class="modal-window hidden container is-max-desktop is-mobile">
           <header class="modal-card-head">
-            <p class="modal-card-title font-color title m-2">Cadastrar Setor</p>
+            <p class="modal-card-title is-size-5-mobile font-color title m-2" *ngIf="!department.id">Cadastrar Setor</p>
+
+            <p class="modal-card-title is-size-5-mobile font-color title m-2" *ngIf="department.id">Editar Setor</p>
+
             <button
               id="btnFechar"
               class="delete"
@@ -27,6 +32,7 @@
               #name
               class="input is-success mb-5"
               placeholder="Nome do setor"
+              [value]="department.name ? department.name : '' "
             />
   
             <label for="acronym" class="label">Sigla</label>
@@ -36,17 +42,25 @@
               #acronym
               class="input is-success mb-5"
               placeholder="Sigla do setor"
+              [value]="department.acronym ? department.acronym : '' "
             />
           </section>
   
           <footer
-            class="modal-card-foot is-justify-content-center is-align-items-center"
-          >
+            class="modal-card-foot is-justify-content-center is-align-items-center">
+
             <form
               role="form"
-              (submit)="createDepartment(name.value, acronym.value)"
-            >
+              (submit)="createDepartment(name.value, acronym.value)" *ngIf="!department.id">
+
               <button id="create" type="submit" class="button is-success">Cadastrar</button>
+            </form>
+
+            <form
+              role="form"
+              (submit)="editDepartment(department.id, name.value, acronym.value)" *ngIf="department.id">
+
+              <button id="edit" type="submit" class="button is-success">Salvar</button>
             </form>
             <button class="button" (click)="hideModal('#modalCadastrar')">
               Cancelar
@@ -54,60 +68,8 @@
           </footer>
         </div>
 
-        <!-- MODAL PARA EDITAR SETOR -->
-        <div id="modalEditar" class="modal-window hidden" style="width: 45%">
-          <header class="modal-card-head">
-            <p class="modal-card-title font-color title m-2">Editar Setor</p>
-            <button
-              id="btnClose"
-              class="delete"
-              aria-label="close"
-              (click)="hideModal('#modalEditar')"
-            ></button>
-          </header>
-
-          <section
-            class="modal-card-body"
-            style="margin-right: 15%; margin-left: 15%"
-          >
-            <label for="name" class="label">Nome</label>
-            <input
-              id="nameModalEdit"
-              type="text"
-              #nameEdit
-              class="input is-success mb-5"
-              placeholder="Nome do setor"
-              [value]="department.name"
-            />
-  
-            <label for="acronym" class="label">Sigla</label>
-            <input
-              id="acronymModalEdit"
-              type="text"
-              #acronymEdit
-              class="input is-success mb-5"
-              placeholder="Sigla do setor"
-              [value]="department.acronym"
-            />
-          </section>
-  
-          <footer
-            class="modal-card-foot is-justify-content-center is-align-items-center"
-          >
-            <form
-              role="form"
-              (submit)="editDepartment(department.id, nameEdit.value, acronymEdit.value)"
-            >
-              <button id="edit" type="submit" class="button is-success">Salvar</button>
-            </form>
-            <button class="button" (click)="hideModal('#modalEditar')">
-              Cancelar
-            </button>
-          </footer>
-        </div>
-
-        <div class="overlay hidden"></div>
         <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
+        <div class="overlay hidden"></div>
   
         <!-- BOTÃO PARA ABRIR O MODAL DE CADASTRO -->
         <div class="header-component">

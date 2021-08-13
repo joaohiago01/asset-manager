@@ -157,7 +157,7 @@ body {
 .header-component {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  padding-right: 0.2rem;
+  padding-right: 0.8rem;
   display: flex;
   justify-content: flex-end;
   margin-right: 6px;
@@ -191,6 +191,10 @@ and (max-device-width: 650px) {
   .container {
     margin-right: 8px;
     margin-left: 6px;
+  }
+
+  .header-component {
+    padding-right: 0.2rem;
   }
 
   .header-component-form {
