@@ -139,38 +139,52 @@ export class EquipmentFormComponent implements OnInit {
           filename,
         });
 
-        const response = await this.equipmentService.createEquipment(equipment);
-        if (response.status == 201) {
-          const equipmentId = response.data['id'];
-          if (this.file.name != 'empty.txt') {
-            const fileResponse = await this.equipmentService.sendFile(
-              this.file,
-              equipmentId
-            );
-            if (fileResponse.status == 201) {
+        try {
+          const response = await this.equipmentService.createEquipment(equipment);
+
+          if (response.status == 201) {
+            const equipmentId = response.data['id'];
+
+            if (this.file.name != 'empty.txt') {
+              const fileResponse = await this.equipmentService.sendFile(
+                this.file,
+                equipmentId
+              );
+
+              if (fileResponse.status != 201) {
+                this.utilityService.showNotification("Ocorreu um erro ao salvar o arquivo");
+
+                setTimeout(() => {
+                  this.utilityService.closeNotification();
+                }, 5000);
+              }
+            }
+
+            this.utilityService.showNotification('Equipamento cadastrado com sucesso!');
+
+            setTimeout(() => {
+              this.utilityService.closeNotification();
+
               this.router.navigate(['equipments'], {
                 state: { needReload: true },
               });
-            }
-          } else {
-            this.router.navigate(['equipments'], {
-              state: { needReload: true },
-            });
+            }, 3000);
           }
-        } else {
-          this.utilityService.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse equipamento');
+
+        } catch (error) {
+          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
 
           setTimeout(() => {
             this.utilityService.closeNotification();
-          }, 6000);
+          }, 5000);
         }
 
       } else {
-        this.utilityService.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
+        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 6000);
+        }, 5000);
       }
     }
   }
@@ -211,46 +225,64 @@ export class EquipmentFormComponent implements OnInit {
         id
       );
 
-      let equipmentWasEdited = await this.equipmentService.editEquipment(
-        equipment
-      );
-      if (equipmentWasEdited === true) {
-        this.equipment = undefined;
-        this.router.navigate(['equipments'], { state: { needReload: true } });
-      } else {
-        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar editar esse equipamento');
+      try {
+        const response = await this.equipmentService.editEquipment(equipment);
+
+        this.utilityService.showNotification('Equipamento atualizado com sucesso!');
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 6000);
+
+          this.router.navigate(['equipments'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+
+      } catch (error) {
+        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      this.utilityService.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 6000);
+      }, 5000);
     }
   }
 
   async deleteEquipment(id: number): Promise<void> {
     if (id) {
-      let equipmentWasDeleted = await this.equipmentService.deleteEquipment(id);
-      if (equipmentWasDeleted === true) {
-        this.router.navigate(['equipments'], { state: { needReload: true } });
-      } else {
-        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar remover esse equipamento');
+      try {
+        const response = await this.equipmentService.deleteEquipment(id);
+
+        this.utilityService.showNotification("O Equipamento foi excluído com sucesso!");
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 6000);
+
+          this.router.navigate(['equipments'], {
+            state: { needReload: true },
+          });
+        }, 3000);
+      } catch (error) {
+        this.utilityService.showNotification("O equipamento está em uso e não pode ser excluído");
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 5000);
       }
+
     } else {
-      this.utilityService.showNotification('Ocorreu um erro! Esse equipamento não foi encontrado');
+      this.utilityService.showNotification("Equipamento não encontrado");
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 6000);
+      }, 5000);
     }
   }
 

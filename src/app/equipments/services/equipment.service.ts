@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Equipment } from 'src/app/shared/models/equipment.model';
 import { EquipmentApiCampus } from 'src/app/shared/models/equipmentApiCampus.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { AxiosResponse } from 'axios';
+import { AxiosPromise, AxiosResponse } from 'axios';
 import api from 'src/app/shared/services/api';
 import apiCampus from 'src/app/shared/services/apiCampus';
 import * as equipmentsApiCampus from '../../shared/services/equipments-api-campus.json';
@@ -144,8 +144,7 @@ export class EquipmentService {
     }
   }
 
-  async editEquipment(equipment: Equipment): Promise<boolean> {
-    let equipmentWasEdited = false;
+  async editEquipment(equipment: Equipment): Promise<AxiosPromise> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
@@ -167,31 +166,25 @@ export class EquipmentService {
         nomeArquivo: equipment.filename,
       };
 
-      await api.put(`/equipamentos/${equipment.id}`, equipmentServer, {
+      return await api.put(`/equipamentos/${equipment.id}`, equipmentServer, {
         headers,
       });
-      equipmentWasEdited = true;
-      return equipmentWasEdited;
     } catch (error) {
       console.error(error);
-      return (equipmentWasEdited = false);
+      throw new Error(error);
     }
   }
 
-  async deleteEquipment(id: Number): Promise<boolean> {
-    let equipmentWasDeleted = false;
+  async deleteEquipment(id: Number): Promise<AxiosPromise> {
     try {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      await api.delete(`/equipamentos/${id}`, { headers });
-      equipmentWasDeleted = true;
-
-      return equipmentWasDeleted;
+      return await api.delete(`/equipamentos/${id}`, { headers });
     } catch (error) {
       console.error(error);
-      return (equipmentWasDeleted = false);
+      throw new Error(error);
     }
   }
 }

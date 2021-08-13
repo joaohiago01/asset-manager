@@ -24,7 +24,7 @@
           )
         "
       >
-        <div class="header-equipment-create">
+        <div class="header-component-form">
           <button
             id="save"
             class="btn-save"
@@ -48,21 +48,21 @@
         </div>
       </form>
 
-      <div class="content-equipment-create">
-        <div class="description"></div>
+      <div class="content-component-form">
 
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label>Número:</mat-label>
+        <div class="columns">
+          <div class="column">
+            <label for="number" class="label">Número</label>
             <input
-              #number
               id="number"
+              #number
+              matInput
               class="input medium-input"
               placeholder="Digite o Número"
               value="{{ equipment ? equipment.number : '' }}"
               aria-label="Número"
               [formControl]="myControl"
-              matInput
+              
               [matAutocomplete]="auto"
             />
             <mat-autocomplete #auto="matAutocomplete">
@@ -76,8 +76,8 @@
             </mat-autocomplete>
           </div>
 
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Número de série:</mat-label>
+          <div class="column">
+            <label for="serialNumber" class="label">Número de série</label>
             <input
               id="serialNumber"
               #serialNumber
@@ -89,141 +89,161 @@
           </div>
         </div>
 
-        <div class="description">
-          <mat-label>Descrição:</mat-label>
-          <textarea
-            id="description"
-            class="inputDescription"
-            type="text"
-            #description
-            matInput
-            >{{ equipment ? equipment.description : "" }}</textarea
-          >
+        <div class="columns">
+          <div class="column">
+            <label for="description" class="label">Descrição</label>
+            <textarea
+              id="description"
+              class="textarea"
+              type="text"
+              #description
+              matInput
+              rows="3"
+              >{{ equipment ? equipment.description : "" }}</textarea>
+          </div>
         </div>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Categoria:</mat-label>
-          <mat-select id="categories" [(ngModel)]="selectedCategoryId">
-            <mat-option
-              *ngFor="let category of categories"
-              [value]="category.id"
-            >
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="columns">
+          <div class="column">
+            <label for="categories" class="label">Categoria</label>
+            <div class="select is-fullwidth">
+              <select id="categories" class="is-size-6" [(ngModel)]="selectedCategoryId">
+                <option *ngFor="let category of categories"
+                [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Estado De Conservação:</mat-label>
-          <mat-select
-            id="conservationStates"
-            [(ngModel)]="selectedConservationState"
-          >
-            <mat-option
-              *ngFor="let conservationState of conservationStates"
-              [value]="conservationState"
-            >
-              {{ conservationState }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <div class="column">
+            <label for="conservationStates" class="label">Estado De Conservação</label>
+            <div class="select is-fullwidth">
+              <select id="conservationStates" class="is-size-6" [(ngModel)]="selectedConservationState">
+                <option *ngFor="let conservationState of conservationStates"
+                [value]="conservationState">{{ conservationState }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-        <div class="two-fields-container">
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Bloco:</mat-label>
+        <div class="columns">
+          <div class="column">
+            <label for="block" class="label">Bloco</label>
             <input
               id="block"
               #block
               matInput
+              type="text"
               class="input medium-input"
-              placeholder="Digite o Bloco"
+              placeholder="Digite a letra do bloco"
               value="{{ equipment ? equipment.block : '' }}"
             />
           </div>
-          <div class="two-fields-box">
-            <mat-label class="two-labels">Sala:</mat-label>
+
+          <div class="column">
+            <label for="room" class="label">Sala</label>
             <input
               id="room"
               #room
               matInput
+              type="text"
               class="input medium-input"
-              placeholder="Digite a Sala"
+              placeholder="Digite o número da sala"
               value="{{ equipment ? equipment.room : '' }}"
             />
           </div>
         </div>
-      </div>
 
-      <div class="two-fields-container">
-        <div class="two-fields-box">
-          <mat-label class="two-labels">Hostname (opcional):</mat-label>
-          <input
-            id="hostname"
-            #hostname
-            matInput
-            class="input medium-input"
-            placeholder="Digite o Hostname"
-            value="{{
-              equipment && equipment.network ? equipment.network.hostname : ''
-            }}"
-          />
+        <div class="columns">
+          <div class="column">
+            <label for="hostname" class="label">Hostname (opcional):</label>
+            <input
+              id="hostname"
+              #hostname
+              matInput
+              class="input medium-input"
+              placeholder="Digite o hostname"
+              value="{{
+                equipment && equipment.network ? equipment.network.hostname : ''
+              }}"
+            />
+          </div>
+
+          <div class="column">
+            <label for="addressIP" class="label">Endereço IP (opcional):</label>
+            <input
+              id="addressIP"
+              #addressIP
+              matInput
+              class="input medium-input"
+              placeholder="Digite o endereço IP"
+              value="{{
+                equipment && equipment.network ? equipment.network.addressIP : ''
+              }}"
+            />
+          </div>
+
+          <div class="column">
+            <label for="addressMAC" class="label">Endereço MAC (opcional):</label>
+            <input
+              id="addressMAC"
+              #addressMAC
+              matInput
+              class="input medium-input"
+              placeholder="Digite o endereço MAC"
+              value="{{
+                equipment && equipment.network ? equipment.network.addressMAC : ''
+              }}"
+            />
+          </div>
         </div>
-        <div class="two-fields-box">
-          <mat-label class="two-labels">Endereço IP (opcional):</mat-label>
-          <input
-            id="addressIP"
-            #addressIP
-            matInput
-            class="input medium-input"
-            placeholder="Digite o Endereço IP"
-            value="{{
-              equipment && equipment.network ? equipment.network.addressIP : ''
-            }}"
-          />
-        </div>
-      </div>
-      <div class="one-field-container">
-        <div class="one-field-box">
-          <mat-label>Endereço MAC (opcional):</mat-label>
-          <input
-            id="addressMAC"
-            #addressMAC
-            matInput
-            class="input medium-input"
-            placeholder="Digite o Endereço MAC"
-            value="{{
-              equipment && equipment.network ? equipment.network.addressMAC : ''
-            }}"
-          />
-        </div>
-      </div>
-      <div class="file">
-        <label class="file-label">
-          <input
-            #filename
-            class="file-input"
-            type="file"
-            (change)="inputFileChange($event)"
-          />
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fa fa-upload"></i>
+
+        <div class="file has-name is-fullwidth">
+          <label class="file-label">
+            <input 
+              #filename 
+              class="file-input" 
+              type="file" 
+              name="resume"
+              (change)="inputFileChange($event)">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fa fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Escolha um arquivo…
+              </span>
             </span>
-            <span class="file-label"> Escolha Um Arquivo… </span>
-          </span>
-        </label>
-      </div>
+            <span class="file-name">
+              {{ equipment?.filename ? equipment?.filename : 'nenhum arquivo selecionado' }}
+            </span>
+          </label>
+        </div>
 
-      <button
-        (click)="downloadFile()"
-        #btnDownload
-        class="btn-save"
-        mat-raised-button
-        *ngIf="equipment?.id && equipment?.filename"
-        color="primary">
-        <i class="material-icons">download</i>
-        Baixar anexo
-      </button>
+        <div class="mt-5" *ngIf="equipment?.id && equipment?.filename">
+          <h2>Anexos <span><i class="fa fa-paperclip"></i></span></h2>
+
+          <h3>Nome do arquivo: {{ equipment?.filename }}</h3>
+
+          <button
+            (click)="downloadFile()"
+            #btnDownload
+            class="btn-save mr-2"
+            mat-raised-button
+            color="primary">
+            <i class="material-icons">download</i>
+              Baixar anexo
+          </button>
+
+          <button
+            #btnDelete
+            class="btn-delete"
+            mat-raised-button
+            color="primary">
+            <i class="material-icons">delete</i>
+              Excluir anexo
+          </button>
+        </div>
+        
     </div>
   </div>
 </div>
