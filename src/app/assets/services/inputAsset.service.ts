@@ -3,6 +3,7 @@ import { Asset } from 'src/app/shared/models/asset.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import api from 'src/app/shared/services/api';
 import { InputAsset } from 'src/app/shared/models/inputAsset.model';
+import { AxiosResponse } from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -10,42 +11,26 @@ import { InputAsset } from 'src/app/shared/models/inputAsset.model';
 export class InputAssetService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async saveInputAsset(assetId: number, inputAsset: InputAsset): Promise<boolean> {
-    let inputAssetWasAdded = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+  async saveInputAsset(assetId: number, inputAsset: InputAsset): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let inputAssetServer = {
-        data: inputAsset.inputDate,
-        dataValidade: inputAsset.expirationDate,
-        quantidade: inputAsset.amount,
-      };
-      await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
-      inputAssetWasAdded = true;
-      return inputAssetWasAdded;
-    } catch (error) {
-      console.error(error);
-      return (inputAssetWasAdded = false);
-    }
+    let inputAssetServer = {
+      data: inputAsset.inputDate,
+      dataValidade: inputAsset.expirationDate,
+      quantidade: inputAsset.amount,
+    };
+
+    return await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
   }
 
-  async deleteInputAsset(assetId: number, inputAssetId: number): Promise<boolean> {
-    let inputAssetWasDeleted = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+  async deleteInputAsset(assetId: number, inputAssetId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      await api.delete(`/insumos/${assetId}/entradas/${inputAssetId}`, { headers });
-      inputAssetWasDeleted = true;
-
-      return inputAssetWasDeleted;
-    } catch (error) {
-      console.error(error);
-      return (inputAssetWasDeleted = false);
-    }
+    return await api.delete(`/insumos/${assetId}/entradas/${inputAssetId}`, { headers });
   }
 
   async getAllInputs(assetId: number): Promise<InputAsset[]> {

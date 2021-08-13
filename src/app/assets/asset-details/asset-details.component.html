@@ -208,7 +208,7 @@
         <!-- BACKGROUND COM BLUR PARA DESTACAR O MODAL -->
         <div class="overlay hidden"></div>
 
-        <div class="header-asset-details-create">
+        <div class="header-component-form">
           <div class="header-category">
             <button
               id="return"
@@ -224,7 +224,7 @@
         </div>
       </div>
 
-        <div class="content-asset-details-create">
+        <div class="content-component-form">
 
           <article class="message is-success">
             <div class="message-header">
@@ -348,11 +348,11 @@
                     <tr *ngFor="let assetOutput of assetOutputs">
                       <td>{{ assetOutput.outputDate | date: 'dd/MM/yyyy' }}</td>
                       <td>{{ assetOutput.amount }}</td>
-                      <td>{{ assetOutput.callNumberSuap }} <br>
-                        <a class="has-text-success has-text-weight-bold" href="{{ assetOutput.callLinkSuap }}" target="_blank">Ver no SUAP</a>
+                      <td>{{ assetOutput.callNumberSuap ? assetOutput.callNumberSuap : '-' }} <br>
+                        <a class="has-text-success has-text-weight-bold" href="{{ assetOutput.callLinkSuap }}" target="_blank" *ngIf="assetOutput.callLinkSuap">Ver no SUAP</a>
                       </td>
-                      <td *ngIf="assetOutput.consignor">{{ assetOutput.consignor.name }} <br> {{ assetOutput.consignor.registrationNumber }}</td>
-                      <td *ngIf="assetOutput.requestor">{{ assetOutput.requestor.name }} <br> {{ assetOutput.requestor.registrationNumber }}</td>
+                      <td *ngIf="assetOutput.consignor">{{ assetOutput.consignor.name ? assetOutput.consignor.name : '-'  }} <br> {{ assetOutput.consignor.registrationNumber }}</td>
+                      <td *ngIf="assetOutput.requestor">{{ assetOutput.requestor.name ? assetOutput.requestor.name : '-' }} <br> {{ assetOutput.requestor.registrationNumber }}</td>
                       <td>{{ assetOutput.department?.acronym }}</td>
                       <td>
                         <button

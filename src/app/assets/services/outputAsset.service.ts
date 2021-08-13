@@ -2,6 +2,7 @@ import { Injectable, Output } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import api from 'src/app/shared/services/api';
 import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
+import { AxiosResponse } from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -9,54 +10,38 @@ import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
 export class OutputAssetService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async saveOutputAsset(assetId: number, outputAsset: OutputAsset): Promise<boolean> {
-    let outputAssetWasSaved = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+  async saveOutputAsset(assetId: number, outputAsset: OutputAsset): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let outputAssetServer = {
-        numeroChamadoSuap: outputAsset.callNumberSuap,
-        linkChamadoSuap: outputAsset.callLinkSuap,
-        observacoes: outputAsset.observations,
-        expedidor: {
-            matricula: outputAsset.consignor?.registrationNumber,
-            nome: outputAsset.consignor?.name,
-        },
-        solicitante: {
-            matricula: outputAsset.requestor?.registrationNumber,
-            nome: outputAsset.requestor?.name,
-        },
-        setor: {
-            id: outputAsset.departmentId,
-        },
-        quantidade: outputAsset.amount,
-      };
-      await api.post(`/insumos/${assetId}/retiradas`, outputAssetServer, { headers });
-      outputAssetWasSaved = true;
-      return outputAssetWasSaved;
-    } catch (error) {
-      console.error(error);
-      return (outputAssetWasSaved = false);
-    }
+    let outputAssetServer = {
+      numeroChamadoSuap: outputAsset.callNumberSuap,
+      linkChamadoSuap: outputAsset.callLinkSuap,
+      observacoes: outputAsset.observations,
+      expedidor: {
+          matricula: outputAsset.consignor?.registrationNumber,
+          nome: outputAsset.consignor?.name,
+      },
+      solicitante: {
+          matricula: outputAsset.requestor?.registrationNumber,
+          nome: outputAsset.requestor?.name,
+      },
+      setor: {
+          id: outputAsset.departmentId,
+      },
+      quantidade: outputAsset.amount,
+    };
+
+    return await api.post(`/insumos/${assetId}/retiradas`, outputAssetServer, { headers });
   }
 
-  async deleteOutputAsset(assetId: number, outputAssetId: number): Promise<boolean> {
-    let outputAssetWasDeleted = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+  async deleteOutputAsset(assetId: number, outputAssetId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      await api.delete(`/insumos/${assetId}/retiradas/${outputAssetId}`, { headers });
-      outputAssetWasDeleted = true;
-
-      return outputAssetWasDeleted;
-    } catch (error) {
-      console.error(error);
-      return (outputAssetWasDeleted = false);
-    }
+    return await api.delete(`/insumos/${assetId}/retiradas/${outputAssetId}`, { headers });
   }
 
   async getAllOutputs(assetId: number): Promise<OutputAsset[]> {

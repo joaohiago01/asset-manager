@@ -1,48 +1,52 @@
-  .container {
-      width: 100%;
-  }
-  
-  .header-asset-details-create {
-    padding-top: 1rem;
-    padding-right: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .btn-save {
-    background-color: #1fd181;
-    margin-right: 5px;
-  }
-  
-  .content-asset-details-create {
-    padding-right: 0.8rem;
-    padding-top: 1.2rem;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .hidden {
-    display: none;
-  }
+.btn-save {
+  background-color: #1fd181;
+  margin-right: 5px;
+}
 
-  .undo-button {
-    background-color: gray;
-    font-size: small;
-  }
-  
-  .field-title {
-    margin-bottom: 2px;
-    font-size: 15px;
-    font-weight: bold;
-  }
+.hidden {
+  display: none;
+}
 
-  .field-title > span {
-    margin-left: 5px;
-    font-weight: normal;
-  }
+.undo-button {
+  background-color: gray;
+  font-size: small;
+}
 
-  .header-asset-history {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 16px;
+.field-title {
+  margin-bottom: 2px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.field-title > span {
+  margin-left: 5px;
+  font-weight: normal;
+}
+
+.header-asset-history {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.content-component-form {
+  margin-right: 1rem;
+}
+
+#modalInput {
+  width: 35%;
+}
+
+#modalOutput {
+  width: 50%;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 650px) {
+  #modalInput, #modalOutput {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
+}
