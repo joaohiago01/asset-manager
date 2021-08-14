@@ -54,6 +54,16 @@
                 </div>
 
                 <div class="content">
+                  <p *ngIf="asset.currentQuantity <= asset.minQuantity && asset.currentQuantity >= 0" class="field-title has-text-warning has-text-weight-medium card-alert">
+                    <i class="material-icons mr-1">warning</i>
+                    Este insumo alcançou a quantidade mínima de estoque
+                  </p>
+
+                  <p *ngIf="asset.currentQuantity === 0" class="field-title has-text-danger has-text-weight-medium card-alert">
+                    <i class="material-icons mr-1">warning</i>
+                    Este insumo está com o estoque zerado
+                  </p>
+
                   <p class="field-title">Categoria: <span>{{ asset.categoryName | slice: 0:28 }}</span></p>
                   <p class="field-title">Localização:
                     <span>{{ asset.bookcase }}</span>

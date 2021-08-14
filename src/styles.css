@@ -141,6 +141,11 @@ body {
   margin-left: 3px;
 }
 
+.card-alert {
+  display: flex; 
+  align-items: center;
+}
+
 .field-title {
   color: black;
   font-weight: bold;

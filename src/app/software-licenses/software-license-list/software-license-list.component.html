@@ -53,21 +53,30 @@
                 </div>
 
                 <div class="content">
-                    <p class="field-title">Categoria: 
-                      <span>{{ softwareLicense.categoryName | slice: 0:28 }}</span>
-                    </p>
-                    <p class="field-title">Número: 
-                      <span>{{ softwareLicense.number }}</span>
-                    </p>
-                    <p class="field-title">Chave de Ativação: 
-                      <span>{{ softwareLicense.activationKey }}</span>
-                    </p>
-                    <p class="field-title">Máximo de Ativações: 
-                      <span>{{ softwareLicense.maxActivations }}</span>
-                    </p>
-                    <p class="field-title">Quantidade de Ativações Usadas: 
-                      <span>{{ softwareLicense.numberOfActivationsUsed }}</span>
-                    </p>
+                  <p *ngIf="(softwareLicense.numberOfActivationsUsed >= softwareLicense.maxActivations) && !softwareLicense.ignoreMaxActivations" class="field-title has-text-warning has-text-weight-medium card-alert">
+                    <i class="material-icons mr-1">warning</i>
+                    Esta licença alcançou o limite máximo de ativações
+                  </p>
+
+                  <p class="field-title">Categoria: 
+                    <span>{{ softwareLicense.categoryName | slice: 0:28 }}</span>
+                  </p>
+
+                  <p class="field-title">Número: 
+                    <span>{{ softwareLicense.number }}</span>
+                  </p>
+
+                  <p class="field-title">Chave de Ativação: 
+                    <span>{{ softwareLicense.activationKey }}</span>
+                  </p>
+
+                  <p class="field-title">Máximo de Ativações: 
+                    <span>{{ softwareLicense.maxActivations }}</span>
+                  </p>
+
+                  <p class="field-title">Quantidade de Ativações Usadas: 
+                    <span>{{ softwareLicense.numberOfActivationsUsed }}</span>
+                  </p>
                 </div>
               </div>
             </div>

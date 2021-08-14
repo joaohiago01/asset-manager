@@ -51,14 +51,30 @@
                 </div>
 
                 <div class="content">
-                    <p class="field-title">Categoria: <span>{{ equipment.categoryName | slice: 0:28 }}</span></p>
-                    <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
-                    <p class="field-title">Número de Série: <span>{{ equipment.serialNumber }}</span></p>
-                    <p class="field-title">Localização:
-                      <span>{{ equipment.block }}</span>
-                      <span>{{ equipment.room }}</span>
-                    </p>
-                    <p class="field-title">Estado de Conservação: <span>{{ equipment.conservationState }}</span></p>
+                  <p *ngIf="equipment.conservationState === 'DANIFICADO'" class="field-title has-text-warning has-text-weight-medium card-alert">
+                    <i class="material-icons mr-1">warning</i>
+                    Este equipamento possui o status DANIFICADO
+                  </p>
+
+                  <p *ngIf="equipment.conservationState === 'IRRECUPERAVEL'" class="field-title has-text-danger has-text-weight-medium card-alert">
+                    <i class="material-icons mr-1">warning</i>
+                    Este equipamento possui o status IRRECUPERÁVEL
+                  </p>
+
+                  <p class="field-title">Categoria: <span>{{ equipment.categoryName | slice: 0:28 }}</span></p>
+                  <p class="field-title">Número: <span>{{ equipment.number }}</span></p>
+                  <p class="field-title">Número de Série: <span>{{ equipment.serialNumber }}</span></p>
+                  <p class="field-title">Localização:
+                    <span>{{ equipment.block }}</span>
+                    <span>{{ equipment.room }}</span>
+                  </p>
+                  <p class="field-title">Estado de Conservação: 
+                    <span>
+                      <strong>
+                        {{ equipment.conservationState }}
+                      </strong>
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
