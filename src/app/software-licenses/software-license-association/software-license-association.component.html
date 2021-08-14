@@ -7,9 +7,9 @@
 
       <div class="container">
       <!-- MODAL PARA ASSOCIAR A LICENÇA -->
-      <div id="modalAssociate" class="modal-window hidden" style="width: 45%">
+      <div id="modalAssociate" class="modal-window hidden container is-max-desktop is-mobile">
         <header class="modal-card-head">
-          <p class="modal-card-title font-color title m-2">
+          <p class="modal-card-title is-size-6-mobile font-color title m-2">
             Associar Licença a um Equipamento
           </p>
           <button
@@ -24,7 +24,7 @@
           <p class="subtitle is-6">Você está prestes a associar a seguinte licença:</p>
           <p class="title is-5">{{ softwareLicense?.name}}</p>
 
-          <mat-label class="two-labels">Pesquise um equipamento:</mat-label>
+          <label for="equipmentSearch" class="label">Pesquise um equipamento:</label>
           <div class="control has-icons-left mb-5">
             <input
               #equipmentSearch
@@ -51,7 +51,7 @@
 
           <div class="columns">
             <div class="column is-one-quarter">
-              <mat-label class="two-labels">Número:</mat-label>
+              <label for="number" class="label">Número:</label>
               <input
                 id="number"
                 #number
@@ -63,7 +63,7 @@
             </div>
 
             <div class="column">
-              <mat-label class="two-labels">Nome:</mat-label>
+              <label for="name" class="label">Nome:</label>
               <input
                 id="name"
                 #name
@@ -76,7 +76,7 @@
 
           <div class="columns">
             <div class="column is-one-third">
-              <mat-label class="two-labels">Hostname:</mat-label>
+              <label for="hostname" class="label">Hostname:</label>
               <input
                 id="hostname"
                 #hostname
@@ -87,7 +87,7 @@
             </div>
 
             <div class="column">
-              <mat-label class="two-labels">Endereço IP:</mat-label>
+              <label for="addressIP" class="label">Endereço IP:</label>
               <input
                 id="addressIP"
                 #addressIP
@@ -98,7 +98,7 @@
             </div>
 
             <div class="column">
-              <mat-label class="two-labels">Endereço MAC:</mat-label>
+              <label for="addressMAC" class="label">Endereço MAC:</label>
               <input
                 id="addressMAC"
                 #addressMAC
@@ -126,7 +126,7 @@
       </div>
       <div class="overlay hidden"></div>
 
-        <div class="header-software-licence-create">
+        <div class="header-component-form">
           <div class="header-category">
             <button
               id="return"
@@ -154,25 +154,28 @@
         </div>
       </div>
 
-      <div class="content-software-licence-create">
+      <div class="content-component-form">
 
-          <div>
-            <p class="subtitle is-5">Informações da Licença de Software</p>
-
+        <article class="message is-success">
+          <div class="message-header">
+            <p class="is-size-5 has-text-weight-medium">Informações da Licença de Software</p>
+          </div>
+          <div class="message-body">
             <p class="field-title has-text-weight-bold">Nome: <span>{{ softwareLicense?.name }}</span></p>
 
-            <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
+              <p class="field-title has-text-weight-bold">Categoria: <span>{{ softwareLicense?.categoryName }}</span></p>
 
-            <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
+              <p class="field-title has-text-weight-bold">Número: <span>{{ softwareLicense?.number }}</span></p>
 
-            <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
+              <p class="field-title has-text-weight-bold">Chave de Ativação: <span>{{ softwareLicense?.activationKey }}</span></p>
 
-            <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
+              <p class="field-title has-text-weight-bold">Máximo de Ativações: <span>{{ softwareLicense?.maxActivations }}</span></p>
 
-            <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
+              <p class="field-title has-text-weight-bold">Ativações Usadas: <span>{{ softwareLicense?.numberOfActivationsUsed }}</span></p>
           </div>
+        </article>
 
-        <p class="subtitle is-5" style="margin-top: 25px; margin-bottom: 10px;">Equipamentos Associados:</p>
+        <p class="subtitle has-text-weight-medium is-5" style="margin-top: 25px; margin-bottom: 10px;">Equipamentos Associados:</p>
 
         <div class="list">
           <div *ngIf="associatedEquipments.length < 1">

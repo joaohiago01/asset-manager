@@ -26,11 +26,6 @@
 .header-asset-history {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 16px;
-}
-
-.content-component-form {
-  margin-right: 1rem;
 }
 
 #modalInput {
@@ -48,5 +43,13 @@ and (max-device-width: 650px) {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .header-asset-history {
+    margin-bottom: 25px;
+  }
+
+  .content-component-form {
+    margin-right: 1rem;
   }
 }
