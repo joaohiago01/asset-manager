@@ -270,9 +270,11 @@ export class ServiceFormComponent implements OnInit {
     selectedDepartmentId: number): Promise<void> {
     if (this.selectedAsset?.id && amount) {
       const assetOutput = new OutputAsset({
+        serviceAssetTableId: this.assetOutputs.length + 1,
         amount: Number(amount),
         assetId: this.selectedAsset?.id,
         assetName: this.selectedAsset.name,
+        unitOfMeasurement: this.selectedAsset.unitOfMeasurement,
         departmentId: selectedDepartmentId,
       });
 
@@ -289,6 +291,12 @@ export class ServiceFormComponent implements OnInit {
       }, 5000);
     }
 
+  }
+
+  async deleteAssetOutput(assetOutputId?: number): Promise<void> {
+    if (assetOutputId) {
+      this.assetOutputs = this.assetOutputs.filter(assetOutput => assetOutput.serviceAssetTableId !== assetOutputId);
+    }
   }
 
   navigateToServices(): void {

@@ -8,6 +8,8 @@ export class OutputAsset extends Output {
     public assetName?: string;
     public departmentId?: number;
     public asset?: Asset;
+    public serviceAssetTableId?: number;
+    public unitOfMeasurement?: string;
 
     constructor(props: Omit<OutputAsset, 'id'>, id?: number) {
         super(props);
@@ -16,6 +18,8 @@ export class OutputAsset extends Output {
         this.departmentId = props.departmentId;
         this.assetId = props.assetId;
         this.assetName = props.assetName;
+        this.serviceAssetTableId = props.serviceAssetTableId;
+        this.unitOfMeasurement = props.unitOfMeasurement;
         if (id != undefined) {
           this.id = id;
         }

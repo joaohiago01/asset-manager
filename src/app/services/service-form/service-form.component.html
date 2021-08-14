@@ -341,17 +341,21 @@
                   <table class="table is-fullwidth is-bordered is-mobile has-text-centered">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Insumo</th>
                         <th>Quantidade</th>
+                        <th>Unidade de Medida</th>
                         <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let assetOutput of assetOutputs">
+                        <td>{{ assetOutput?.serviceAssetTableId }}</td>
                         <td>{{ assetOutput?.assetName }}</td>
                         <td>{{ assetOutput.amount }}</td>
+                        <td>{{ assetOutput.unitOfMeasurement }}</td>
                         <td>
-                          <button class="button is-success is-outlined">
+                          <button class="button is-success is-outlined" (click)="deleteAssetOutput(assetOutput.serviceAssetTableId)">
                             <i class="material-icons">delete</i>
                             Excluir
                           </button>
