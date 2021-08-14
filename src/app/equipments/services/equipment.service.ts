@@ -81,110 +81,87 @@ export class EquipmentService {
   }
 
   async sendFile(file: File, equipmentId: number): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-      const formData = new FormData();
-      formData.append('arquivo', file);
-      const response = await api.post(
-        `/equipamentos/${equipmentId}/file`,
-        formData,
-        { headers }
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+    const formData = new FormData();
+    formData.append('arquivo', file);
+    const response = await api.post(
+      `/equipamentos/${equipmentId}/file`,
+      formData,
+      { headers }
+    );
+    
+    return response;
   }
 
   async getFile(equipmentId: number): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-      
-      const response = await api.get(
-        `/equipamentos/${equipmentId}/file`,
-        { headers }
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+    
+    const response = await api.get(
+      `/equipamentos/${equipmentId}/file`,
+      { headers }
+    );
+    return response;
   }
 
   async createEquipment(equipment: Equipment): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let equipmentServer = {
-        categoriaId: equipment.categoryId,
-        numero: equipment.number,
-        numeroSerie: equipment.serialNumber,
-        descricao: equipment.description,
-        bloco: equipment.block,
-        sala: equipment.room,
-        estadoConservacao: equipment.conservationState,
-        rede: {
-          hostname: equipment.network.hostname,
-          enderecoIP: equipment.network.addressIP,
-          enderecoMAC: equipment.network.addressMAC,
-        },
-        nomeArquivo: equipment.filename,
-      };
-      return await api.post('/equipamentos', equipmentServer, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    let equipmentServer = {
+      categoriaId: equipment.categoryId,
+      numero: equipment.number,
+      numeroSerie: equipment.serialNumber,
+      descricao: equipment.description,
+      bloco: equipment.block,
+      sala: equipment.room,
+      estadoConservacao: equipment.conservationState,
+      rede: {
+        hostname: equipment.network.hostname,
+        enderecoIP: equipment.network.addressIP,
+        enderecoMAC: equipment.network.addressMAC,
+      },
+      nomeArquivo: equipment.filename,
+    };
+    
+    return await api.post('/equipamentos', equipmentServer, { headers });
   }
 
   async editEquipment(equipment: Equipment): Promise<AxiosPromise> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let equipmentServer = {
-        categoriaId: equipment.categoryId,
-        numero: equipment.number,
-        numeroSerie: equipment.serialNumber,
-        descricao: equipment.description,
-        bloco: equipment.block,
-        sala: equipment.room,
-        estadoConservacao: equipment.conservationState,
-        rede: {
-          hostname: equipment.network.hostname,
-          enderecoIP: equipment.network.addressIP,
-          enderecoMAC: equipment.network.addressMAC,
-        },
-        nomeArquivo: equipment.filename,
-      };
+    let equipmentServer = {
+      categoriaId: equipment.categoryId,
+      numero: equipment.number,
+      numeroSerie: equipment.serialNumber,
+      descricao: equipment.description,
+      bloco: equipment.block,
+      sala: equipment.room,
+      estadoConservacao: equipment.conservationState,
+      rede: {
+        hostname: equipment.network.hostname,
+        enderecoIP: equipment.network.addressIP,
+        enderecoMAC: equipment.network.addressMAC,
+      },
+      nomeArquivo: equipment.filename,
+    };
 
-      return await api.put(`/equipamentos/${equipment.id}`, equipmentServer, {
-        headers,
-      });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.put(`/equipamentos/${equipment.id}`, equipmentServer, {
+      headers,
+    });
   }
 
   async deleteEquipment(id: Number): Promise<AxiosPromise> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      return await api.delete(`/equipamentos/${id}`, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.delete(`/equipamentos/${id}`, { headers });
   }
 }

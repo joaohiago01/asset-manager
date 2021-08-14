@@ -120,7 +120,6 @@ export class EquipmentFormComponent implements OnInit {
         filename
       );
     } else {
-      if (number && selectedConservationState) {
         const conservationState: ConservationState = <ConservationState>(
           selectedConservationState
         );
@@ -141,51 +140,41 @@ export class EquipmentFormComponent implements OnInit {
 
         try {
           const response = await this.equipmentService.createEquipment(equipment);
+          const equipmentId = response.data['id'];
+  
+          this.utilityService.showNotification('Equipamento cadastrado com sucesso');
+  
+          if (this.file.name != 'empty.txt') {
+            const fileResponse = await this.equipmentService.sendFile(this.file, equipmentId);
 
-          if (response.status == 201) {
-            const equipmentId = response.data['id'];
-
-            if (this.file.name != 'empty.txt') {
-              const fileResponse = await this.equipmentService.sendFile(
-                this.file,
-                equipmentId
-              );
-
-              if (fileResponse.status != 201) {
-                this.utilityService.showNotification("Ocorreu um erro ao salvar o arquivo");
-
-                setTimeout(() => {
-                  this.utilityService.closeNotification();
-                }, 5000);
-              }
+            if (fileResponse.status != 201) {
+              this.utilityService.showNotification("Ocorreu um erro ao salvar o arquivo");
+  
+              setTimeout(() => {
+                this.utilityService.closeNotification();
+              }, 2000);
             }
-
-            this.utilityService.showNotification('Equipamento cadastrado com sucesso!');
-
-            setTimeout(() => {
-              this.utilityService.closeNotification();
-
-              this.router.navigate(['equipments'], {
-                state: { needReload: true },
-              });
-            }, 3000);
           }
-
-        } catch (error) {
-          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
 
           setTimeout(() => {
             this.utilityService.closeNotification();
-          }, 5000);
+  
+            this.router.navigate(['equipments'], {
+              state: { needReload: true },
+            });
+          }, 1500);
+          
+        } catch (error) {
+          if (!error.response) {
+            this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+          }
+  
+          this.utilityService.showNotification(error.response.data['detail']);
+  
+          setTimeout(() => {
+            this.utilityService.closeNotification();
+          }, 4000);
         }
-
-      } else {
-        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-        }, 5000);
-      }
     }
   }
 
@@ -203,55 +192,50 @@ export class EquipmentFormComponent implements OnInit {
     addressMAC: string,
     filename: string
   ): Promise<void> {
-    if (id && number && selectedConservationState) {
-      const conservationState: ConservationState = <ConservationState>(
-        selectedConservationState
-      );
+    const conservationState: ConservationState = <ConservationState>(
+      selectedConservationState
+    );
 
-      let network = new Network(hostname, addressIP, addressMAC);
+    let network = new Network(hostname, addressIP, addressMAC);
 
-      let equipment = new Equipment(
-        {
-          categoryId: selectedCategoryId,
-          number: Number.parseInt(number),
-          serialNumber,
-          description,
-          block,
-          room,
-          conservationState,
-          network,
-          filename,
-        },
-        id
-      );
+    let equipment = new Equipment(
+      {
+        categoryId: selectedCategoryId,
+        number: Number.parseInt(number),
+        serialNumber,
+        description,
+        block,
+        room,
+        conservationState,
+        network,
+        filename,
+      },
+      id
+    );
 
-      try {
-        const response = await this.equipmentService.editEquipment(equipment);
+    try {
+      const response = await this.equipmentService.editEquipment(equipment);
 
-        this.utilityService.showNotification('Equipamento atualizado com sucesso!');
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-
-          this.router.navigate(['equipments'], {
-            state: { needReload: true },
-          });
-        }, 3000);
-
-      } catch (error) {
-        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-        }, 5000);
-      }
-
-    } else {
-      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Equipamento atualizado com sucesso');
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 5000);
+
+        this.router.navigate(['equipments'], {
+          state: { needReload: true },
+        });
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+      }
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
   }
 
@@ -259,30 +243,24 @@ export class EquipmentFormComponent implements OnInit {
     if (id) {
       try {
         const response = await this.equipmentService.deleteEquipment(id);
-
-        this.utilityService.showNotification("O Equipamento foi excluído com sucesso!");
-
+  
+        this.utilityService.showNotification('Equipamento excluído com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-
+  
           this.router.navigate(['equipments'], {
             state: { needReload: true },
           });
-        }, 3000);
+        }, 1000);
+        
       } catch (error) {
-        this.utilityService.showNotification("O equipamento está em uso e não pode ser excluído");
-
+        this.utilityService.showNotification('O equipamento está em uso e não pode ser excluído');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
-
-    } else {
-      this.utilityService.showNotification("Equipamento não encontrado");
-
-      setTimeout(() => {
-        this.utilityService.closeNotification();
-      }, 5000);
     }
   }
 

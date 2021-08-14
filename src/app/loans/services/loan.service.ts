@@ -12,96 +12,82 @@ export class LoanService {
   constructor(private authenticationService: AuthenticationService) {}
 
   async createLoan(loan: Loan): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let equipamentoIdInputDTO = {
-        id: loan.equipmentId
-      };
-      let setorIdInputDTO = {
-        id: loan.department?.id
-      };
-      let expedidor = {
-        matricula: loan.consignor?.registrationNumber,
-        nome: loan.consignor?.name
-      };
-      let solicitante = {
-        matricula: loan.requestor?.registrationNumber,
-        nome: loan.requestor?.name
-      };
-      let loanServer = {
-        numeroChamadoSuap: loan.callNumberSuap,
-        linkChamadoSuap: loan.callLinkSuap,
-        observacoes: loan.observations,
-        dataSaida: loan.outputDate.toISOString(),
-        dataPrevistaRetorno: loan.expectedReturnDate.toISOString(),
-        dataRetorno: loan.returnDate.toISOString(),
-        status: StatusLoan.EMPRESTADO,
-        equipamento: equipamentoIdInputDTO,
-        setor: setorIdInputDTO,
-        expedidor,
-        solicitante
-      };
+    let equipamentoIdInputDTO = {
+      id: loan.equipmentId
+    };
+    let setorIdInputDTO = {
+      id: loan.department?.id
+    };
+    let expedidor = {
+      matricula: loan.consignor?.registrationNumber,
+      nome: loan.consignor?.name
+    };
+    let solicitante = {
+      matricula: loan.requestor?.registrationNumber,
+      nome: loan.requestor?.name
+    };
+    let loanServer = {
+      numeroChamadoSuap: loan.callNumberSuap,
+      linkChamadoSuap: loan.callLinkSuap,
+      observacoes: loan.observations,
+      dataSaida: loan.outputDate.toISOString(),
+      dataPrevistaRetorno: loan.expectedReturnDate.toISOString(),
+      dataRetorno: loan.returnDate.toISOString(),
+      status: StatusLoan.EMPRESTADO,
+      equipamento: equipamentoIdInputDTO,
+      setor: setorIdInputDTO,
+      expedidor,
+      solicitante
+    };
 
-      return await api.post('/emprestimos', loanServer, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.post('/emprestimos', loanServer, { headers });
   }
 
   async editLoan(loan: Loan): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let equipamentoIdInputDTO = {
-        id: loan.equipmentId
-      };
-      let setorIdInputDTO = {
-        id: loan.department?.id
-      };
-      let expedidor = {
-        matricula: loan.consignor?.registrationNumber,
-        nome: loan.consignor?.name
-      };
-      let solicitante = {
-        matricula: loan.requestor?.registrationNumber,
-        nome: loan.requestor?.name
-      };
-      let loanServer = {
-        numeroChamadoSuap: loan.callNumberSuap,
-        linkChamadoSuap: loan.callLinkSuap,
-        observacoes: loan.observations,
-        dataPrevistaRetorno: loan.expectedReturnDate,
-        dataRetorno: loan.returnDate,
-        status: loan.statusLoan,
-        equipamento: equipamentoIdInputDTO,
-        setor: setorIdInputDTO,
-        expedidor,
-        solicitante
-      };
+    let equipamentoIdInputDTO = {
+      id: loan.equipmentId
+    };
+    let setorIdInputDTO = {
+      id: loan.department?.id
+    };
+    let expedidor = {
+      matricula: loan.consignor?.registrationNumber,
+      nome: loan.consignor?.name
+    };
+    let solicitante = {
+      matricula: loan.requestor?.registrationNumber,
+      nome: loan.requestor?.name
+    };
+    let loanServer = {
+      numeroChamadoSuap: loan.callNumberSuap,
+      linkChamadoSuap: loan.callLinkSuap,
+      observacoes: loan.observations,
+      dataPrevistaRetorno: loan.expectedReturnDate,
+      dataRetorno: loan.returnDate,
+      status: loan.statusLoan,
+      equipamento: equipamentoIdInputDTO,
+      setor: setorIdInputDTO,
+      expedidor,
+      solicitante
+    };
 
-      return await api.put(`/emprestimos/${loan.id}`, loanServer,{ headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.put(`/emprestimos/${loan.id}`, loanServer,{ headers });
   }
 
   async deleteLoan(id: Number): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-      return await api.delete(`/emprestimos/${id}`, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+    
+    return await api.delete(`/emprestimos/${id}`, { headers });
   }
 
   async getAllLoans(): Promise<Loan[]> {

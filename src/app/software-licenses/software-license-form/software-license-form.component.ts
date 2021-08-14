@@ -88,39 +88,42 @@ export class SoftwareLicenseFormComponent implements OnInit {
           name: name,
           number: number,
           activationKey: activationKey,
-          maxActivations: this.ignoreMaxActivations === false
-            ? Number(maxActivations)
-            : undefined,
+          maxActivations: Number(maxActivations),
           numberOfActivationsUsed: 0,
           ignoreMaxActivations: this.ignoreMaxActivations
         });
 
         try {
           const response = await this.softwareLicenseService.createSoftwareLicense(softwareLicense);
-
-          this.utilityService.showNotification('Licença de Software cadastrada com sucesso!');
-
+    
+          this.utilityService.showNotification('Licença de software cadastrada com sucesso');
+    
           setTimeout(() => {
             this.utilityService.closeNotification();
-
+    
             this.router.navigate(['software-licenses'], {
               state: { needReload: true },
             });
-          }, 3000);
+          }, 1000);
+          
         } catch (error) {
-          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
+          if (!error.response) {
+            this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+          }
+    
+          this.utilityService.showNotification(error.response.data['detail']);
+    
           setTimeout(() => {
             this.utilityService.closeNotification();
-          }, 5000);
+          }, 4000);
         }
         
       } else {
-        this.utilityService.showNotification("Verifique se os campos estão preenchidos corretamente");
+        this.utilityService.showNotification("Insira a quantidade máxima de ativações ou marque a opção de ignorar o limite");
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
     }
   }
@@ -152,30 +155,35 @@ export class SoftwareLicenseFormComponent implements OnInit {
 
       try {
         const response = await this.softwareLicenseService.editSoftwareLicense(softwareLicense);
-
-        this.utilityService.showNotification('Licença de Software atualizada com sucesso!');
-
+  
+        this.utilityService.showNotification('Licença de software atualizada com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-
+  
           this.router.navigate(['software-licenses'], {
             state: { needReload: true },
           });
-        }, 3000);
+        }, 1000);
+        
       } catch (error) {
-        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+  
+        this.utilityService.showNotification(error.response.data['detail']);
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
 
     } else {
-      this.utilityService.showNotification("Verifique se os campos estão preenchidos corretamente");
+      this.utilityService.showNotification("Insira a quantidade máxima de ativações ou marque a opção de ignorar o limite");
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 5000);
+      }, 4000);
     }
   }
 
@@ -184,7 +192,7 @@ export class SoftwareLicenseFormComponent implements OnInit {
       try {
         const response = await this.softwareLicenseService.deleteSoftwareLicense(id);
 
-        this.utilityService.showNotification("A Licença de Software foi excluída com sucesso!");
+        this.utilityService.showNotification('Licença de software excluída com sucesso');
 
         setTimeout(() => {
           this.utilityService.closeNotification();
@@ -192,21 +200,15 @@ export class SoftwareLicenseFormComponent implements OnInit {
           this.router.navigate(['software-licenses'], {
             state: { needReload: true },
           });
-        }, 3000);
+        }, 1000);
+        
       } catch (error) {
-        this.utilityService.showNotification("A Licença de Software está em uso e não pode ser excluída");
+        this.utilityService.showNotification('A licença de software está em uso e não pode ser excluída');
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
-
-    } else {
-      this.utilityService.showNotification("Licença de Software não encontrada");
-
-      setTimeout(() => {
-        this.utilityService.closeNotification();
-      }, 5000);
     }
   }
 

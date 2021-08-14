@@ -4,6 +4,7 @@ import { Equipment } from 'src/app/shared/models/equipment.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { EquipmentService } from '../services/equipment.service';
 import { CategoryService } from 'src/app/category/services/category.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-equipments-list',
@@ -18,7 +19,8 @@ export class EquipmentsListComponent implements OnInit {
   constructor(
     private router: Router,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,7 +42,11 @@ export class EquipmentsListComponent implements OnInit {
     });
 
     if (!this.equipments) {
-      alert('Nenhum Equipamento Encontrado');
+      this.utilityService.showNotification('Nenhum equipamento encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 

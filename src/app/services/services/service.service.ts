@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import { OutputAsset } from 'src/app/shared/models/outputAsset.model';
 import { Service } from 'src/app/shared/models/service.model';
 import api from 'src/app/shared/services/api';
@@ -10,120 +11,96 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 export class ServiceService {
   constructor(private authenticationService: AuthenticationService) {}
 
-  async createService(service: Service): Promise<boolean> {
-    let serviceWasCreated = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+  async createService(service: Service): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let equipamentoIdInputDTO = {
-        id: service.equipmentId
-      };
-      let setorIdInputDTO = {
-        id: service.departmentId
-      };
-      let expedidor = {
-        matricula: service.consignor?.registrationNumber,
-        nome: service.consignor?.name
-      };
-      let solicitante = {
-        matricula: service.requestor?.registrationNumber,
-        nome: service.requestor?.name
-      };
-      let retiradas = service.assetOutputs?.map((assetOutput) => (
-        {
-          quantidade: assetOutput.amount,
-          insumoId: assetOutput.assetId,
-          numeroChamadoSuap: service.callNumberSuap,
-          linkChamadoSuap: service.callLinkSuap,
-          observacoes: service.observations,
-          setor: setorIdInputDTO,
-          expedidor,
-          solicitante
-        }
-      ));
-      
-      let serviceServer = {
+    let equipamentoIdInputDTO = {
+      id: service.equipmentId
+    };
+    let setorIdInputDTO = {
+      id: service.departmentId
+    };
+    let expedidor = {
+      matricula: service.consignor?.registrationNumber,
+      nome: service.consignor?.name
+    };
+    let solicitante = {
+      matricula: service.requestor?.registrationNumber,
+      nome: service.requestor?.name
+    };
+    let retiradas = service.assetOutputs?.map((assetOutput) => (
+      {
+        quantidade: assetOutput.amount,
+        insumoId: assetOutput.assetId,
         numeroChamadoSuap: service.callNumberSuap,
         linkChamadoSuap: service.callLinkSuap,
         observacoes: service.observations,
-        dataRetorno: service.returnDate,
-        descricao: service.description,
-        tipoServico: service.serviceType,
-        equipamento: equipamentoIdInputDTO,
         setor: setorIdInputDTO,
-        retiradas,
         expedidor,
         solicitante
-      };
+      }
+    ));
+    
+    let serviceServer = {
+      numeroChamadoSuap: service.callNumberSuap,
+      linkChamadoSuap: service.callLinkSuap,
+      observacoes: service.observations,
+      dataRetorno: service.returnDate,
+      descricao: service.description,
+      tipoServico: service.serviceType,
+      equipamento: equipamentoIdInputDTO,
+      setor: setorIdInputDTO,
+      retiradas,
+      expedidor,
+      solicitante
+    };
 
-      await api.post('/servicos', serviceServer, { headers });
-      serviceWasCreated = true;
-      return serviceWasCreated;
-    } catch (error) {
-      console.error(error);
-      return (serviceWasCreated = false);
-    }
+    return await api.post('/servicos', serviceServer, { headers });
   }
 
-  async editService(service: Service): Promise<boolean> {
-    let serviceWasEdited = false;
-    try {
+  async editService(service: Service): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+
+    let equipamentoIdInputDTO = {
+      id: service.equipmentId
+    };
+    let setorIdInputDTO = {
+      id: service.departmentId
+    };
+    let expedidor = {
+      matricula: service.consignor?.registrationNumber,
+      nome: service.consignor?.name
+    };
+    let solicitante = {
+      matricula: service.requestor?.registrationNumber,
+      nome: service.requestor?.name
+    };
+    let serviceServer = {
+      numeroChamadoSuap: service.callNumberSuap,
+      linkChamadoSuap: service.callLinkSuap,
+      observacoes: service.observations,
+      dataRetorno: service.returnDate,
+      descricao: service.description,
+      tipoServico: service.serviceType,
+      equipamento: equipamentoIdInputDTO,
+      setor: setorIdInputDTO,
+      expedidor,
+      solicitante
+    };
+
+    return await api.put(`/servicos/${service.id}`, serviceServer,{ headers });
+  }
+
+  async deleteService(id: Number): Promise<AxiosResponse> {
       let headers = {
         Authorization: `Bearer ${this.authenticationService.token}`,
       };
 
-      let equipamentoIdInputDTO = {
-        id: service.equipmentId
-      };
-      let setorIdInputDTO = {
-        id: service.departmentId
-      };
-      let expedidor = {
-        matricula: service.consignor?.registrationNumber,
-        nome: service.consignor?.name
-      };
-      let solicitante = {
-        matricula: service.requestor?.registrationNumber,
-        nome: service.requestor?.name
-      };
-      let serviceServer = {
-        numeroChamadoSuap: service.callNumberSuap,
-        linkChamadoSuap: service.callLinkSuap,
-        observacoes: service.observations,
-        dataRetorno: service.returnDate,
-        descricao: service.description,
-        tipoServico: service.serviceType,
-        equipamento: equipamentoIdInputDTO,
-        setor: setorIdInputDTO,
-        expedidor,
-        solicitante
-      };
-
-      await api.put(`/servicos/${service.id}`, serviceServer,{ headers });
-      serviceWasEdited = true;
-      return serviceWasEdited;
-    } catch (error) {
-      console.error(error);
-      return (serviceWasEdited = false);
-    }
-  }
-
-  async deleteService(id: Number): Promise<boolean> {
-    let serviceWasDeleted = false;
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-      await api.delete(`/servicos/${id}`, { headers });
-      serviceWasDeleted = true;
-      alert('Deletado com sucesso!');
-      return serviceWasDeleted;
-    } catch (error) {
-      console.error(error);
-      return (serviceWasDeleted = false);
-    }
+      return await api.delete(`/servicos/${id}`, { headers });
   }
 
   async getAllServices(): Promise<Service[]> {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Service } from 'src/app/shared/models/service.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { ServiceService } from '../services/service.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class ServiceListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private service: ServiceService
+    private service: ServiceService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -34,7 +36,11 @@ export class ServiceListComponent implements OnInit {
     });
 
     if (!this.services) {
-      alert('Nenhuma manutenção ou conserto encontrado');
+      this.utilityService.showNotification('Nenhuma manutenção ou conserto encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 

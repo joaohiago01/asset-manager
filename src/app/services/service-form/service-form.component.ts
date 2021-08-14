@@ -125,52 +125,54 @@ export class ServiceFormComponent implements OnInit {
         observations
       );
     } else {
-      if (this.selectedEquipment?.id && selectedDepartmentId && selectedServiceType) {
-        const serviceType: ServiceType = <ServiceType>(
-          selectedServiceType
-        );
+      const serviceType: ServiceType = <ServiceType>(
+        selectedServiceType
+      );
 
-        let service = new Service(
-          {
-            equipmentId: Number(this.selectedEquipment.id),
-            departmentId: Number(selectedDepartmentId),
-            serviceType: serviceType,
-            description,
-            assetOutputs: this.assetOutputs,
-            returnDate: new Date(),
-            consignor: {
-              name: consignorName,
-              registrationNumber: consignorRegistrationNumber,
-            },
-            requestor: {
-              name: requestorName,
-              registrationNumber: requestorRegistrationNumber,
-            },
-            callNumberSuap,
-            callLinkSuap,
-            observations,
-          }
-        );
-
-        let serviceWasCreated = await this.serviceService.createService(
-          service
-        );
-        if (serviceWasCreated === true) {
-          this.service = undefined;
-          this.router.navigate(['services'], { state: { needReload: true } });
-        } else {
-          this.utilityService.showNotification('Oops, ocorreu um erro ao tentar cadastrar esse serviço');
-
-          setTimeout(() => {
-            this.utilityService.closeNotification();
-          }, 6000);
+      let service = new Service(
+        {
+          equipmentId: Number(this.selectedEquipment?.id),
+          departmentId: Number(selectedDepartmentId),
+          serviceType: serviceType,
+          description,
+          assetOutputs: this.assetOutputs,
+          returnDate: new Date(),
+          consignor: {
+            name: consignorName,
+            registrationNumber: consignorRegistrationNumber,
+          },
+          requestor: {
+            name: requestorName,
+            registrationNumber: requestorRegistrationNumber,
+          },
+          callNumberSuap,
+          callLinkSuap,
+          observations,
         }
-      } else {
-        this.utilityService.showNotification('Não é possível cadastrar! Verifique se os campos estão preenchidos corretamente');
+      );
 
+      try {
+        const response = await this.serviceService.createService(service);
+  
+        this.utilityService.showNotification('Serviço cadastrado com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 6000);
+  
+          this.service = <Service>{};
+          this.router.navigate(['services'], { state: { needReload: true } });
+        }, 1000);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+  
+        this.utilityService.showNotification(error.response.data['detail']);
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
     }
   }
@@ -188,81 +190,85 @@ export class ServiceFormComponent implements OnInit {
     callLinkSuap: string,
     observations: string
   ): Promise<void> {
-    if (serviceId && this.selectedEquipment?.id && selectedDepartmentId && selectedServiceType) {
-      const serviceType: ServiceType = <ServiceType>(
-        selectedServiceType
-      );
+    const serviceType: ServiceType = <ServiceType>(
+      selectedServiceType
+    );
 
-      let service = new Service(
-        {
-          equipmentId: Number(this.selectedEquipment.id),
-          departmentId: Number(selectedDepartmentId),
-          serviceType: serviceType,
-          description,
-          assetOutputs: this.assetOutputs,
-          returnDate: new Date(),
-          consignor: {
-            name: consignorName,
-            registrationNumber: consignorRegistrationNumber,
-          },
-          requestor: {
-            name: requestorName,
-            registrationNumber: requestorRegistrationNumber,
-          },
-          callNumberSuap,
-          callLinkSuap,
-          observations,
+    let service = new Service(
+      {
+        equipmentId: Number(this.selectedEquipment?.id),
+        departmentId: Number(selectedDepartmentId),
+        serviceType: serviceType,
+        description,
+        assetOutputs: this.assetOutputs,
+        returnDate: new Date(),
+        consignor: {
+          name: consignorName,
+          registrationNumber: consignorRegistrationNumber,
         },
-        serviceId
-      );
+        requestor: {
+          name: requestorName,
+          registrationNumber: requestorRegistrationNumber,
+        },
+        callNumberSuap,
+        callLinkSuap,
+        observations,
+      },
+      serviceId
+    );
 
-      let serviceWasEdited = await this.serviceService.editService(
-        service
-      );
-      if (serviceWasEdited === true) {
-        this.service = undefined;
-        this.router.navigate(['services'], { state: { needReload: true } });
-      } else {
-        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar editar esse serviço');
+    try {
+      const response = await this.serviceService.editService(service);
 
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-        }, 6000);
-      }
-    } else {
-      this.utilityService.showNotification('Não é possível editar! Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Serviço atualizado com sucesso');
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 6000);
+
+        this.service = <Service>{};
+        this.router.navigate(['services'], { state: { needReload: true } });
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+      }
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
   }
 
   async deleteService(serviceId: number): Promise<void> {
     if (serviceId) {
-      let serviceWasDeleted = await this.serviceService.deleteService(serviceId);
-      if (serviceWasDeleted === true) {
-        this.router.navigate(['services'], { state: { needReload: true } });
-      } else {
-        this.utilityService.showNotification('Oops, ocorreu um erro ao tentar remover esse serviço');
-
+      try {
+        const response = await this.serviceService.deleteService(serviceId);
+  
+        this.utilityService.showNotification('Serviço excluído com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 6000);
+  
+          this.router.navigate(['services'], { state: { needReload: true } });
+        }, 1000);
+        
+      } catch (error) {
+        this.utilityService.showNotification('O serviço está em uso e não pode ser excluído');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
-    } else {
-      this.utilityService.showNotification('Ocorreu um erro! O serviço não foi encontrado');
-
-      setTimeout(() => {
-        this.utilityService.closeNotification();
-      }, 6000);
     }
   }
 
   async createAssetOutput(
     amount: string,
     selectedDepartmentId: number): Promise<void> {
-      if (this.selectedAsset?.id && amount) {
+    if (this.selectedAsset?.id && amount) {
       const assetOutput = new OutputAsset({
         amount: Number(amount),
         assetId: this.selectedAsset?.id,
@@ -280,7 +286,7 @@ export class ServiceFormComponent implements OnInit {
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 6000);
+      }, 5000);
     }
 
   }

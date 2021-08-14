@@ -11,74 +11,47 @@ export class AssetService {
   constructor(private authenticationService: AuthenticationService) {}
 
   async createAsset(asset: Asset): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let assetServer = {
-        categoriaId: asset.categoryId,
-        nome: asset.name,
-        estante: asset.bookcase[0],
-        prateleira: asset.shelf[0],
-        quantidadeMinima: asset.minQuantity,
-        quantidadeAtual: asset.currentQuantity,
-        unidadeDeMedida: asset.unitOfMeasurement,
-      };
-      let response = await api.post('/insumos', assetServer, { headers });
-      let assetId = response.data.id;
-
-      let expirationDate = new Date();
-      expirationDate.setFullYear(expirationDate.getFullYear() + 1);
-      let inputAssetServer = {
-        data: new Date(),
-        dataValidade: expirationDate,
-        quantidade: asset.currentQuantity
-      };
-      await api.post(`/insumos/${assetId}/entradas`, inputAssetServer, { headers });
-
-      assetServer.quantidadeAtual = asset.currentQuantity;
-      return await api.put(`/insumos/${assetId}`, assetServer, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    let assetServer = {
+      categoriaId: asset.categoryId,
+      nome: asset.name,
+      estante: asset.bookcase[0],
+      prateleira: asset.shelf[0],
+      quantidadeMinima: asset.minQuantity,
+      quantidadeAtual: asset.currentQuantity,
+      unidadeDeMedida: asset.unitOfMeasurement,
+    };
+    
+    return await api.post('/insumos', assetServer, { headers });
   }
 
   async editAsset(asset: Asset): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let assetServer = {
-        categoriaId: asset.categoryId,
-        nome: asset.name,
-        estante: asset.bookcase[0],
-        prateleira: asset.shelf[0],
-        quantidadeMinima: asset.minQuantity,
-        quantidadeAtual: asset.currentQuantity,
-        unidadeDeMedida: asset.unitOfMeasurement,
-      };
+    let assetServer = {
+      categoriaId: asset.categoryId,
+      nome: asset.name,
+      estante: asset.bookcase[0],
+      prateleira: asset.shelf[0],
+      quantidadeMinima: asset.minQuantity,
+      quantidadeAtual: asset.currentQuantity,
+      unidadeDeMedida: asset.unitOfMeasurement,
+    };
 
-      return await api.put(`/insumos/${asset.id}`, assetServer, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.put(`/insumos/${asset.id}`, assetServer, { headers });
   }
 
   async deleteAsset(id: Number): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      return await api.delete(`/insumos/${id}`, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.delete(`/insumos/${id}`, { headers });
   }
 
   async getAllAssets(): Promise<Asset[]> {

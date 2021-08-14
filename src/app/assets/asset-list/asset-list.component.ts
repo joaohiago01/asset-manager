@@ -5,6 +5,7 @@ import { Asset } from 'src/app/shared/models/asset.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { AssetService } from '../services/asset.service';
 import { saveAs } from 'file-saver';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-asset-list',
@@ -19,7 +20,8 @@ export class AssetListComponent implements OnInit {
   constructor(
     private router: Router,
     private assetService: AssetService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -41,7 +43,11 @@ export class AssetListComponent implements OnInit {
     });
 
     if (!this.assets) {
-      alert('Nenhum insumo encontrado');
+      this.utilityService.showNotification('Nenhum insumo encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 

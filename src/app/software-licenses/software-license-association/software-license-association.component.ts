@@ -8,6 +8,7 @@ import { EquipmentService } from 'src/app/equipments/services/equipment.service'
 import { Category } from 'src/app/shared/models/category.model';
 import { Equipment } from 'src/app/shared/models/equipment.model';
 import { SoftwareLicense } from 'src/app/shared/models/softwareLicense.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { SoftwareLicenseAssociationService } from '../services/software-license-association.service';
 import { SoftwareLicenseService } from '../services/software-license.service';
 
@@ -31,7 +32,8 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
     public softwareLicenseService: SoftwareLicenseService,
     public associationService: SoftwareLicenseAssociationService,
     public equipmentService: EquipmentService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {
     const softwareLicense: SoftwareLicense = <SoftwareLicense>(
       this.router.getCurrentNavigation()?.extras.state
@@ -78,49 +80,82 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
 
   async associateSoftwareLicense(equipmentId?: number): Promise<void> {
     if (this.softwareLicense?.id != undefined && equipmentId !== undefined) {
-      let softwareLicenseWasAssociated = await this.associationService.associateSoftwareLicense(this.softwareLicense?.id, equipmentId);
+      try {
+        const response = await this.associationService.associateSoftwareLicense(this.softwareLicense?.id, equipmentId);
+  
+        this.utilityService.showNotification('A Licença de Software foi associada com sucesso');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+  
+          if (this.softwareLicense?.numberOfActivationsUsed)
+            this.softwareLicense.numberOfActivationsUsed++;
 
-      if (softwareLicenseWasAssociated) {
-        alert('A Licença de Software foi associada com sucesso!')
-
-        this.softwareLicense.numberOfActivationsUsed++;
-
-        this.router.navigate(['software-licenses/associations'], {
-          state: { softwareLicense: this.softwareLicense },
-        });
-      } else {
-        alert('Não foi possível fazer essa associação!'); 
+          this.router.navigate(['software-licenses/associations'], {
+            state: { softwareLicense: this.softwareLicense },
+          });
+        }, 1000);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+  
+        this.utilityService.showNotification(error.response.data['detail']);
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
-
     }
 
-    if (equipmentId === undefined)
-      alert('Nenhum equipamento foi selecionado!');
+    if (equipmentId === undefined) {
+      this.utilityService.showNotification('Não foi possível associar! Selecione um equipamento');
     
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
+    }
   }
 
   async disassociateSoftwareLicense(equipmentId: number): Promise<void> {
     if (this.softwareLicense?.id != undefined && equipmentId !== undefined) {
-      let softwareLicenseWasDisassociated = await this.associationService.disassociateSoftwareLicense(this.softwareLicense?.id, equipmentId);
+      try {
+        const response = await this.associationService.disassociateSoftwareLicense(this.softwareLicense?.id, equipmentId);
+  
+        this.utilityService.showNotification('A associação foi desfeita com sucesso');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+  
+          if (this.softwareLicense?.numberOfActivationsUsed)
+            this.softwareLicense.numberOfActivationsUsed--;
 
-      console.log(softwareLicenseWasDisassociated);
-
-      if (softwareLicenseWasDisassociated) {
-        alert('A associação foi desfeita com sucesso!')
-
-        this.softwareLicense.numberOfActivationsUsed--;
-
-        this.router.navigate(['software-licenses/associations'], {
-          state: { softwareLicense: this.softwareLicense },
-        });
-      } else {
-        alert('Não foi possível desfazer essa associação!');
+          this.router.navigate(['software-licenses/associations'], {
+            state: { softwareLicense: this.softwareLicense },
+          });
+        }, 1000);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+  
+        this.utilityService.showNotification(error.response.data['detail']);
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
     }
 
-    if (equipmentId === undefined)
-      alert('Nenhum equipamento foi selecionado!');
-
+    if (equipmentId === undefined) {
+      this.utilityService.showNotification('Não foi possível desfazer essa associação');
+    
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
+    }
   }
 
   navigateToSoftwareLicenses(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Loan } from 'src/app/shared/models/loan.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { LoanService } from '../services/loan.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class LoanListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private loanService: LoanService
+    private loanService: LoanService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -30,7 +32,11 @@ export class LoanListComponent implements OnInit {
     this.loans = await this.loanService.getAllLoans();
 
     if (!this.loans) {
-      alert('Nenhum empréstimo encontrado');
+      this.utilityService.showNotification('Nenhum empréstimo encontrado');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 

@@ -3,6 +3,8 @@
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
+    <app-notification></app-notification>
+
     <div class="container">
       <div class="header-component">
         <button
@@ -41,7 +43,7 @@
                 </div>
 
                 <div class="content">
-                    <p class="field-title">Data de Criação: <span>{{ service.outputDate | date: 'dd/MM/yyyy' }}</span></p>
+                    <p class="field-title">Data de Cadastro: <span>{{ service.outputDate | date: 'dd/MM/yyyy' }}</span></p>
 
                     <p *ngIf="service.callNumberSuap" class="field-title">Nº chamado do SUAP: <span>{{ service.callNumberSuap }}</span></p>
 

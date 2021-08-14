@@ -13,65 +13,51 @@ export class SoftwareLicenseService {
   async createSoftwareLicense(
     softwareLicense: SoftwareLicense
   ): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let softwareLicenseServer = {
-        categoriaId: softwareLicense.categoryId,
-        software: softwareLicense.name,
-        numero: softwareLicense.number,
-        chaveAtivacao: softwareLicense.activationKey,
-        maximoAtivacoes: softwareLicense.maxActivations,
-        ativacoesInfinitas: softwareLicense.ignoreMaxActivations
-      };
-      return await api.post('/licencas-software', softwareLicenseServer, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    let softwareLicenseServer = {
+      categoriaId: softwareLicense.categoryId,
+      software: softwareLicense.name,
+      numero: softwareLicense.number,
+      chaveAtivacao: softwareLicense.activationKey,
+      maximoAtivacoes: softwareLicense.maxActivations,
+      ativacoesInfinitas: softwareLicense.ignoreMaxActivations
+    };
+    
+    return await api.post('/licencas-software', softwareLicenseServer, { headers });
   }
 
   async editSoftwareLicense(
     softwareLicense: SoftwareLicense
   ): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      let softwareLicenseServer = {
-        categoriaId: softwareLicense.categoryId,
-        software: softwareLicense.name,
-        numero: softwareLicense.number,
-        chaveAtivacao: softwareLicense.activationKey,
-        maximoAtivacoes: softwareLicense.maxActivations,
-        ativacoesInfinitas: softwareLicense.ignoreMaxActivations
-      };
+    let softwareLicenseServer = {
+      categoriaId: softwareLicense.categoryId,
+      software: softwareLicense.name,
+      numero: softwareLicense.number,
+      chaveAtivacao: softwareLicense.activationKey,
+      maximoAtivacoes: softwareLicense.maxActivations,
+      ativacoesInfinitas: softwareLicense.ignoreMaxActivations
+    };
 
-      return await api.put(
-        `/licencas-software/${softwareLicense.id}`,
-        softwareLicenseServer,
-        { headers }
-      );
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.put(
+      `/licencas-software/${softwareLicense.id}`,
+      softwareLicenseServer,
+      { headers }
+    );
   }
 
   async deleteSoftwareLicense(id: Number): Promise<AxiosResponse> {
-    try {
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-      return await api.delete(`/licencas-software/${id}`, { headers });
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
+    return await api.delete(`/licencas-software/${id}`, { headers });
   }
 
   async getAllSoftwareLicenses(): Promise<SoftwareLicense[]> {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AxiosResponse } from 'axios';
 import { Equipment } from 'src/app/shared/models/equipment.model';
 import { SoftwareLicense } from 'src/app/shared/models/softwareLicense.model';
 import api from 'src/app/shared/services/api';
@@ -47,60 +48,36 @@ export class SoftwareLicenseAssociationService {
     }
   }
 
-  async associateSoftwareLicense(id: Number, equipmentId: number): Promise<boolean> {
-    let softwareLicenseWasAssociated = false;
+  async associateSoftwareLicense(id: Number, equipmentId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-    try {
+    let associationServer = {
+      equipamentoId: equipmentId,
+    };
 
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-
-      let associationServer = {
-        equipamentoId: equipmentId,
-      };
-
-      await api.put(
-        `/licencas-software/${id}/associar`,
-        associationServer,
-        { headers }
-      );
-
-      softwareLicenseWasAssociated = true;
-      return softwareLicenseWasAssociated;
-
-    } catch (error) {
-      console.error(error);
-      return (softwareLicenseWasAssociated = false);
-    }
+    return await api.put(
+      `/licencas-software/${id}/associar`,
+      associationServer,
+      { headers }
+    );
   }
 
-  async disassociateSoftwareLicense(id: Number, equipmentId: number): Promise<boolean> {
-    let softwareLicenseWasDisassociated = false;
+  async disassociateSoftwareLicense(id: Number, equipmentId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
 
-    try {
+    let associationServer = {
+      equipamentoId: equipmentId,
+    };
 
-      let headers = {
-        Authorization: `Bearer ${this.authenticationService.token}`,
-      };
-
-      let associationServer = {
-        equipamentoId: equipmentId,
-      };
-
-      await api.put(
-        `/licencas-software/${id}/desassociar`,
-        associationServer,
-        { headers }
-      );
-
-      softwareLicenseWasDisassociated = true;
-      return softwareLicenseWasDisassociated;
-
-    } catch (error) {
-      console.error(error);
-      return (softwareLicenseWasDisassociated = false);
-    }
+    return await api.put(
+      `/licencas-software/${id}/desassociar`,
+      associationServer,
+      { headers }
+    );
   }
 
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { Category } from 'src/app/shared/models/category.model';
 import { SoftwareLicense } from 'src/app/shared/models/softwareLicense.model';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { SoftwareLicenseService } from '../services/software-license.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class SoftwareLicenseListComponent implements OnInit {
   constructor(
     private router: Router,
     private softwareLicenseService: SoftwareLicenseService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    public utilityService: UtilityService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -46,7 +48,11 @@ export class SoftwareLicenseListComponent implements OnInit {
     );
 
     if (!this.softwareLicenses) {
-      alert('Nenhuma Licença de Software encontrada');
+      this.utilityService.showNotification('Nenhuma licença de software encontrada');
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 3000);
     }
   }
 

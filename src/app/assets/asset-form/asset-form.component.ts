@@ -7,6 +7,8 @@ import { AssetService } from 'src/app/assets/services/asset.service';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { CategoryType } from 'src/app/shared/models/categoryType.enum';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { InputAssetService } from '../services/inputAsset.service';
+import { InputAsset } from 'src/app/shared/models/inputAsset.model';
 
 @Component({
   selector: 'app-asset-form',
@@ -23,6 +25,7 @@ export class AssetFormComponent implements OnInit {
   constructor(
     private router: Router,
     public assetService: AssetService,
+    public inputAssetService: InputAssetService,
     public categoryService: CategoryService,
     public utilityService: UtilityService
   ) {
@@ -77,45 +80,57 @@ export class AssetFormComponent implements OnInit {
         unitOfMeasurement
       );
     } else {
-      if (minQuantity && currentQuantity) {
-        let asset = new Asset({
-          categoryId: selectedCategoryId,
-          name: name,
-          bookcase: bookcase,
-          shelf: shelf,
-          minQuantity: Number.parseFloat(minQuantity),
-          currentQuantity: Number.parseFloat(currentQuantity),
-          unitOfMeasurement: unitOfMeasurement,
+      let asset = new Asset({
+        categoryId: selectedCategoryId,
+        name: name,
+        bookcase: bookcase,
+        shelf: shelf,
+        minQuantity: Number.parseFloat(minQuantity),
+        currentQuantity: Number.parseFloat(currentQuantity),
+        unitOfMeasurement: unitOfMeasurement,
+      });
+      
+      try {
+        const response = await this.assetService.createAsset(asset);
+
+        this.utilityService.showNotification('Insumo cadastrado com sucesso!');
+
+        let assetId = response.data.id;
+
+        let expirationDate = new Date();
+        expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+
+        let inputAsset = new InputAsset({
+          inputDate: new Date(),
+          expirationDate,
+          amount: asset.currentQuantity
         });
 
-        try {
-          const response = await this.assetService.createAsset(asset);
+        await this.inputAssetService.saveInputAsset(assetId, inputAsset);
 
-          this.utilityService.showNotification('Equipamento cadastrado com sucesso!');
-
-          setTimeout(() => {
-            this.utilityService.closeNotification();
-
-            this.router.navigate(['assets'], {
-              state: { needReload: true },
-            });
-          }, 3000);
-
-        } catch (error) {
-          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
-          setTimeout(() => {
-            this.utilityService.closeNotification();
-          }, 5000);
-        }
-        
-      } else {
-        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+        asset.id = assetId;
+        await this.assetService.editAsset(asset);
 
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+
+          this.router.navigate(['assets'], {
+            state: { needReload: true },
+          });
+        }, 1500);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+
+        this.utilityService.showNotification(error.response.data['detail']);
+
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
+      
     }
   }
 
@@ -129,47 +144,42 @@ export class AssetFormComponent implements OnInit {
     currentQuantity: string,
     unitOfMeasurement: string
   ): Promise<void> {
-    if (id && minQuantity && currentQuantity) {
-      let asset = new Asset(
-        {
-          categoryId: selectedCategoryId,
-          name: name,
-          bookcase: bookcase,
-          shelf: shelf,
-          minQuantity: Number.parseFloat(minQuantity),
-          currentQuantity: Number.parseFloat(currentQuantity),
-          unitOfMeasurement: unitOfMeasurement,
-        },
-        id
-      );
+    let asset = new Asset(
+      {
+        categoryId: selectedCategoryId,
+        name: name,
+        bookcase: bookcase,
+        shelf: shelf,
+        minQuantity: Number.parseFloat(minQuantity),
+        currentQuantity: Number.parseFloat(currentQuantity),
+        unitOfMeasurement: unitOfMeasurement,
+      },
+      id
+    );
 
-      try {
-        const response = await this.assetService.editAsset(asset);
+    try {
+      const response = await this.assetService.editAsset(asset);
 
-        this.utilityService.showNotification('Equipamento atualizado com sucesso!');
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-
-          this.router.navigate(['assets'], {
-            state: { needReload: true },
-          });
-        }, 3000);
-
-      } catch (error) {
-        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-        }, 5000);
-      }
-      
-    } else {
-      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Insumo atualizado com sucesso!');
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 5000);
+
+        this.router.navigate(['assets'], {
+          state: { needReload: true },
+        });
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+      }
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
   }
 
@@ -178,7 +188,7 @@ export class AssetFormComponent implements OnInit {
       try {
         const response = await this.assetService.deleteAsset(id);
 
-        this.utilityService.showNotification("O Insumo foi excluído com sucesso!");
+        this.utilityService.showNotification("Insumo excluído com sucesso!");
 
         setTimeout(() => {
           this.utilityService.closeNotification();
@@ -186,21 +196,17 @@ export class AssetFormComponent implements OnInit {
           this.router.navigate(['assets'], {
             state: { needReload: true },
           });
-        }, 3000);
+        }, 1000);
+        
       } catch (error) {
-        this.utilityService.showNotification("O Insumo está em uso e não pode ser excluído");
-
+        this.utilityService.showNotification('O insumo está em uso e não pode ser excluído');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
 
-    } else {
-      this.utilityService.showNotification("Insumo não encontrado");
-
-      setTimeout(() => {
-        this.utilityService.closeNotification();
-      }, 5000);
     }
+
   }
 }

@@ -99,58 +99,51 @@ export class LoanFormComponent implements OnInit {
         requestorRegistrationNumber
       );
     } else {
-      if (selectedDepartmentId && selectedEquipmentId) {
-        const selectedDepartment = this.departments.find(d => d.id == selectedDepartmentId);
-        const consignor = new Contributor({
-          name: consignorName,
-          registrationNumber: consignorRegistrationNumber
-        });
-        const requestor = new Contributor({
-          name: requestorName,
-          registrationNumber: requestorRegistrationNumber
-        });
-        let loan = new Loan({
-          equipmentId: selectedEquipmentId,
-          callNumberSuap: callNumberSuap,
-          callLinkSuap: callLinkSuap,
-          observations: observations,
-          outputDate: new Date(),
-          returnDate: new Date(returnDate),
-          expectedReturnDate: new Date(expectedReturnDate),
-          department: selectedDepartment,
-          consignor,
-          requestor
-        });
+      const selectedDepartment = this.departments.find(d => d.id == selectedDepartmentId);
+      const consignor = new Contributor({
+        name: consignorName,
+        registrationNumber: consignorRegistrationNumber
+      });
+      const requestor = new Contributor({
+        name: requestorName,
+        registrationNumber: requestorRegistrationNumber
+      });
+      let loan = new Loan({
+        equipmentId: selectedEquipmentId,
+        callNumberSuap: callNumberSuap,
+        callLinkSuap: callLinkSuap,
+        observations: observations,
+        outputDate: new Date(),
+        returnDate: new Date(returnDate),
+        expectedReturnDate: new Date(expectedReturnDate),
+        department: selectedDepartment,
+        consignor,
+        requestor
+      });
 
-        console.log(loan);
-
-        try {
-          const response = await this.loanService.createLoan(loan);
-
-          this.utilityService.showNotification('Empréstimo cadastrado com sucesso!');
-
-          setTimeout(() => {
-            this.utilityService.closeNotification();
-
-            this.router.navigate(['loans'], {
-              state: { needReload: true },
-            });
-          }, 3000);
-
-        } catch (error) {
-          this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
-          setTimeout(() => {
-            this.utilityService.closeNotification();
-          }, 5000);
-        }
-        
-      } else {
-        this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
-
+      try {
+        const response = await this.loanService.createLoan(loan);
+  
+        this.utilityService.showNotification('Empréstimo cadastrado com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+  
+          this.router.navigate(['loans'], {
+            state: { needReload: true },
+          });
+        }, 1000);
+        
+      } catch (error) {
+        if (!error.response) {
+          this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+        }
+  
+        this.utilityService.showNotification(error.response.data['detail']);
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
       }
     }
   }
@@ -170,60 +163,55 @@ export class LoanFormComponent implements OnInit {
     requestorName: string,
     requestorRegistrationNumber: string
   ): Promise<void> {
-    if (id && selectedDepartmentId && selectedEquipmentId) {
-      const statusLoanSelected: StatusLoan = <StatusLoan> statusLoan;
-      const selectedDepartment = this.departments.find(d => d.id === selectedDepartmentId);
-      const consignor = new Contributor({
-        name: consignorName,
-        registrationNumber: consignorRegistrationNumber
-      });
-      const requestor = new Contributor({
-        name: requestorName,
-        registrationNumber: requestorRegistrationNumber
-      });
-      let loan = new Loan(
-        {
-          equipmentId: selectedEquipmentId,
-          callNumberSuap: callNumberSuap,
-          callLinkSuap: callLinkSuap,
-          observations: observations,
-          returnDate: new Date(returnDate),
-          expectedReturnDate: new Date(expectedReturnDate),
-          statusLoan: statusLoanSelected,
-          department: selectedDepartment,
-          consignor,
-          requestor
-        },
-        id
-      );
+    const statusLoanSelected: StatusLoan = <StatusLoan> statusLoan;
+    const selectedDepartment = this.departments.find(d => d.id === selectedDepartmentId);
+    const consignor = new Contributor({
+      name: consignorName,
+      registrationNumber: consignorRegistrationNumber
+    });
+    const requestor = new Contributor({
+      name: requestorName,
+      registrationNumber: requestorRegistrationNumber
+    });
+    let loan = new Loan(
+      {
+        equipmentId: selectedEquipmentId,
+        callNumberSuap: callNumberSuap,
+        callLinkSuap: callLinkSuap,
+        observations: observations,
+        returnDate: new Date(returnDate),
+        expectedReturnDate: new Date(expectedReturnDate),
+        statusLoan: statusLoanSelected,
+        department: selectedDepartment,
+        consignor,
+        requestor
+      },
+      id
+    );
 
-      try {
-        const response = await this.loanService.editLoan(loan);
+    try {
+      const response = await this.loanService.editLoan(loan);
 
-        this.utilityService.showNotification('Empréstimo atualizado com sucesso!');
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-
-          this.router.navigate(['loans'], {
-            state: { needReload: true },
-          });
-        }, 3000);
-
-      } catch (error) {
-        this.utilityService.showNotification("Oops, ocorreu um erro inesperado ao salvar! Tente novamente");
-
-        setTimeout(() => {
-          this.utilityService.closeNotification();
-        }, 5000);
-      }
-      
-    } else {
-      this.utilityService.showNotification('Verifique se os campos estão preenchidos corretamente');
+      this.utilityService.showNotification('Empréstimo atualizado com sucesso');
 
       setTimeout(() => {
         this.utilityService.closeNotification();
-      }, 5000);
+
+        this.router.navigate(['loans'], {
+          state: { needReload: true },
+        });
+      }, 1000);
+      
+    } catch (error) {
+      if (!error.response) {
+        this.utilityService.showNotification('Oops, ocorreu um erro desconhecido! Tente novamente');
+      }
+
+      this.utilityService.showNotification(error.response.data['detail']);
+
+      setTimeout(() => {
+        this.utilityService.closeNotification();
+      }, 4000);
     }
   }
 
@@ -231,30 +219,25 @@ export class LoanFormComponent implements OnInit {
     if (id) {
       try {
         const response = await this.loanService.deleteLoan(id);
-
-        this.utilityService.showNotification("O Empréstimo foi excluído com sucesso!");
-
+  
+        this.utilityService.showNotification('Empréstimo excluído com sucesso');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-
+  
           this.router.navigate(['loans'], {
             state: { needReload: true },
           });
-        }, 3000);
+        }, 1000);
+        
       } catch (error) {
-        this.utilityService.showNotification("O Empréstimo não pode ser excluído");
-
+        this.utilityService.showNotification('O empréstimo não pode ser excluído');
+  
         setTimeout(() => {
           this.utilityService.closeNotification();
-        }, 5000);
+        }, 4000);
       }
-
-    } else {
-      this.utilityService.showNotification("Empréstimo não encontrado");
-
-      setTimeout(() => {
-        this.utilityService.closeNotification();
-      }, 5000);
     }
   }
+
 }

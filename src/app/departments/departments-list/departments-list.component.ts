@@ -69,7 +69,6 @@ export class DepartmentsListComponent implements OnInit {
         this.utilityService.closeNotification();
       }, 4000);
     }
-
   }
 
   detailDepartment(departmentId: number) {
@@ -113,7 +112,6 @@ export class DepartmentsListComponent implements OnInit {
         this.utilityService.closeNotification();
       }, 4000);
     }
-
   }
 
   async deleteDepartment(id: number): Promise<void> {
@@ -137,7 +135,6 @@ export class DepartmentsListComponent implements OnInit {
         }, 4000);
       }
     }
-
   } 
 
   showModal(modalSelector: string) {
