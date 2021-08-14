@@ -86,6 +86,24 @@ export class SoftwareLicenseListComponent implements OnInit {
     });
   }
 
+  export() {
+    let softwareLicences = this.softwareLicenses.map((softwareLicense: SoftwareLicense) => {
+      return {
+        id: softwareLicense.id,
+        categoriaId: softwareLicense.categoryId,
+        software: softwareLicense.name,
+        numero: softwareLicense.number,
+        chaveAtivacao: softwareLicense.activationKey,
+        maximoAtivacoes: softwareLicense.maxActivations,
+        quantidadeUsada: softwareLicense.numberOfActivationsUsed,
+        ativacoesInfinitas: softwareLicense.ignoreMaxActivations
+      };
+    });
+    let json = JSON.stringify(softwareLicences);
+    const file = new Blob([json], { type: 'application/json' });
+    saveAs(file, 'Licenças de Software.json');
+  }
+
   navigateToSoftwareLicenseAssociations(): void {
     this.router.navigate(['/software-licenses/associations']);
   }
