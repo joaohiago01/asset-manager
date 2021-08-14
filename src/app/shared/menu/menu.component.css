@@ -23,7 +23,9 @@
 }
 
 .sidebar-content {
-  height: 100vh;
+  position: fixed;
+  width: 24%;
+  height: 120vh;
 }
 
 .button-container {
@@ -53,8 +55,9 @@
 /* Smartphones and some iPads */
 @media only screen
 and (min-device-width: 320px)
-and (max-device-width : 650px) {
+and (max-device-width : 1024px) {
   .sidebar-content {
+    position: initial;
     width: 90%;
     height: 120vh;
   }
