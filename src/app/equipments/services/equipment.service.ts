@@ -95,12 +95,39 @@ export class EquipmentService {
     return response;
   }
 
+  async editFile(file: File, equipmentId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+    const formData = new FormData();
+    formData.append('arquivo', file);
+    const response = await api.put(
+      `/equipamentos/${equipmentId}/file`,
+      formData,
+      { headers }
+    );
+    
+    return response;
+  }
+
   async getFile(equipmentId: number): Promise<AxiosResponse> {
     let headers = {
       Authorization: `Bearer ${this.authenticationService.token}`,
     };
     
     const response = await api.get(
+      `/equipamentos/${equipmentId}/file`,
+      { headers }
+    );
+    return response;
+  }
+
+  async deleteFile(equipmentId: number): Promise<AxiosResponse> {
+    let headers = {
+      Authorization: `Bearer ${this.authenticationService.token}`,
+    };
+    
+    const response = await api.delete(
       `/equipamentos/${equipmentId}/file`,
       { headers }
     );

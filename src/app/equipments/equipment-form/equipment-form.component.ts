@@ -146,14 +146,6 @@ export class EquipmentFormComponent implements OnInit {
   
           if (this.file.name != 'empty.txt') {
             const fileResponse = await this.equipmentService.sendFile(this.file, equipmentId);
-
-            if (fileResponse.status != 201) {
-              this.utilityService.showNotification("Ocorreu um erro ao salvar o arquivo");
-  
-              setTimeout(() => {
-                this.utilityService.closeNotification();
-              }, 2000);
-            }
           }
 
           setTimeout(() => {
@@ -215,8 +207,13 @@ export class EquipmentFormComponent implements OnInit {
 
     try {
       const response = await this.equipmentService.editEquipment(equipment);
+      const equipmentId = response.data['id'];
 
       this.utilityService.showNotification('Equipamento atualizado com sucesso');
+
+      if (this.file.name != 'empty.txt') {
+        const fileResponse = await this.equipmentService.editFile(this.file, equipmentId);
+      }
 
       setTimeout(() => {
         this.utilityService.closeNotification();
@@ -264,24 +261,48 @@ export class EquipmentFormComponent implements OnInit {
     }
   }
 
-  downloadFile() {
+  async downloadFile() {
     if (this.equipment?.id && this.equipment.filename) {
-      const promise = this.equipmentService.getFile(this.equipment?.id);
+      try {
+        const response = await this.equipmentService.getFile(this.equipment?.id);
 
-      promise.then(response => {
+        const contentType = response.headers['content-type'];
 
-        // if (this.equipment?.filename)
-          // var file = new File(response.data, this.equipment?.filename, { type: 'image/jpg' });
-
-          // const data = JSON.stringify(response);
-          const file = new File([response.data], "imagem.jpg", { type: 'image/jpg' });
-
-          saveAs(file, this.equipment?.filename);
-      });
-      
-      
+        const file = new File([response.data], contentType, { type: contentType });
+        saveAs(file, this.equipment?.filename);
+      } catch (error) {
+        this.utilityService.showNotification('Ocorreu um erro ao tentar baixar esse anexo');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
+      }
     }
     
+  }
+
+  async deleteFile() {
+    if (this.equipment?.id && this.equipment.filename) {
+      try {
+        await this.equipmentService.deleteFile(this.equipment?.id);
+
+        this.utilityService.showNotification('Anexo ' + this.equipment.filename + ' excluído com sucesso');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+
+          this.router.navigate(['equipments'], {
+            state: { needReload: true },
+          });
+        }, 1500);
+      } catch (error) {
+        this.utilityService.showNotification('Ocorreu um erro ao tentar excluir esse anexo');
+  
+        setTimeout(() => {
+          this.utilityService.closeNotification();
+        }, 4000);
+      }
+    }
   }
 
   public autoCompleteInputFields(equipmentApiCampusNumber: string) {

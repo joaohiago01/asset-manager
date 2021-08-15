@@ -9,6 +9,10 @@
       <app-confirmation-modal title="Excluir equipamento" message="Tem certeza que deseja excluir o equipamento" itemName="{{ equipment?.description }}">
         <button class="button is-danger" (click)="equipment && deleteEquipment(equipment.id)">Confirmar</button>
       </app-confirmation-modal>
+
+      <app-confirmation-modal modalName="deleteFileModal" title="Excluir anexo" message="Tem certeza que deseja excluir o anexo" itemName="{{ equipment?.filename }}">
+        <button class="button is-danger" (click)="deleteFile()">Confirmar</button>
+      </app-confirmation-modal>
       <div class="overlay hidden"></div>
 
       <form
@@ -218,7 +222,11 @@
                 Escolha um arquivo…
               </span>
             </span>
-            <span class="file-name">
+            <span class="file-name" *ngIf="!equipment?.filename">
+              {{ filename.value ? filename.value.split("C:\\fakepath\\")[1] : 'nenhum arquivo selecionado' }}
+            </span>
+
+            <span class="file-name" *ngIf="equipment?.filename">
               {{ equipment?.filename ? equipment?.filename : 'nenhum arquivo selecionado' }}
             </span>
           </label>
@@ -231,7 +239,7 @@
 
           <button
             (click)="downloadFile()"
-            #btnDownload
+            #btnDownloadFile
             class="btn-save mr-2"
             mat-raised-button
             color="primary">
@@ -240,7 +248,8 @@
           </button>
 
           <button
-            #btnDelete
+            (click)="utilityService.showConfirmationModalByName('#deleteFileModal')"
+            #btnDeleteFile
             class="btn-delete"
             mat-raised-button
             color="primary">
