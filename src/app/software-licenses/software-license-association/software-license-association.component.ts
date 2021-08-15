@@ -23,8 +23,9 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
   public associatedEquipments: Equipment[] = [];
   public equipments: Equipment[] = [];
   public selectedEquipment?: Equipment = <Equipment>{};
+  public selectedAssociatedEquipment: Equipment = <Equipment>{};
+
   public myControl = new FormControl();
-  
   public filteredOptions?: Observable<Equipment[]>;
 
   constructor(
@@ -155,6 +156,16 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
       setTimeout(() => {
         this.utilityService.closeNotification();
       }, 4000);
+    }
+  }
+
+  showDeleteAssociationModal(associatedEquipmentId: number) {
+    if (associatedEquipmentId) {
+      this.selectedAssociatedEquipment = <Equipment>(
+        this.equipments.find((equipment: Equipment) => equipment.id === associatedEquipmentId)
+      );
+
+      this.utilityService.showConfirmationModal();
     }
   }
 

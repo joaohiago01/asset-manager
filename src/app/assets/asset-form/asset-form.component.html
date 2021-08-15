@@ -1,11 +1,16 @@
 <div class="columns">
-  <div class="column is-3 background-color">
+  <div class="column is-3">
     <app-menu></app-menu>
   </div>
   <div class="column is-9">
     <app-notification></app-notification>
 
     <div class="container">
+      <app-confirmation-modal title="Excluir insumo" message="Tem certeza que deseja excluir o insumo" itemName="{{ asset?.name }}">
+        <button class="button is-danger" (click)="asset && deleteAsset(asset.id)">Confirmar</button>
+      </app-confirmation-modal>
+      <div class="overlay hidden"></div>
+
       <form
         role="form"
         (submit)="
@@ -26,8 +31,8 @@
             class="btn-save"
             mat-raised-button
             color="primary"
-            type="submit"
-          >
+            type="submit">
+            <i class="material-icons">save</i>
             Salvar
           </button>
 
@@ -37,9 +42,9 @@
             class="btn-delete"
             mat-raised-button
             type="button"
-            (click)="asset && deleteAsset(asset.id)"
-          >
-            Deletar
+            (click)="utilityService.showConfirmationModal()">
+            <i class="material-icons">delete</i>
+            Excluir
           </button>
         </div>
       </form>

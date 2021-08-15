@@ -6,6 +6,10 @@
       <app-notification></app-notification>
 
       <div class="container">
+        <app-confirmation-modal title="Desfazer associação" message="Tem certeza que deseja desfazer a associação com o equipamento" itemName="{{ selectedAssociatedEquipment?.description }}">
+          <button class="button is-danger" (click)="disassociateSoftwareLicense(selectedAssociatedEquipment.id)">Confirmar</button>
+        </app-confirmation-modal>
+
       <!-- MODAL PARA ASSOCIAR A LICENÇA -->
       <div id="modalAssociate" class="modal-window hidden container is-max-desktop is-mobile">
         <header class="modal-card-head">
@@ -196,7 +200,7 @@
                     <div class="card-buttons">
                       <button
                         class="button card-button bg-gray"
-                        (click)="disassociateSoftwareLicense(equipment.id)">
+                        (click)="showDeleteAssociationModal(equipment.id)">
                         <i class="material-icons v-middle color-card-icon">link_off</i>
                       </button>
                     </div>

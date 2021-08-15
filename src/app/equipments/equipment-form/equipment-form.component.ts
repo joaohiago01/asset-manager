@@ -36,7 +36,7 @@ export class EquipmentFormComponent implements OnInit {
     private router: Router,
     public equipmentService: EquipmentService,
     public categoryService: CategoryService,
-    private utilityService: UtilityService
+    public utilityService: UtilityService
   ) {
     const equipment: Equipment = <Equipment>(
       this.router.getCurrentNavigation()?.extras.state

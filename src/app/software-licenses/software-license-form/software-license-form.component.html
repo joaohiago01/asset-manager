@@ -6,6 +6,11 @@
     <app-notification></app-notification>
 
     <div class="container">
+      <app-confirmation-modal title="Excluir licença de software" message="Tem certeza que deseja excluir a licença de software" itemName="{{ softwareLicense?.name }}">
+        <button class="button is-danger" (click)="softwareLicense && deleteSoftwareLicense(softwareLicense.id)">Confirmar</button>
+      </app-confirmation-modal>
+      <div class="overlay hidden"></div>
+
       <form
         role="form"
         (submit)="
@@ -22,8 +27,8 @@
             class="btn-save"
             mat-raised-button
             color="primary"
-            type="submit"
-          >
+            type="submit">
+            <i class="material-icons">save</i>
             Salvar
           </button>
 
@@ -33,11 +38,9 @@
             class="btn-delete"
             mat-raised-button
             type="button"
-            (click)="
-              softwareLicense && deleteSoftwareLicense(softwareLicense.id)
-            "
-          >
-            Deletar
+            (click)="utilityService.showConfirmationModal()">
+            <i class="material-icons">delete</i>
+            Excluir
           </button>
         </div>
       </form>

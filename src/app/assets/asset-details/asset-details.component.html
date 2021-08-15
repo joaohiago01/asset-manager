@@ -6,6 +6,14 @@
       <app-notification></app-notification>
 
       <div class="container">
+        <app-confirmation-modal modalName="deleteInputAssetModal" title="Desfazer entrada de insumo" message="Tem certeza que deseja desfazer essa entrada do dia" itemName="{{ selectedInputAsset?.inputDate | date: 'dd/MM/yyyy' }}">
+          <button class="button is-danger" (click)="undoAssetInput(selectedInputAsset.id)">Confirmar</button>
+        </app-confirmation-modal>
+
+        <app-confirmation-modal modalName="deleteOutputAssetModal" title="Desfazer retirada de insumo" message="Tem certeza que deseja desfazer essa retirada do dia" itemName="{{ selectedOutputAsset?.outputDate | date: 'dd/MM/yyyy' }} para {{ selectedOutputAsset?.department?.name }}">
+          <button class="button is-danger" (click)="undoAssetOutput(selectedOutputAsset.id)">Confirmar</button>
+        </app-confirmation-modal>
+
       <!-- MODAL PARA ENTRADA DE INSUMOS -->
         <div id="modalInput" class="modal-window hidden container is-max-desktop is-mobile">
           <header class="modal-card-head">
@@ -196,7 +204,7 @@
               requestorName.value,
               requestorRegistrationNumber.value)">
   
-              <button id="createAssetOutput" type="submit" class="button is-success">Confirmar</button>
+              <button id="createAssetOutput" type="submit" class="button is-success">Cadastrar</button>
             </form>
 
             <button class="button" (click)="hideModal('#modalOutput')">
@@ -315,7 +323,7 @@
                           class="button undo-button"
                           mat-raised-button
                           color="primary"
-                          (click)="undoAssetInput(assetInput.id)">
+                          (click)="showUndoAssetInputModal(assetInput.id)">
                           <i class="material-icons">undo</i>
                           Desfazer
                         </button>
@@ -359,7 +367,7 @@
                           class="button undo-button"
                           mat-raised-button
                           color="primary"
-                          (click)="undoAssetOutput(assetOutput.id)">
+                          (click)="showUndoAssetOutputModal(assetOutput.id)">
                           <i class="material-icons">undo</i>
                           Desfazer
                         </button>

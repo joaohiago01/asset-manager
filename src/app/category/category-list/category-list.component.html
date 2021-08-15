@@ -6,6 +6,10 @@
     <app-notification></app-notification>
 
     <div class="container">
+      <app-confirmation-modal title="Excluir categoria" message="Tem certeza que deseja excluir a categoria" itemName="{{ selectedCategory.name }}">
+        <button class="button is-danger" (click)="deleteCategory(selectedCategory.id)">Confirmar</button>
+      </app-confirmation-modal>
+
       <!-- MODAL PARA CADASTRAR E EDITAR CATEGORIA -->
       <div id="modalCadastrar" class="modal-window hidden container is-max-desktop is-mobile">
         <header class="modal-card-head">
@@ -110,7 +114,7 @@
                     </button>
                     <button
                       class="button card-button bg-red"
-                      (click)="deleteCategory(category.id)">
+                      (click)="showDeletionModal(category.id)">
                       <i class="material-icons v-middle color-card-icon">delete</i>
                     </button>
                   </div>

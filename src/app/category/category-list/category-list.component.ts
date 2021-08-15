@@ -16,6 +16,7 @@ export class CategoryListComponent implements OnInit {
   public selectedValue: string = '';
   types: string[] = [];
   category: Category = <Category>{};
+  public selectedCategory: Category = <Category>{};
 
   constructor(
     public httpClient: HttpClient,
@@ -130,6 +131,9 @@ export class CategoryListComponent implements OnInit {
         const response = await this.categoryService.deleteCategory(id);
   
         this.utilityService.showNotification('Categoria excluída com sucesso');
+
+        this.selectedCategory = <Category>{};
+        this.utilityService.closeConfirmationModal();
   
         setTimeout(() => {
           this.utilityService.closeNotification();
@@ -147,6 +151,16 @@ export class CategoryListComponent implements OnInit {
 
     }
 
+  }
+
+  showDeletionModal(id: number) {
+    if (id) {
+      this.selectedCategory = <Category>(
+        this.categories.find((category: Category) => category.id === id)
+      );
+
+      this.utilityService.showConfirmationModal();
+    }
   }
 
   showModal(modalSelector: string) {

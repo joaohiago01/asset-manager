@@ -1,0 +1,15 @@
+<div [id]="modalName" class="modal-window hidden container is-max-desktop is-mobile">
+  <header class="modal-card-head">
+    <p class="modal-card-title is-size-5-mobile">{{ title }}</p>
+    <button class="delete" aria-label="close" (click)="utilityService.closeConfirmationModalByName('#' + modalName)"></button>
+  </header>
+
+  <section class="modal-card-body is-size-6">
+    {{ message }} <span *ngIf="itemName" class="has-text-weight-medium has-text-danger">{{ itemName | slice: 0:150 }}</span><span *ngIf="itemName">?</span>
+  </section>
+
+  <footer class="modal-card-foot">
+    <ng-content></ng-content>
+    <button class="button" (click)="utilityService.closeConfirmationModalByName('#' + modalName)">Cancelar</button>
+  </footer>
+</div>

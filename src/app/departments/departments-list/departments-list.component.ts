@@ -14,6 +14,7 @@ export class DepartmentsListComponent implements OnInit {
 
   public departments: Department[] = [];
   public department: Department = <Department>{};
+  public selectedDepartment: Department = <Department>{};
 
   constructor(
     public httpClient: HttpClient,
@@ -120,6 +121,9 @@ export class DepartmentsListComponent implements OnInit {
         const response = await this.departmentService.deleteDepartment(id);
   
         this.utilityService.showNotification('Setor excluído com sucesso');
+
+        this.selectedDepartment = <Department>{};
+        this.utilityService.closeConfirmationModal();
   
         setTimeout(() => {
           this.utilityService.closeNotification();
@@ -135,7 +139,17 @@ export class DepartmentsListComponent implements OnInit {
         }, 4000);
       }
     }
-  } 
+  }
+  
+  showDeletionModal(id: number) {
+    if (id) {
+      this.selectedDepartment = <Department>(
+        this.departments.find((department: Department) => department.id === id)
+      );
+
+      this.utilityService.showConfirmationModal();
+    }
+  }
 
   showModal(modalSelector: string) {
     const modal: HTMLDivElement = <HTMLDivElement>(

@@ -25,7 +25,8 @@ export class AssetDetailsComponent implements OnInit {
   public inputActive: boolean = true;
   public outputActive:boolean = false;
 
-  public selectedOutputAsset?: OutputAsset = <OutputAsset>{};
+  public selectedInputAsset: InputAsset = <InputAsset>{};
+  public selectedOutputAsset: OutputAsset = <OutputAsset>{};
 
   public departments: Department[] = [];
   public selectedDepartmentId: number = 0;
@@ -204,6 +205,16 @@ export class AssetDetailsComponent implements OnInit {
     }
   }
 
+  showUndoAssetInputModal(inputAssetId: number) {
+    if (inputAssetId) {
+      this.selectedInputAsset = <InputAsset>(
+        this.assetInputs.find((inputAsset: InputAsset) => inputAsset.id === inputAssetId)
+      );
+
+      this.utilityService.showConfirmationModalByName("#deleteInputAssetModal");
+    }
+  }
+
   async undoAssetOutput(assetOutputId: number): Promise<void> {
     if (assetOutputId != undefined && this.asset?.id) {
       try {
@@ -233,6 +244,16 @@ export class AssetDetailsComponent implements OnInit {
         }, 4000);
       }
 
+    }
+  }
+
+  showUndoAssetOutputModal(outputAssetId: number) {
+    if (outputAssetId) {
+      this.selectedOutputAsset = <OutputAsset>(
+        this.assetOutputs.find((outputAsset: OutputAsset) => outputAsset.id === outputAssetId)
+      );
+
+      this.utilityService.showConfirmationModalByName("#deleteOutputAssetModal");
     }
   }
 
