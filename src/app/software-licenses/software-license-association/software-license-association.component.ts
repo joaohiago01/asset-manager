@@ -85,12 +85,11 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
         const response = await this.associationService.associateSoftwareLicense(this.softwareLicense?.id, equipmentId);
   
         this.utilityService.showNotification('A Licença de Software foi associada com sucesso');
+
+        this.softwareLicense.numberOfActivationsUsed += 1;
   
         setTimeout(() => {
           this.utilityService.closeNotification();
-  
-          if (this.softwareLicense?.numberOfActivationsUsed)
-            this.softwareLicense.numberOfActivationsUsed++;
 
           this.router.navigate(['software-licenses/associations'], {
             state: { softwareLicense: this.softwareLicense },
@@ -111,7 +110,7 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
     }
 
     if (equipmentId === undefined) {
-      this.utilityService.showNotification('Não foi possível associar! Selecione um equipamento');
+      this.utilityService.showNotification('Não foi possível associar! Selecione um equipamento e tente novamente');
     
       setTimeout(() => {
         this.utilityService.closeNotification();
@@ -126,11 +125,10 @@ export class SoftwareLicenseAssociationComponent implements OnInit {
   
         this.utilityService.showNotification('A associação foi desfeita com sucesso');
   
+        this.softwareLicense.numberOfActivationsUsed -= 1;
+
         setTimeout(() => {
           this.utilityService.closeNotification();
-  
-          if (this.softwareLicense?.numberOfActivationsUsed)
-            this.softwareLicense.numberOfActivationsUsed--;
 
           this.router.navigate(['software-licenses/associations'], {
             state: { softwareLicense: this.softwareLicense },
