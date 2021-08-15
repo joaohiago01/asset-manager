@@ -1,52 +1,51 @@
-<div class="columns is-vcentered">
-  <div class="column is-6 background-color">
-    <div class="has-text-centered">
-      <figure class="image is-square">
-        <img src="assets/images/background-login.png">
-      </figure>
-    </div>
-  </div>
-  <div class="column is-6 is-flex is-justify-content-center is-align-items-center" style="background-color: white;">
-    <section class="section">
-      <div class="is-flex is-justify-content-center">
-        <figure class="image is-128x128">
-          <img src="assets/images/icon-login.png">
-        </figure>
-      </div>
-      <div class="has-text-centered p-4">
-        <h1 class="is-size-4">
-          Entre em sua conta
-        </h1>
-      </div>
+<app-notification></app-notification>
 
-      <form role="form" (submit)="login($event, username.value, password.value)">
-      <div class="field">
-        <label class="label">Usuário:</label>
-        <div class="control has-icons-right">
-          <input type="text" #username class="input" id="username" placeholder="Digite Seu Usuário">
-          <span class="icon is-small is-right">
-            <i class="fa fa-user"></i>
-          </span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Senha:</label>
-        <div class="control has-icons-right">
-          <input type="password" #password class="input" id="password" placeholder="Digite Sua Senha">
-          <span class="icon is-small is-right">
-            <i class="fa fa-lock"></i>
-          </span>
-        </div>
-      </div>
-      <div class="has-text-centered p-2">
-        <button id="login" type="submit" class="button is-vcentered is-medium button-color">
-          <strong>Acessar</strong>
-        </button>
-      </div>
-      </form>
+<div class="gradient-background">  
+  <div class="container-login">
+    <section class="image-section">
+      <img src="assets/images/background-login.png" alt="Asset Manager For CTI">
     </section>
-  </div>
-  <div id="particles-js" class="interactive-bg column is-8">
+
+    <section class="form-section">
+      <div class="form-content">
+        <div class="is-flex is-justify-content-center">
+          <figure class="image is-64x64">
+            <img src="assets/images/icon-login.png">
+          </figure>
+        </div>
+        <div class="has-text-centered p-4">
+          <h1 class="is-size-4 is-size-5-mobile has-text-weight-medium has-text-dark">
+            Entre em sua conta
+          </h1>
+        </div>
+
+        <form role="form" (submit)="login($event, username.value, password.value)">
+          <div class="field">
+            <label class="label">Usuário</label>
+            <div class="control has-icons-left">
+              <input type="text" #username class="input" id="username" placeholder="Digite seu usuário">
+              <span class="icon is-small is-left">
+                <i class="fa fa-user"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Senha</label>
+            <div class="control has-icons-left">
+              <input type="password" #password class="input" id="password" placeholder="Digite sua senha">
+              <span class="icon is-small is-left">
+                <i class="fa fa-lock"></i>
+              </span>
+            </div>
+          </div>
+          <div class="has-text-centered mt-5">
+            <button id="login" type="submit" class="button is-vcentered is-medium is-success is-fullwidth">
+              <span class="has-text-weight-medium">Acessar</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 import { User } from '../../shared/models/user.model';
 import api from './api';
+import { AxiosResponse } from 'axios';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -36,7 +37,7 @@ export class AuthenticationService {
     }
   }
 
-  async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<AxiosResponse> {
     const params = new URLSearchParams()
     params.append('username', username);
     params.append('password', password);
@@ -58,10 +59,6 @@ export class AuthenticationService {
         this.setCurrentUser();
         this.currentUserSubject.next(user);
         return user;
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-        return null;
       });
   }
 

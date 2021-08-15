@@ -1,6 +1,15 @@
 .notification {
     z-index: 20; 
     position: fixed; 
-    top:99vh;
-    transform:translateY(-100%)
+    top: 99vh;
+    transform:translateY(-100%);
+}
+
+@media only screen
+and (min-device-width: 521px) {
+  .notification {
+    left: 25%;
+    right: 25%;
+    width: auto;
+  }
 }

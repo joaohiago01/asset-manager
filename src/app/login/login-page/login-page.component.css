@@ -1,0 +1,65 @@
+.gradient-background {
+    line-height: 1.5;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to top left, #1fd181, #48c774);
+}
+
+.is-success {
+    background-color: #48c774;
+}
+
+.container-login {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    height: 100%;
+}
+
+.image-section {
+    width: 50%;
+    height: 85%;
+}
+
+.image-section > img {
+    min-width: 100%;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.form-section {
+    background-color: white;
+    width: 50%;
+    height: 85%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.form-content {
+    padding: 20% 15%;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 1024px) {
+  .image-section {
+      display: none;
+  }
+
+  .gradient-background {
+    align-items: center;
+  }
+
+  .container-login {
+      width: 88%;
+      height: auto;
+  }
+
+  .form-section {
+      width: 100%;
+      border-radius: 25px;
+  }
+}
