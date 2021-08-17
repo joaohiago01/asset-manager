@@ -209,6 +209,7 @@
         <div class="file has-name is-fullwidth">
           <label class="file-label">
             <input 
+              id="filename"
               #filename 
               class="file-input" 
               type="file" 
@@ -226,7 +227,7 @@
               {{ filename.value ? filename.value.split("C:\\fakepath\\")[1] : 'nenhum arquivo selecionado' }}
             </span>
 
-            <span class="file-name" *ngIf="equipment?.filename">
+            <span id="filenameText" class="file-name" *ngIf="equipment?.filename">
               {{ equipment?.filename ? equipment?.filename : 'nenhum arquivo selecionado' }}
             </span>
           </label>

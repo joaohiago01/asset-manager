@@ -117,7 +117,8 @@ export class EquipmentService {
     
     const response = await api.get(
       `/equipamentos/${equipmentId}/file`,
-      { headers }
+      { headers,
+      responseType: 'blob' },
     );
     return response;
   }

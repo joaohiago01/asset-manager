@@ -55,6 +55,10 @@ export class EquipmentFormComponent implements OnInit {
     if (files != null && files[0] != null) {
       const userfile = files[0];
       this.file = userfile;
+
+      const filenameInput = <HTMLInputElement> document.querySelector('#filename');
+      const filenameText = <HTMLSpanElement> document.querySelector('#filenameText');
+      filenameText.textContent = filenameInput.value.split("C:\\fakepath\\")[1];
     }
   }
 
@@ -267,10 +271,13 @@ export class EquipmentFormComponent implements OnInit {
         const response = await this.equipmentService.getFile(this.equipment?.id);
 
         const contentType = response.headers['content-type'];
+        const data = response.data;
 
-        const file = new File([response.data], contentType, { type: contentType });
-        saveAs(file, this.equipment?.filename);
+        let blob = new Blob([data], {type: contentType});
+        
+        saveAs(blob, this.equipment.filename);
       } catch (error) {
+        console.log(error);
         this.utilityService.showNotification('Ocorreu um erro ao tentar baixar esse anexo');
   
         setTimeout(() => {
