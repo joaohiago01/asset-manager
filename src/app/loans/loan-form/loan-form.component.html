@@ -139,19 +139,20 @@
               #expectedReturnDate
               id="expectedReturnDate"
               class="input medium-input"
-              value="{{ loan ? loan.expectedReturnDate : '' }}"
+              value="{{ loan?.expectedReturnDate | date: 'yyyy-MM-dd' }}"
               type="date"
             />
           </div>
 
           <div class="column">
-            <label for="returnDate" class="label">Data de Retorno</label>
+            <label for="returnDate" class="label">Data de Devolução</label>
             <input
               #returnDate
               id="returnDate"
               class="input medium-input"
-              value="{{ loan ? loan.returnDate : '' }}"
+              value="{{ loan?.returnDate | date: 'yyyy-MM-dd' }}"
               type="date"
+              [disabled]="!loan?.id"
             />
           </div>
         </div>

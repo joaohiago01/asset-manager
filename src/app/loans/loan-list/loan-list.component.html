@@ -50,8 +50,12 @@
                       <span>{{ loan.outputDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
 
-                    <p class="field-title">Data Esperada:
+                    <p class="field-title">Data Prevista:
                       <span>{{ loan.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
+                    </p>
+
+                    <p class="field-title" *ngIf="loan.returnDate">Data de Devolução:
+                      <span>{{ loan?.returnDate | date: 'dd/MM/yyyy' }}</span>
                     </p>
 
                     <p class="field-title" *ngIf="loan.callNumberSuap">Nº chamado do SUAP:

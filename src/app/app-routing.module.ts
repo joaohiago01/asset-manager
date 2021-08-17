@@ -6,7 +6,7 @@ import { AuthenticationGuardService } from './shared/services/authentication-gua
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthenticationGuardService]
   },
   {
