@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  assetmanagerforcti:
+    image: assetmanagerforcti
+    build: .
+    ports:
+      - 4200:80
