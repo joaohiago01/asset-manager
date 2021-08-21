@@ -31,7 +31,7 @@ describe('Create New Service', () => {
     element(by.id('assetsTab')).getWebElement().click();
     browser.sleep(2000);
     
-    element(by.id('assetSearch')).sendKeys('Papel Sulfite A4');
+    element(by.id('assetSearch')).sendKeys('Álcool');
     browser.sleep(2000);
 
     element(by.id('assetAddButton')).getWebElement().click();
@@ -39,8 +39,11 @@ describe('Create New Service', () => {
   });
 
   it('should create new service without sending SUAP form', () => {
-    element(by.id('equipmentSearch')).sendKeys('IMPRESSORA ECO-TANK. MARCA: EPSON');
+    element(by.id('equipmentSearch')).sendKeys('PROJETOR MULTIMÍDIA. MARCA: ACER.');
     browser.sleep(1000);
+
+    element(by.id('equipmentSelected')).getWebElement().click();
+    browser.sleep(2000);
 
     element(by.id('description')).getWebElement().sendKeys('Conserto do equipamento');
     browser.sleep(1000);
@@ -57,8 +60,11 @@ describe('Create New Service', () => {
     element(by.id('assetsTab')).getWebElement().click();
     browser.sleep(2000);
     
-    element(by.id('assetSearch')).sendKeys('Papel Sulfite A4');
+    element(by.id('assetSearch')).sendKeys('Álcool');
     browser.sleep(1000);
+
+    element(by.id('assetSelected')).getWebElement().click();
+    browser.sleep(2000);
 
     element(by.id('assetAmount')).getWebElement().sendKeys('1');
     
